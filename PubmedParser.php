@@ -71,17 +71,17 @@
     # <ref name="$param2"></ref> tags, for easy insertion of references
     # into the Wiki article (requires the References extension)
     $pm = new Pubmed( $param1 );
-    $output = '{{pubmed|'
+    $output = '{{' . wfMsg( 'pubmedparser-templatename' ) . '|'
       . 'pmid=' . $pm->pmid()
-      . '|authors=' . $pm->authors()
-      . '|allauthors=' . $pm->allAuthors()
-      . '|title=' . $pm->title()
-      . '|journal=' . $pm->journal()
-      . '|journala=' . $pm->journalAbbrev()
-      . '|year=' .$pm->year()
-      . '|volume=' . $pm->volume()
-      . '|pages=' . $pm->pages()
-      . '|doi=' . $pm->doi()
+      . '|' . wfMsg( 'pubmedparser-authors' ) . '=' . $pm->authors()
+      . '|' . wfMsg( 'pubmedparser-allauthors' ) . '=' . $pm->allAuthors()
+      . '|' . wfMsg( 'pubmedparser-title' ) . '=' . $pm->title()
+      . '|' . wfMsg( 'pubmedparser-journal' ) . '=' . $pm->journal()
+      . '|' . wfMsg( 'pubmedparser-journala' ) . '=' . $pm->journalAbbrev()
+      . '|' . wfMsg( 'pubmedparser-year' ) . '=' .$pm->year()
+      . '|' . wfMsg( 'pubmedparser-volume' ) . '=' . $pm->volume()
+      . '|' . wfMsg( 'pubmedparser-pages' ) . '=' . $pm->pages()
+      . '|' . wfMsg( 'pubmedparser-doi' ) . '=' . $pm->doi()
       . '}}';
 
     if ( $param2 != '' ) {
