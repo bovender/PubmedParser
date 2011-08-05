@@ -59,6 +59,7 @@
 		}
 
 		/// The following functions all return information on the article.
+
 		function authors()
 		// returns an abbreviated list of the authors; if there are two
 		// authors, it returns something like "Miller & Thomas"; with more
@@ -87,6 +88,21 @@
 				} else {
 					$a = $this->article->AuthorList->Author[0];
 				}
+				return $a;
+			} // if ( $this->medline )
+		}
+
+		function allAuthors()
+		// returns a list of all authors of this article
+		{
+			if ( $this->medline ) {
+				global $wgPubmedParserAnd; // need to declare global!
+				$numauthors = count( $this->article->AuthorList->Author );
+				for ( $i=0; $i < $numauthors-1; $i++ ) {
+					$a .= $this->authorName( $this->article->AuthorList->Author[$i] ) . ", ";
+				}
+				$a = rtrim( $a, ", " ) . " $wgPubmedParserAnd "
+						. $this->authorName( $this->article->AuthorList->Author[$i] );
 				return $a;
 			} // if ( $this->medline )
 		}
@@ -168,7 +184,20 @@
 				return $this->medline->asXML();
 			}
 		}
-		
+
+		// authorName returns either the author's last name or
+		// the "CollectiveName" is the author is a group.
+		// Parameter $author must be an instance of SimpleXMLElement
+		private function authorName( $author ) {
+			if ( $author instanceof SimpleXMLElement ) {
+				$n = $author->LastName;
+				if ( $n ) {
+					return $n;
+				} else {
+					return $author->CollectiveName;
+				}
+			}
+		}
 
 		/// Private class elements
 		private $id;			// holds the PMID

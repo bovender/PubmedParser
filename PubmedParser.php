@@ -30,7 +30,7 @@
     'name' => 'PubmedParser',
     'author' => 'Daniel Kraus', 
     'url' => 'http://www.mediawiki.org/wiki/User:Bovender',
-    'version' => '0.1',
+    'version' => '0.1.1',
     'descriptionmsg' => 'pubmedparser-desc'
     );
 
@@ -70,10 +70,11 @@
     # optional:   $param2 - if given the output will be enclosed by
     # <ref name="$param2"></ref> tags, for easy insertion of references
     # into the Wiki article (requires the References extension)
-    $pm = new Pubmed( $param1 ); // Wanner, NEJM 2009: PMID 16034009
+    $pm = new Pubmed( $param1 );
     $output = '{{pubmed|'
       . 'pmid=' . $pm->pmid()
       . '|authors=' . $pm->authors()
+      . '|allauthors=' . $pm->allAuthors()
       . '|title=' . $pm->title()
       . '|journal=' . $pm->journal()
       . '|journala=' . $pm->journalAbbrev()
