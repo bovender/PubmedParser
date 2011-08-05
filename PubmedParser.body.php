@@ -1,8 +1,15 @@
 <?php
+/*! \file PubmedParser.body.php
+ */
+ 
   if ( !defined( 'MEDIAWIKI' ) ) {
     die( 'Not an entry point.' );
   }
 
+	/*! The central PubmedParser class.
+	 *  Fetches article information in XML format from Pubmed.gov, and
+	 *  provides an interface to the article properties.
+	 */
   class Pubmed
 	{
 		/*! Constructor.
@@ -58,12 +65,14 @@
 			} // if ($pmid)
 		}
 
-		/// The following functions all return information on the article.
+		// *************************************************************
+		// The following functions all return information on the article.
 
+		/*! Returns an abbreviated list of the authors. If there are two
+		 *  authors, it returns something like "Miller & Thomas"; with more
+		 *  than two authors, it returns "Miller et al."
+		 */
 		function authors()
-		// returns an abbreviated list of the authors; if there are two
-		// authors, it returns something like "Miller & Thomas"; with more
-		// than two authors, it returns "Miller et al."
 		{
 			if ( $this->medline ) {
 				// SimpleXMLElement::count() supposedly returns the number of
@@ -76,14 +85,13 @@
 				 * workaround is given below. This was taken from the user comments
 				 * on http://php.net/manual/en/simplexmlelement.count.php
 				 */
-				
-				global $wgPubmedParserAnd, $wgPubmedParserEtAl; // need to declare global!
 				$numauthors = count($this->article->AuthorList->Author);
 				if ( $numauthors > 2 ) {
-					$a = $this->article->AuthorList->Author[0]->LastName . " $wgPubmedParserEtAl";
+					$a = $this->article->AuthorList->Author[0]->LastName
+						. " " . wfMsg( 'pubmedparser-etal' );
 				} elseif ( $numauthors = 2 ) {
 					$a = $this->article->AuthorList->Author[0]->LastName
-						. " $wgPubmedParserAnd "
+						. " " . wfMsg( 'pubmedparser-and' ) . " "
 						. $this->article->AuthorList->Author[1]->LastName;
 				} else {
 					$a = $this->article->AuthorList->Author[0];
@@ -92,21 +100,21 @@
 			} // if ( $this->medline )
 		}
 
+		/// Returns a list of all authors of this article.
 		function allAuthors()
-		// returns a list of all authors of this article
 		{
 			if ( $this->medline ) {
-				global $wgPubmedParserAnd; // need to declare global!
 				$numauthors = count( $this->article->AuthorList->Author );
 				for ( $i=0; $i < $numauthors-1; $i++ ) {
 					$a .= $this->authorName( $this->article->AuthorList->Author[$i] ) . ", ";
 				}
-				$a = rtrim( $a, ", " ) . " $wgPubmedParserAnd "
+				$a .= wfMsg( 'pubmedparser-and' ) . " "
 						. $this->authorName( $this->article->AuthorList->Author[$i] );
 				return $a;
 			} // if ( $this->medline )
 		}
 
+		/// Returns the last name of the article's first author.
 		function firstAuthor()
 		{
 			if ( $this->medline ) {
@@ -114,16 +122,15 @@
 			}
 		}
 
+		/// Returns the title of the article. A trailing period will be removed.
 		function title()
 		{
-			// this function returns the article title as registered in
-			// pubmed, with the trailing period removed; users can add
-			// it in the MediaWiki template if desired.
 			if ( $this->medline ) {
 				return rtrim($this->article->ArticleTitle, '.');
 			}
 		}
 
+		/// Returns the journal name as stored in Pubmed.
 		function journal()
 		{
 			if ( $this->medline ) {
@@ -131,6 +138,7 @@
 			}
 		}
 
+		/// Returns the ISO abbreviation for the journal, with periods.
 		function journalAbbrev()
 		{
 			if ( $this->medline ) {
@@ -138,6 +146,7 @@
 			}
 		}
 
+		/// Returns the year the article was published.
 		function year()
 		{
 			if ( $this->medline ) {
@@ -145,6 +154,7 @@
 			}
 		}
 
+		/// Returns the volume of the journal that the article was published in.
 		function volume()
 		{
 			if ( $this->medline ) {
@@ -152,6 +162,7 @@
 			}
 		}
 
+		/// Returns the pagination of the article.
 		function pages()
 		{
 			if ( $this->medline ) {
@@ -159,11 +170,15 @@
 			}
 		}
 
+		/// Returns the PMID of the article.
 		function pmid()
 		{
 			return $this->id;
 		}
 
+		/*! Returns the digital object identifier (DOI).
+		 *  Note that not all Pubmed citations have this information.
+		 */
 		function doi()
 		{
 			if ( $this->medline ) {
@@ -179,15 +194,18 @@
 			}
 		}
 
+		/// Returns the citation data as formatted XML.
 		function dumpData() {
 			if ( $this->medline ) {
 				return $this->medline->asXML();
 			}
 		}
 
-		// authorName returns either the author's last name or
-		// the "CollectiveName" is the author is a group.
-		// Parameter $author must be an instance of SimpleXMLElement
+		/*! A private function that returns either the author's last name or
+		 *  the "CollectiveName" is the author is a group.
+		 *  \param   $author must be an instance of SimpleXMLElement
+		 *  \returns         either the author's last name, or the group's collective name 
+		 */
 		private function authorName( $author ) {
 			if ( $author instanceof SimpleXMLElement ) {
 				$n = $author->LastName;
@@ -199,8 +217,9 @@
 			}
 		}
 
-		/// Private class elements
-		private $id;			// holds the PMID
-		private $medline; // a SimpleXMLElement object that holds the Medline Data
-		private $article; // $medline->PubmedArticle->MedlineCitation->Article
+		// =======================
+		// Private class elements
+		private $id;			///< holds the PMID
+		private $medline; ///< a SimpleXMLElement object that holds the Medline Data
+		private $article; ///< $medline->PubmedArticle->MedlineCitation->Article
 	}

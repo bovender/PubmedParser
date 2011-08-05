@@ -1,6 +1,6 @@
 <?php
 /*
- *      PubmedParser.php
+ *      \file PubmedParser.php
  *      
  *      Copyright 2011 Daniel Kraus <krada@gmx.net>
  *      
@@ -29,7 +29,7 @@
     'path' => __FILE__,
     'name' => 'PubmedParser',
     'author' => 'Daniel Kraus', 
-    'url' => 'http://www.mediawiki.org/wiki/User:Bovender',
+    'url' => 'http://www.mediawiki.org/wiki/Extension:PubmedParser',
     'version' => '0.1.1',
     'descriptionmsg' => 'pubmedparser-desc'
     );
@@ -41,47 +41,50 @@
   # Add a hook to initialise the magic word
   $wgHooks['LanguageGetMagic'][]    = 'efPubmedParser_Magic';
 
-  // Default settings
+  /*! Path to the cache folder
+   *  To enable caching, make sure this path exists and is writable for
+   *  the web server.
+   */
   $wgPubmedParserCache = "$IP/cache/PubmedParser";
-  $wgPubmedParserEtAl = "''et al.''";  // et al. text (appended to author list)
-  $wgPubmedParserAnd  = "and"; // how to concatenate two author names
 
 
+  /// Default setup function.
+  /// Associates the "pmid" magic word with the efPubmedParser_Render function.
   function efPubmedParser_Setup( &$parser ) {
     # Set a function hook associating the "pmid" magic word with our function
     $parser->setFunctionHook( 'pmid', 'efPubmedParser_Render' );
     return true;
   }
- 
+
+  /// Adds the magic word to the parser.
   function efPubmedParser_Magic( &$magicWords, $langCode ) {
-    # Add the magic word
     # The first array element is whether to be case sensitive, in this case (0) it is not case sensitive, 1 would be sensitive
     # All remaining elements are synonyms for our parser function
     $magicWords['pmid'] = array( 0, 'pmid' );
     # unless we return true, other parser functions extensions won't get loaded.
     return true;
   }
- 
+
+  /// Parser function.
+  /*! \param $parser     The parser; ignored by the function.
+   *  \param $param1     The mandatory first parameter; expected to be a PMID.
+   *  \param $param2     The optional second parameter; can indicate a reference name.
+   *                     If given, the output will be surrounded by <ref name="$param2"></ref>
+   *                     tags (note that this requires the Cite extension).
+   */
   function efPubmedParser_Render( $parser, $param1 = '', $param2 = '' ) {
-    # The parser function itself
-    # The input parameters are wikitext with templates expanded
-    # The output should be wikitext too
-    # Parameters: $param1 - PMID
-    # optional:   $param2 - if given the output will be enclosed by
-    # <ref name="$param2"></ref> tags, for easy insertion of references
-    # into the Wiki article (requires the References extension)
     $pm = new Pubmed( $param1 );
     $output = '{{' . wfMsg( 'pubmedparser-templatename' ) . '|'
       . 'pmid=' . $pm->pmid()
-      . '|' . wfMsg( 'pubmedparser-authors' ) . '=' . $pm->authors()
+      . '|' . wfMsg( 'pubmedparser-authors' )    . '=' . $pm->authors()
       . '|' . wfMsg( 'pubmedparser-allauthors' ) . '=' . $pm->allAuthors()
-      . '|' . wfMsg( 'pubmedparser-title' ) . '=' . $pm->title()
-      . '|' . wfMsg( 'pubmedparser-journal' ) . '=' . $pm->journal()
-      . '|' . wfMsg( 'pubmedparser-journala' ) . '=' . $pm->journalAbbrev()
-      . '|' . wfMsg( 'pubmedparser-year' ) . '=' .$pm->year()
-      . '|' . wfMsg( 'pubmedparser-volume' ) . '=' . $pm->volume()
-      . '|' . wfMsg( 'pubmedparser-pages' ) . '=' . $pm->pages()
-      . '|' . wfMsg( 'pubmedparser-doi' ) . '=' . $pm->doi()
+      . '|' . wfMsg( 'pubmedparser-title' )      . '=' . $pm->title()
+      . '|' . wfMsg( 'pubmedparser-journal' )    . '=' . $pm->journal()
+      . '|' . wfMsg( 'pubmedparser-journala' )   . '=' . $pm->journalAbbrev()
+      . '|' . wfMsg( 'pubmedparser-year' )       . '=' .$pm->year()
+      . '|' . wfMsg( 'pubmedparser-volume' )     . '=' . $pm->volume()
+      . '|' . wfMsg( 'pubmedparser-pages' )      . '=' . $pm->pages()
+      . '|' . wfMsg( 'pubmedparser-doi' )        . '=' . $pm->doi()
       . '}}';
 
     if ( $param2 != '' ) {
