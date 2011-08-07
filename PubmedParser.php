@@ -23,9 +23,9 @@
     die( 'Not an entry point.' );
   }
 
-  define( 'PUBMEDPARSER_OK',          0); ///< Status code: okay
-  define( 'PUBMEDPARSER_INVALIDPMID', 1); ///< Status code: PMID is invalid
-  define( 'PUBMEDPARSER_NODATA',      2); ///< Status code: Pubmed returned no data
+  define( 'PUBMEDPARSER_OK',          1); ///< Status code: okay
+  define( 'PUBMEDPARSER_INVALIDPMID', 2); ///< Status code: PMID is invalid
+  define( 'PUBMEDPARSER_NODATA',      3); ///< Status code: Pubmed returned no data
   
   $wgExtensionMessagesFiles['PubmedParser'] = dirname( __FILE__ ) . '/PubmedParser.i18n.php';
 
@@ -34,7 +34,7 @@
     'name'           => 'PubmedParser',
     'author'         => '[http://www.mediawiki.org/wiki/User:Bovender Daniel Kraus]', 
     'url'            => 'http://www.mediawiki.org/wiki/Extension:PubmedParser',
-    'version'        => '0.1.2',
+    'version'        => '0.1.3',
     'descriptionmsg' => 'pubmedparser-desc'
     );
 

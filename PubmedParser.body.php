@@ -43,8 +43,15 @@
 				$pmid is the unique Pubmed identifier; if given, the instance
 				of the class will immediately retrieve the article information
 				from pubmed. */
-		function __construct($pmid = 0)
+		function __construct($pmid = '')
 		{
+			/* As long as there we have not retrieved any valid data, the
+			 * status needs to be set to something other than 'ok'; since
+			 * it is the uninitialized $pmid that is the reason for not
+			 * having any data, setting the status to PUBMEDPARSER_INVALIDPMID
+			 * makes sense.
+			 */
+			$this->status = PUBMEDPARSER_INVALIDPMID;
 			if ( $pmid ) {
 				$this->lookUp( $pmid );
 			}
@@ -55,10 +62,11 @@
 		 *  data for the requested PMID. If not found, it checks Pubmed online.
 		 *	For this to work, the EUtilities application must be up and running
 		 *	on the NCBI server.
+		 *  \param $pmid [in] PMID (unique Pubmed identifier)
 		 */
 		function lookUp( $pmid )
 		{
-			global $wgPubmedParserCache; // reference to the global variable;
+			global $wgPubmedParserCache; ///< reference to the global variable;
 
 			$this->id = $pmid;
 
@@ -109,6 +117,8 @@
 				if ( !isset($this->article) ) {
 					$this->status = PUBMEDPARSER_NODATA;
 					unset ( $this->medline );
+				} else {
+					$this->status = PUBMEDPARSER_OK;
 				}
 				
 			} // if ($pmid)
@@ -266,7 +276,7 @@
 				case PUBMEDPARSER_NODATA:
 					return $s . wfMsg( 'pubmedparser-error-nodata' ) . ' (PMID: ' . $this->id . ')';
 				default:
-					return '#' . $this->status;
+					return 'Status code: #' . $this->status;
 			}
 		}
 
