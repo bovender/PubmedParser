@@ -22,15 +22,19 @@
   if ( !defined( 'MEDIAWIKI' ) ) {
     die( 'Not an entry point.' );
   }
+
+  define( 'PUBMEDPARSER_OK',          0); ///< Status code: okay
+  define( 'PUBMEDPARSER_INVALIDPMID', 1); ///< Status code: PMID is invalid
+  define( 'PUBMEDPARSER_NODATA',      2); ///< Status code: Pubmed returned no data
   
   $wgExtensionMessagesFiles['PubmedParser'] = dirname( __FILE__ ) . '/PubmedParser.i18n.php';
 
   $wgExtensionCredits['parserhook'][] = array(
-    'path' => __FILE__,
-    'name' => 'PubmedParser',
-    'author' => 'Daniel Kraus', 
-    'url' => 'http://www.mediawiki.org/wiki/Extension:PubmedParser',
-    'version' => '0.1.1',
+    'path'           => __FILE__,
+    'name'           => 'PubmedParser',
+    'author'         => '[http://www.mediawiki.org/wiki/User:Bovender Daniel Kraus]', 
+    'url'            => 'http://www.mediawiki.org/wiki/Extension:PubmedParser',
+    'version'        => '0.1.2',
     'descriptionmsg' => 'pubmedparser-desc'
     );
 
@@ -74,21 +78,28 @@
    */
   function efPubmedParser_Render( $parser, $param1 = '', $param2 = '' ) {
     $pm = new Pubmed( $param1 );
-    $output = '{{' . wfMsg( 'pubmedparser-templatename' ) . '|'
-      . 'pmid=' . $pm->pmid()
-      . '|' . wfMsg( 'pubmedparser-authors' )    . '=' . $pm->authors()
-      . '|' . wfMsg( 'pubmedparser-allauthors' ) . '=' . $pm->allAuthors()
-      . '|' . wfMsg( 'pubmedparser-title' )      . '=' . $pm->title()
-      . '|' . wfMsg( 'pubmedparser-journal' )    . '=' . $pm->journal()
-      . '|' . wfMsg( 'pubmedparser-journala' )   . '=' . $pm->journalAbbrev()
-      . '|' . wfMsg( 'pubmedparser-year' )       . '=' .$pm->year()
-      . '|' . wfMsg( 'pubmedparser-volume' )     . '=' . $pm->volume()
-      . '|' . wfMsg( 'pubmedparser-pages' )      . '=' . $pm->pages()
-      . '|' . wfMsg( 'pubmedparser-doi' )        . '=' . $pm->doi()
-      . '}}';
 
-    if ( $param2 != '' ) {
-      $output = "<ref name=\"$param2\">$output</ref>";
+    if ( $pm->statusCode() == PUBMEDPARSER_OK ) {
+      $output = '{{' . wfMsg( 'pubmedparser-templatename' ) . '|'
+        . 'pmid=' . $pm->pmid()
+        . '|' . wfMsg( 'pubmedparser-authors' )    . '=' . $pm->authors()
+        . '|' . wfMsg( 'pubmedparser-allauthors' ) . '=' . $pm->allAuthors()
+        . '|' . wfMsg( 'pubmedparser-title' )      . '=' . $pm->title()
+        . '|' . wfMsg( 'pubmedparser-journal' )    . '=' . $pm->journal()
+        . '|' . wfMsg( 'pubmedparser-journala' )   . '=' . $pm->journalAbbrev()
+        . '|' . wfMsg( 'pubmedparser-year' )       . '=' .$pm->year()
+        . '|' . wfMsg( 'pubmedparser-volume' )     . '=' . $pm->volume()
+        . '|' . wfMsg( 'pubmedparser-pages' )      . '=' . $pm->pages()
+        . '|' . wfMsg( 'pubmedparser-doi' )        . '=' . $pm->doi()
+        . '}}';
+
+      if ( $param2 != '' ) {
+        $output = "<ref name=\"$param2\">$output</ref>";
+      }
+    } else { // status not ok
+      $output = '<span style="font-size:150%; color:red; background-color:yellow;">'
+        . $pm->statusMsg()
+        . '</span>';
     }
 
     // set noparse to false to enable full parsing of the output

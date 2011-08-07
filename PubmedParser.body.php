@@ -1,10 +1,37 @@
 <?php
-/*! \file PubmedParser.body.php
+/*
+ *      \file PubmedParser.body.php
+ *      
+ *      Copyright 2011 Daniel Kraus <krada@gmx.net>
+ *      
+ *      This program is free software; you can redistribute it and/or modify
+ *      it under the terms of the GNU General Public License as published by
+ *      the Free Software Foundation; either version 2 of the License, or
+ *      (at your option) any later version.
+ *      
+ *      This program is distributed in the hope that it will be useful,
+ *      but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *      GNU General Public License for more details.
+ *      
+ *      You should have received a copy of the GNU General Public License
+ *      along with this program; if not, write to the Free Software
+ *      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ *      MA 02110-1301, USA.
  */
  
   if ( !defined( 'MEDIAWIKI' ) ) {
     die( 'Not an entry point.' );
   }
+
+	/*! Replacement for ctype_digit, to properly handle (via return value false) nulls,
+	 *  booleans, objects, resources, etc.
+	 *  Taken from: http://www.php.net/manual/en/function.ctype-digit.php#87113
+	 */
+	function ctype_digit2 ($str) { 
+		 return (is_string($str) || is_int($str) || is_float($str)) && 
+				 preg_match('/^\d+\z/', $str); 
+	}
 
 	/*! The central PubmedParser class.
 	 *  Fetches article information in XML format from Pubmed.gov, and
@@ -34,6 +61,13 @@
 			global $wgPubmedParserCache; // reference to the global variable;
 
 			$this->id = $pmid;
+
+			// First, let's check if the PMID consists of digits only
+			if ( !ctype_digit2( $pmid ) ) {
+				$this->status = PUBMEDPARSER_INVALIDPMID;
+				return;
+			}
+			
 			$cacheFile = rtrim( $wgPubmedParserCache, '/' ) . '/' . $pmid;
 
 			if ( $pmid )
@@ -48,20 +82,35 @@
 					// retmode=xml returns raw XML.
 					$this->medline = simplexml_load_file("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=$pmid&retmode=xml");
 
-					// now that we have the data, let's attempt to store it locally
-					// in the cache
-					if ( is_writable( $wgPubmedParserCache )) {
-						try {
-							$this->medline->asXML( $cacheFile );
-						}
-						catch (Exception $e) {
-						}
+					/* Check if Pubmed returned valid article data: If the PMID does not exist,
+					 * Pubmed will deliver invalid XML ("<ERROR>Empty id list - nothing todo</ERROR>").
+					 * In this case, the medline object will return false.
+					 */
+					if ( !$this->medline ) {
+						$this->status = PUBMEDPARSER_NODATA;
+						return;
+					}
+
+					/* Now that we have the data, let's attempt to store it locally
+					 * in the cache.
+					 */
+					if ( is_writable( $wgPubmedParserCache ) ) {
+						$this->medline->asXML( $cacheFile );
 					}
 				} // if file_exists
 				
 				if ( $this->medline ) {
 					$this->article = $this->medline->PubmedArticle->MedlineCitation->Article;
 				}
+
+				// If Pubmed did not return data (e.g., the server is down or the
+				// PMID does not exist), $this->article will not be set, and we
+				// set the status code to PUBMEDPARSER_NODATA
+				if ( !isset($this->article) ) {
+					$this->status = PUBMEDPARSER_NODATA;
+					unset ( $this->medline );
+				}
+				
 			} // if ($pmid)
 		}
 
@@ -201,6 +250,26 @@
 			}
 		}
 
+		/// Returns the status of the object
+		function statusCode() {
+			return $this->status;
+		}
+
+		/// Returns the status message text
+		function statusMsg() {
+			$s = wfMsg( 'pubmedparser-error' ) . ': ';
+			switch ( $this->status ) {
+				case PUBMEDPARSER_OK:
+					return $s . 'ok'; // no i18n since this message will never be shown to the user
+				case PUBMEDPARSER_INVALIDPMID:
+					return $s . wfMsg( 'pubmedparser-error-invalidpmid' );
+				case PUBMEDPARSER_NODATA:
+					return $s . wfMsg( 'pubmedparser-error-nodata' ) . ' (PMID: ' . $this->id . ')';
+				default:
+					return '#' . $this->status;
+			}
+		}
+
 		/*! A private function that returns either the author's last name or
 		 *  the "CollectiveName" is the author is a group.
 		 *  \param   $author must be an instance of SimpleXMLElement
@@ -222,4 +291,5 @@
 		private $id;			///< holds the PMID
 		private $medline; ///< a SimpleXMLElement object that holds the Medline Data
 		private $article; ///< $medline->PubmedArticle->MedlineCitation->Article
+		private $status;  ///< holds status information (0 if everything is ok)
 	}
