@@ -15,16 +15,22 @@ $messages['en'] = array(
 	// Wiki administrators to change the names to suit their needs
 	'pubmedparser-templatename' => 'pubmed', // the name of the template to use
 	'pubmedparser-authors'      => 'authors',
+	'pubmedparser-authorsi'     => 'authorsi',
 	'pubmedparser-allauthors'   => 'allauthors',
+	'pubmedparser-allauthorsi'  => 'allauthorsi',
 	'pubmedparser-journal'      => 'journal',
+	'pubmedparser-journalcaps'  => 'journalcaps',
 	'pubmedparser-journala'     => 'journala',
 	'pubmedparser-volume'       => 'volume',
 	'pubmedparser-pages'        => 'pages',
+	'pubmedparser-firstpage'    => 'firstpage',
 	'pubmedparser-year'         => 'year',
 	'pubmedparser-doi'          => 'doi',
 	'pubmedparser-title'        => 'title',
 	'pubmedparser-and'          => '&',
-	'pubmedparser-etal'         => '\'\'et al.\'\''
+	'pubmedparser-etal'         => '\'\'et al.\'\'',
+	'pubmedparser-initialseparator' => '',  // how to separate initials from last name
+	'pubmedparser-initialperiod'=> '',      // character to place after an initial
 );
 
 $messages['de'] = array(
