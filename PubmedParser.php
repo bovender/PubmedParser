@@ -28,13 +28,14 @@
     'name'           => 'PubmedParser',
     'author'         => '[http://www.mediawiki.org/wiki/User:Bovender Daniel Kraus]', 
     'url'            => 'http://www.mediawiki.org/wiki/Extension:PubmedParser',
-    'version'        => '0.2.0',
+    'version'        => '0.2.1',
     'descriptionmsg' => 'pubmedparser-desc'
     );
 
   define( 'PUBMEDPARSER_OK',          1); ///< Status code: okay
   define( 'PUBMEDPARSER_INVALIDPMID', 2); ///< Status code: PMID is invalid
   define( 'PUBMEDPARSER_NODATA',      3); ///< Status code: Pubmed returned no data
+  define( 'PUBMEDPARSER_RELOAD',      'RELOAD'); ///< Name of the 'reload' option (must be upper case!).
   
   $wgExtensionMessagesFiles['PubmedParser'] = dirname( __FILE__ ) . '/PubmedParser.i18n.php';
 

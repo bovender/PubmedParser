@@ -47,10 +47,27 @@
 		 *  \param $param1     The mandatory first parameter; expected to be a PMID.
 		 *  \param $param2     The optional second parameter; can indicate a reference name.
 		 *                     If given, the output will be surrounded by <ref name="$param2"></ref>
-		 *                     tags (note that this requires the Cite extension).
-		 */
-		public static function Render( $parser, $param1 = '', $param2 = '' ) {
-			$pm = new PubmedParserFetcher( $param1 );
+		 *                     tags (note that this requires the Cite extension).*/
+		public static function Render( $parser, $param1 = '', $param2 = '', $param3 = '' ) {
+
+			/* New for version 0.2.1: Implement the ability to force a reload
+			 * of article data from Pubmed, e.g. if an online-first article 
+			 * has been published in print, and the Pubmed entry has been
+			 * updated.
+			 * Users can add an optional 'reload' parameter:
+			 *    {{#PMID:123456|reload}}
+			 * or {{#PMID:123456|ReferenceName|reload}}
+			 */
+
+			$refName = $param2;
+			if ( strtoupper( $refName ) == PUBMEDPARSER_RELOAD ) {
+				$reload = true;
+				$refName = $param3;
+			} else {
+				strtoupper( $param3 ) == PUBMEDPARSER_RELOAD ? $reload = true : $reload = false;
+			}
+
+			$pm = new PubmedParserFetcher( $param1, $reload );
 
 			if ( $pm->statusCode() == PUBMEDPARSER_OK ) {
 				$output = '{{' . wfMsg( 'pubmedparser-templatename' ) . '|'
