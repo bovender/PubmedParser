@@ -28,7 +28,7 @@
     'name'           => 'PubmedParser',
     'author'         => '[http://www.mediawiki.org/wiki/User:Bovender Daniel Kraus]', 
     'url'            => 'http://www.mediawiki.org/wiki/Extension:PubmedParser',
-    'version'        => '0.2.1',
+    'version'        => '0.2.2',
     'descriptionmsg' => 'pubmedparser-desc'
     );
 
@@ -42,9 +42,9 @@
   $wgAutoloadClasses['PubmedParser'] = dirname(__FILE__) . '/PubmedParser.body.php';
   $wgAutoloadClasses['PubmedParserFetcher'] = dirname(__FILE__) . '/PubmedParserFetcher.body.php';
 
-  # Define a setup function
+  // Define a setup function
   $wgHooks['ParserFirstCallInit'][] = 'PubmedParser::Setup';
-  # Add a hook to initialise the magic word
+  // Add a hook to initialise the magic word
   $wgHooks['LanguageGetMagic'][]    = 'PubmedParser::Magic';
 
   /*! Path to the cache folder

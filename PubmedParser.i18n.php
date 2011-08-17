@@ -21,6 +21,7 @@ $messages['en'] = array(
 	'pubmedparser-journal'      => 'journal',
 	'pubmedparser-journalcaps'  => 'journalcaps',
 	'pubmedparser-journala'     => 'journala',
+	'pubmedparser-journalanop'  => 'journalanop',
 	'pubmedparser-volume'       => 'volume',
 	'pubmedparser-pages'        => 'pages',
 	'pubmedparser-firstpage'    => 'firstpage',

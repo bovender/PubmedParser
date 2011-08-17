@@ -80,6 +80,7 @@
 					. '|' . wfMsg( 'pubmedparser-journal' )    . '=' . $pm->journal()
 					. '|' . wfMsg( 'pubmedparser-journalcaps' ). '=' . $pm->journalCaps()
 					. '|' . wfMsg( 'pubmedparser-journala' )   . '=' . $pm->journalAbbrev()
+					. '|' . wfMsg( 'pubmedparser-journalanop' ). '=' . $pm->journalAbbrevNoPeriods()
 					. '|' . wfMsg( 'pubmedparser-year' )       . '=' . $pm->year()
 					. '|' . wfMsg( 'pubmedparser-volume' )     . '=' . $pm->volume()
 					. '|' . wfMsg( 'pubmedparser-pages' )      . '=' . $pm->pages()
