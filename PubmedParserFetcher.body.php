@@ -290,6 +290,25 @@
 			}
 		}
 
+		/*! Returns the abstract of the article
+		 *  Note the naming of the function: abstr(); we cannot use abstract
+		 *  as it is a PHP keyword.
+		 */
+		function abstr() {
+			foreach ( $this->medline->PubmedArticle->MedlineCitation->Article->Abstract->AbstractText as $p ) {
+					// Abstract paragraphs may be preceded by a label.
+					// The label is given as an XML parameter, e.g.:
+					//  <AbstractText Label="BACKGROUND" NlmCategory="BACKGROUND"></AbstractText>
+					$label = $p['Label'];
+					if ( strlen( $label ) ) {
+						$label .= ': ';
+					}
+					$a .= $label . $p . ' ';
+				}
+			return trim( $a );
+		}
+		
+
 		/// Returns the citation data as formatted XML.
 		function dumpData() {
 			if ( $this->medline ) {

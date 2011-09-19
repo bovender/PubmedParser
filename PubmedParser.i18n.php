@@ -28,6 +28,7 @@ $messages['en'] = array(
 	'pubmedparser-year'         => 'year',
 	'pubmedparser-doi'          => 'doi',
 	'pubmedparser-title'        => 'title',
+	'pubmedparser-abstract'     => 'abstract',
 	'pubmedparser-and'          => '&',
 	'pubmedparser-etal'         => '\'\'et al.\'\'',
 	'pubmedparser-initialseparator' => '',  // how to separate initials from last name

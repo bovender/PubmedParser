@@ -86,6 +86,7 @@
 					. '|' . wfMsg( 'pubmedparser-pages' )      . '=' . $pm->pages()
 					. '|' . wfMsg( 'pubmedparser-firstpage' )  . '=' . $pm->firstPage()
 					. '|' . wfMsg( 'pubmedparser-doi' )        . '=' . $pm->doi()
+					. '|' . wfMsg( 'pubmedparser-abstract' )   . '=' . $pm->abstr()
 					. '}}';
 
 				if ( $param2 != '' ) {
