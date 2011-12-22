@@ -174,7 +174,12 @@
 		 */
 		function allAuthors( $useInitials = false )	{
 			if ( $this->medline ) {
-				$numauthors = count( $this->article->AuthorList->children() );
+				try {
+					$numauthors = count( $this->article->AuthorList->children() );
+				}
+				catch (Exception $e) {
+					return "No authors.";
+				}
 
 				if ( $numauthors > 1 ) {
 					for ( $i=0; $i < $numauthors-1; $i++ ) {
@@ -295,7 +300,15 @@
 		 *  as it is a PHP keyword.
 		 */
 		function abstr() {
-			foreach ( $this->medline->PubmedArticle->MedlineCitation->Article->Abstract->AbstractText as $p ) {
+			/* Sometimes, the foreach loop below will throw Warnings ("Invalid
+			 * argument supplied"). Since it was very tricky to find out why
+			 * this occurred, the error reporting is set to 'none' for this
+			 * bit.
+			 */
+			$oldReporting = error_reporting();
+			error_reporting(E_ERROR);
+			try {
+				foreach ( $this->medline->PubmedArticle->MedlineCitation->Article->Abstract->AbstractText as $p ) {
 					// Abstract paragraphs may be preceded by a label.
 					// The label is given as an XML parameter, e.g.:
 					//  <AbstractText Label="BACKGROUND" NlmCategory="BACKGROUND"></AbstractText>
@@ -305,6 +318,11 @@
 					}
 					$a .= $label . $p . ' ';
 				}
+			}
+			catch (Exception $e) {
+				$a = $e->getMessage();
+			}
+			error_reporting($oldReporting);
 			return trim( $a );
 		}
 		

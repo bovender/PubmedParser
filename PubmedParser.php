@@ -28,7 +28,7 @@
     'name'           => 'PubmedParser',
     'author'         => '[http://www.mediawiki.org/wiki/User:Bovender Daniel Kraus]', 
     'url'            => 'http://www.mediawiki.org/wiki/Extension:PubmedParser',
-    'version'        => '0.2.3',
+    'version'        => '0.2.5',
     'descriptionmsg' => 'pubmedparser-desc'
     );
 

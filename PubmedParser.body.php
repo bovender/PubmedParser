@@ -89,8 +89,8 @@
 					. '|' . wfMsg( 'pubmedparser-abstract' )   . '=' . $pm->abstr()
 					. '}}';
 
-				if ( $param2 != '' ) {
-					$output = "<ref name=\"$param2\">$output</ref>";
+				if ( $refName != '' ) {
+					$output = "<ref name=\"$refName\">$output</ref>";
 				}
 			} else { // status not ok
 				$output = '<span style="font-size:150%; color:red; background-color:yellow;">'
