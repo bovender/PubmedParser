@@ -2,7 +2,7 @@
 /*
  *      \file PubmedParserFetcher.body.php
  *      
- *      Copyright 2011 Daniel Kraus <krada@gmx.net>
+ *      Copyright 2011-2012 Daniel Kraus <krada@gmx.net>
  *      
  *      This program is free software; you can redistribute it and/or modify
  *      it under the terms of the GNU General Public License as published by
@@ -175,7 +175,14 @@
 		function allAuthors( $useInitials = false )	{
 			if ( $this->medline ) {
 				try {
+					/* If there are no authors (e.g., PMID 22077236), an ugly  warning
+					 * will be issued when we access the children() node. The easiest
+					 * way to circumvent this is to temporarily set the error_reporting
+					 */
+					$oldReporting = error_reporting();
+					error_reporting(E_ERROR);
 					$numauthors = count( $this->article->AuthorList->children() );
+					error_reporting($oldReporting);
 				}
 				catch (Exception $e) {
 					return "No authors.";
@@ -245,7 +252,17 @@
 		/// Returns the year the article was published.
 		function year() {
 			if ( $this->medline ) {
-				return $this->medline->PubmedArticle->MedlineCitation->Article->Journal->JournalIssue->PubDate->Year;
+				/* In some cases, the publication date is not saved as a <Year></Year> record,
+				 * but instead as a <MedlineDate></MedlineDate>.
+				 */
+				$y = $this->medline->PubmedArticle->MedlineCitation->Article->Journal->JournalIssue->PubDate->Year;
+				if ($y=='') {
+					$y = $this->medline->PubmedArticle->MedlineCitation->Article->Journal->JournalIssue->PubDate->MedlineDate;
+					// Find a four-digit number in MedlineDate; this will be the year of publication
+					preg_match( '/\d{4}/', $y, $m );
+					$y = $m[0];
+				};
+				return $y;
 			}
 		}
 

@@ -2,7 +2,7 @@
 /*
  *      \file PubmedParser.php
  *      
- *      Copyright 2011 Daniel Kraus <krada@gmx.net>
+ *      Copyright 2011-212 Daniel Kraus <krada@gmx.net>
  *      
  *      This program is free software; you can redistribute it and/or modify
  *      it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@
     'name'           => 'PubmedParser',
     'author'         => '[http://www.mediawiki.org/wiki/User:Bovender Daniel Kraus]', 
     'url'            => 'http://www.mediawiki.org/wiki/Extension:PubmedParser',
-    'version'        => '0.2.5',
+    'version'        => '0.2.7',
     'descriptionmsg' => 'pubmedparser-desc'
     );
 
@@ -49,7 +49,7 @@
 
   /*! Path to the cache folder
    *  To enable caching, make sure this path exists and is writable for
-   *  the web server.
+   *  the web server (chmod 777).
    */
   $wgPubmedParserCache = "$IP/cache/PubmedParser";
 

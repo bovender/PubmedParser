@@ -2,7 +2,7 @@
 /*
  *      \file PubmedParser.body.php
  *      
- *      Copyright 2011 Daniel Kraus <krada@gmx.net>
+ *      Copyright 2011-2012 Daniel Kraus <krada@gmx.net>
  *      
  *      This program is free software; you can redistribute it and/or modify
  *      it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
  
   if ( !defined( 'MEDIAWIKI' ) ) {
     die( 'Not an entry point.' );
-  }
+
 
 	class PubmedParser {
 		/// Default setup function.
@@ -35,7 +35,8 @@
 
 		/// Adds the magic word to the parser.
 		public static function Magic( &$magicWords, $langCode ) {
-			# The first array element is whether to be case sensitive, in this case (0) it is not case sensitive, 1 would be sensitive
+			# The first array element is whether to be case sensitive,
+			# in this case (0) it is not case sensitive, 1 would be sensitive
 			# All remaining elements are synonyms for our parser function
 			$magicWords['pmid'] = array( 0, 'pmid' );
 			# unless we return true, other parser functions extensions won't get loaded.
