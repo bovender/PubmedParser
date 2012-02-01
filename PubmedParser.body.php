@@ -22,7 +22,7 @@
  
   if ( !defined( 'MEDIAWIKI' ) ) {
     die( 'Not an entry point.' );
-
+	}
 
 	class PubmedParser {
 		/// Default setup function.
