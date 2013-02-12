@@ -1,0 +1,35 @@
+PubmedParser Changelog
+======================
+
+1.0.0
+	Improved: Download of PubMed XML data if ALLOW_URL_FOPEN is not set.
+0.2.9
+	Fixed:	  'Undefined variable' error.
+
+0.2.8
+	Fixed:    'Server configuration' error.
+	
+0.2.7
+	Fixed:    Improved extraction of the year of publication.
+
+0.2.6
+	Fixed:	  No longer show warnings when there are no authors listed.
+	
+0.2.5
+	Fixed:    No longer show warnings when abstracts are included.
+
+0.2.4
+	Fixed:    'reload' option would not work properly if it was given as
+			  the only parameter.
+
+0.2.3
+	New:      'abstract' parameter.
+	
+0.2.2
+	New:      'journalanop' parameter to retrieve the abbreviated journal
+			  name without periods.
+						
+0.2.1
+	New:      'reload' option to force updating the data from Pubmed (if
+              using the cache option).
+	Improved:  A link to Pubmed is provided if a 'no data' error occurs.
