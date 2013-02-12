@@ -85,11 +85,23 @@
 					// a cache file was found; so use it.
 					$this->medline = simplexml_load_file( $cacheFile );
 				} else {
+					$url = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=$pmid&retmode=xml";
 					// fetch the article information from PubMed in XML format
 					// note: it's important to have retmode=xml, not rettype=xml!
 					// rettype=xml returns an HTML page with formatted XML-like text;
 					// retmode=xml returns raw XML.
-					$this->medline = simplexml_load_file("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=$pmid&retmode=xml");
+					if ( ini_get( 'allow_url_fopen' ) == true ) {
+						$this->medline = simplexml_load_file( $url );
+					} else if ( function_exists('curl_init') )  {
+						$curl = curl_init( $url );
+						curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
+						$this->medline = simplexml_load_string( curl_exec( $curl ) );
+						curl_close( $curl );
+					} else {
+						$this->status = PUBMEDPARSER_CANNOTDOWNLOAD;
+						return;
+					}
+
 
 					/* Check if Pubmed returned valid article data: If the PMID does not exist,
 					 * Pubmed will deliver invalid XML ("<ERROR>Empty id list - nothing todo</ERROR>").
@@ -188,6 +200,7 @@
 					return "No authors.";
 				}
 
+				$a = '';
 				if ( $numauthors > 1 ) {
 					for ( $i=0; $i < $numauthors-1; $i++ ) {
 						$a .= $this->authorName( $this->article->AuthorList->Author[$i], $useInitials ) . ', ';
@@ -303,6 +316,7 @@
 				// look for the ArticleId node that has its IdType attribute
 				// set to "doi". Note that not all pubmed entries have this
 				// information.
+				$doi = '';
 				foreach ( $this->medline->PubmedArticle->PubmedData->ArticleIdList->ArticleId as $aid ) {
 					if ( $aid['IdType'] == 'doi' ) {
 						$doi = $aid;
@@ -324,6 +338,7 @@
 			 */
 			$oldReporting = error_reporting();
 			error_reporting(E_ERROR);
+			$a = '';
 			try {
 				foreach ( $this->medline->PubmedArticle->MedlineCitation->Article->Abstract->AbstractText as $p ) {
 					// Abstract paragraphs may be preceded by a label.
