@@ -2,7 +2,7 @@
 /*
  *      \file PubmedParser.php
  *      
- *      Copyright 2011-2012 Daniel Kraus <krada@gmx.net>
+ *      Copyright 2011-2013 Daniel Kraus <krada@gmx.net>
  *      
  *      This program is free software; you can redistribute it and/or modify
  *      it under the terms of the GNU General Public License as published by
@@ -26,8 +26,8 @@
   $wgExtensionCredits['parserhook'][] = array(
     'path'           => __FILE__,
     'name'           => 'PubmedParser',
-    'author'         => '[http://www.mediawiki.org/wiki/User:Bovender Daniel Kraus]', 
-    'url'            => 'http://www.mediawiki.org/wiki/Extension:PubmedParser',
+    'author'         => '[https://www.mediawiki.org/wiki/User:Bovender Daniel Kraus]', 
+    'url'            => 'https://www.mediawiki.org/wiki/Extension:PubmedParser',
     'version'        => '1.1.0',
     'descriptionmsg' => 'pubmedparser-desc'
     );
@@ -51,5 +51,3 @@
    *  the web server (chmod 777).
    */
   $wgPubmedParserCache = "$IP/cache/PubmedParser";
-
-
