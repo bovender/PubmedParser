@@ -29,17 +29,7 @@
 		/// Associates the "pmid" magic word with the efPubmedParser_Render function.
 		public static function Setup( &$parser ) {
 			# Set a function hook associating the "pmid" magic word with our function
-			$parser->setFunctionHook( 'pmid', 'PubmedParser::Render' );
-			return true;
-		}
-
-		/// Adds the magic word to the parser.
-		public static function Magic( &$magicWords, $langCode ) {
-			# The first array element is whether to be case sensitive,
-			# in this case (0) it is not case sensitive, 1 would be sensitive
-			# All remaining elements are synonyms for our parser function
-			$magicWords['pmid'] = array( 0, 'pmid' );
-			# unless we return true, other parser functions extensions won't get loaded.
+			$parser->setFunctionHook( 'PubmedParser', 'PubmedParser::Render' );
 			return true;
 		}
 

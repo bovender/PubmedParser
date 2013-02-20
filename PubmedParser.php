@@ -28,7 +28,7 @@
     'name'           => 'PubmedParser',
     'author'         => '[http://www.mediawiki.org/wiki/User:Bovender Daniel Kraus]', 
     'url'            => 'http://www.mediawiki.org/wiki/Extension:PubmedParser',
-    'version'        => '1.0.0',
+    'version'        => '1.1.0',
     'descriptionmsg' => 'pubmedparser-desc'
     );
 
@@ -45,8 +45,6 @@
 
   // Define a setup function
   $wgHooks['ParserFirstCallInit'][] = 'PubmedParser::Setup';
-  // Add a hook to initialise the magic word
-  $wgHooks['LanguageGetMagic'][]    = 'PubmedParser::Magic';
 
   /*! Path to the cache folder
    *  To enable caching, make sure this path exists and is writable for

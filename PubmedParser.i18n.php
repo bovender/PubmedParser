@@ -43,3 +43,8 @@ $messages['de'] = array(
 	'pubmedparser-error-invalidpmid' => 'Ungültige PMID, bitte überprüfen.',
 	'pubmedparser-error-cannotdownload' => 'Kein Zugriff auf PubMed-XML-Daten möglich, da CURL nicht installiert und ALLOW_URL_FOPEN nicht aktiviert.'
 );
+
+$magicWords = array();
+$magicWords['en'] = array(
+	'PubmedParser' => array( 0, 'pmid' ),
+);
