@@ -69,23 +69,23 @@
 			$pm = new PubmedParserFetcher( $param1, $reload );
 
 			if ( $pm->statusCode() == PUBMEDPARSER_OK ) {
-				$output = '{{' . wfMsg( 'pubmedparser-templatename' ) . '|'
+				$output = '{{' . wfMessage( 'pubmedparser-templatename' )->text() . '|'
 					. 'pmid=' . $pm->pmid()
-					. '|' . wfMsg( 'pubmedparser-authors' )    . '=' . $pm->authors()
-					. '|' . wfMsg( 'pubmedparser-authorsi' )   . '=' . $pm->authors( true )
-					. '|' . wfMsg( 'pubmedparser-allauthors' ) . '=' . $pm->allAuthors()
-					. '|' . wfMsg( 'pubmedparser-allauthorsi' ). '=' . $pm->allAuthors( true )
-					. '|' . wfMsg( 'pubmedparser-title' )      . '=' . $pm->title()
-					. '|' . wfMsg( 'pubmedparser-journal' )    . '=' . $pm->journal()
-					. '|' . wfMsg( 'pubmedparser-journalcaps' ). '=' . $pm->journalCaps()
-					. '|' . wfMsg( 'pubmedparser-journala' )   . '=' . $pm->journalAbbrev()
-					. '|' . wfMsg( 'pubmedparser-journalanop' ). '=' . $pm->journalAbbrevNoPeriods()
-					. '|' . wfMsg( 'pubmedparser-year' )       . '=' . $pm->year()
-					. '|' . wfMsg( 'pubmedparser-volume' )     . '=' . $pm->volume()
-					. '|' . wfMsg( 'pubmedparser-pages' )      . '=' . $pm->pages()
-					. '|' . wfMsg( 'pubmedparser-firstpage' )  . '=' . $pm->firstPage()
-					. '|' . wfMsg( 'pubmedparser-doi' )        . '=' . $pm->doi()
-					. '|' . wfMsg( 'pubmedparser-abstract' )   . '=' . $pm->abstr()
+					. '|' . wfMessage( 'pubmedparser-authors' )->text()    . '=' . $pm->authors()
+					. '|' . wfMessage( 'pubmedparser-authorsi' )->text()   . '=' . $pm->authors( true )
+					. '|' . wfMessage( 'pubmedparser-allauthors' )->text() . '=' . $pm->allAuthors()
+					. '|' . wfMessage( 'pubmedparser-allauthorsi' )->text(). '=' . $pm->allAuthors( true )
+					. '|' . wfMessage( 'pubmedparser-title' )->text()      . '=' . $pm->title()
+					. '|' . wfMessage( 'pubmedparser-journal' )->text()    . '=' . $pm->journal()
+					. '|' . wfMessage( 'pubmedparser-journalcaps' )->text(). '=' . $pm->journalCaps()
+					. '|' . wfMessage( 'pubmedparser-journala' )->text()   . '=' . $pm->journalAbbrev()
+					. '|' . wfMessage( 'pubmedparser-journalanop' )->text(). '=' . $pm->journalAbbrevNoPeriods()
+					. '|' . wfMessage( 'pubmedparser-year' )->text()       . '=' . $pm->year()
+					. '|' . wfMessage( 'pubmedparser-volume' )->text()     . '=' . $pm->volume()
+					. '|' . wfMessage( 'pubmedparser-pages' )->text()      . '=' . $pm->pages()
+					. '|' . wfMessage( 'pubmedparser-firstpage' )->text()  . '=' . $pm->firstPage()
+					. '|' . wfMessage( 'pubmedparser-doi' )->text()        . '=' . $pm->doi()
+					. '|' . wfMessage( 'pubmedparser-abstract' )->text()   . '=' . $pm->abstr()
 					. '}}';
 
 				if ( $refName != '' ) {

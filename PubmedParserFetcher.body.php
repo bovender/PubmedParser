@@ -77,7 +77,6 @@
 			
 			$xml = null;
 			if ( ! $reload ) {
-				wfDebug(__METHOD__ . ": Attempting to fetch $pmid...");
 				$xml = self::fetchFromDb( (int)$pmid );
 				if ( $this->status != PUBMEDPARSER_OK ) {
 					return;
@@ -154,7 +153,6 @@
 				);
 				if ( $dbr->lastErrno() == 0 ) {
 					if ( $res->numRows() == 1 ) {
-						wfDebug(__METHOD__ . ": Found!" );
 						$xml = $res->fetchObject()->xml;
 						return $xml;
 					} else {
@@ -199,7 +197,7 @@
 				$numauthors = count( $this->article->AuthorList->Author );
 				if ( $numauthors > 2 ) {
 					$a = $this->authorName( $this->article->AuthorList->Author[0], $useInitials )
-						. " " . wfMsg( 'pubmedparser-etal' );
+						. " " . wfMessage( 'pubmedparser-etal' )->text();
 				} elseif ( $numauthors = 2 ) {
 					/* Sometimes, the number of authors is incorrectly given as 2,
 					 * even though there is only 1 author (cf. PMID 19782018).
@@ -209,7 +207,7 @@
 					$a = $this->authorName( $this->article->AuthorList->Author[1], $useInitials );
 					if ( $a != '' ) {
 						$a = $this->authorName( $this->article->AuthorList->Author[0], $useInitials )
-							. ' ' . wfMsg( 'pubmedparser-and' ) . ' '	. $a;
+							. ' ' . wfMessage( 'pubmedparser-and' )->text() . ' '	. $a;
 					} else {
 						$a = $this->authorName( $this->article->AuthorList->Author[0], $useInitials );
 					}
@@ -245,7 +243,7 @@
 						$a .= $this->authorName( $this->article->AuthorList->Author[$i], $useInitials ) . ', ';
 					}
 					$a = substr( $a, 0, strlen( $a )-2 ); // cut off the last ', '
-					$a .= ' ' . wfMsg( 'pubmedparser-and' ) . ' '
+					$a .= ' ' . wfMessage( 'pubmedparser-and' )->text() . ' '
 							. $this->authorName( $this->article->AuthorList->Author[$i], $useInitials );
 				} else { // only 1 author:
 					$a = $this->authorName( $this->article->AuthorList->Author, $useInitials );
@@ -412,17 +410,17 @@
 
 		/// Returns the status message text
 		function statusMsg() {
-			$s = wfMsg( 'pubmedparser-error' ) . ': ';
+			$s = wfMessage( 'pubmedparser-error' )->text() . ': ';
 			switch ( $this->status ) {
 				case PUBMEDPARSER_OK:
 					return $s . 'ok'; // no i18n since this message will never be shown to the user
 				case PUBMEDPARSER_INVALIDPMID:
-					return $s . wfMsg( 'pubmedparser-error-invalidpmid' );
+					return $s . wfMessage( 'pubmedparser-error-invalidpmid' )->text();
 				case PUBMEDPARSER_NODATA:
-					return $s . wfMsg( 'pubmedparser-error-nodata' )
+					return $s . wfMessage( 'pubmedparser-error-nodata' )->text()
 						. ' (PMID: [http://pubmed.gov/' . $this->id . ' ' . $this->id . '])';
 				case PUBMEDPARSER_DBERROR:
-					return $s . wfMsg( 'pubmedparser-error-dberror' );
+					return $s . wfMessage( 'pubmedparser-error-dberror' )->text();
 				default:
 					return 'Status code: #' . $this->status;
 			}
@@ -440,9 +438,9 @@
 					if ( $useInitial ) {
 						$i = $author->Initials;      // Initials is the concatenated string of initials
 						$iarray = str_split($i, 1);  // get the single initials
-						$i = implode( wfMsg( 'pubmedparser-initialperiod' ), $iarray)
-							. wfMsg( 'pubmedparser-initialperiod' );
-						$n = trim( $n . wfMsg( 'pubmedparser-initialseparator' ) . ' ' . $i, ' ');
+						$i = implode( wfMessage( 'pubmedparser-initialperiod' )->text(), $iarray)
+							. wfMessage( 'pubmedparser-initialperiod' )->text();
+						$n = trim( $n . wfMessage( 'pubmedparser-initialseparator' )->text() . ' ' . $i, ' ');
 						return $n;
 					} else {
 						return $n;
