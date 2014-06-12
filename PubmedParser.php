@@ -36,6 +36,7 @@
   define( 'PUBMEDPARSER_INVALIDPMID',    2); ///< Status code: PMID is invalid
   define( 'PUBMEDPARSER_NODATA',         3); ///< Status code: Pubmed returned no data
   define( 'PUBMEDPARSER_CANNOTDOWNLOAD', 4); ///< Status code: cannot download XML data
+  define( 'PUBMEDPARSER_DBERROR',        5);
   define( 'PUBMEDPARSER_RELOAD',      'RELOAD'); ///< Name of the 'reload' option (must be upper case!).
   
   $wgExtensionMessagesFiles['PubmedParser'] = dirname( __FILE__ ) . '/PubmedParser.i18n.php';

@@ -65,8 +65,6 @@
 		 *  \param $pmid [in] PMID (unique Pubmed identifier)
 		 */
 		function lookUp( $pmid = 0, $reload = false ) {
-			global $wgPubmedParserCache; ///< reference to the global variable;
-
 			$this->id = $pmid;
 
 			// First, let's check if the PMID consists of digits only
@@ -74,67 +72,108 @@
 				$this->status = PUBMEDPARSER_INVALIDPMID;
 				return;
 			}
+
+			$this->status = PUBMEDPARSER_OK;
 			
-			$cacheFile = rtrim( $wgPubmedParserCache, '/' ) . '/' . $pmid;
+			$xml = null;
+			if ( ! $reload ) {
+				wfDebug(__METHOD__ . ": Attempting to fetch $pmid...");
+				$xml = self::fetchFromDb( (int)$pmid );
+				if ( $this->status != PUBMEDPARSER_OK ) {
+					return;
+				}
+			};
 
-			if ( $pmid )
-			{
-				// Attempt to load the information from cache, but only if the
-				// $reload parameter is not true
-				if ( is_readable( $cacheFile ) && !$reload ) {
-					// a cache file was found; so use it.
-					$this->medline = simplexml_load_file( $cacheFile );
+			if ( ! is_null( $xml ) ) {
+				$this->medline = simplexml_load_string( $xml );
+			} else {
+				// fetch the article information from PubMed in XML format
+				// note: it's important to have retmode=xml, not rettype=xml!
+				// rettype=xml returns an HTML page with formatted XML-like text;
+				// retmode=xml returns raw XML.
+				$url = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=$pmid&retmode=xml";
+				if ( ini_get( 'allow_url_fopen' ) == true ) {
+					$this->medline = simplexml_load_file( $url );
+				} else if ( function_exists('curl_init') )  {
+					$curl = curl_init( $url );
+					curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
+					$this->medline = simplexml_load_string( curl_exec( $curl ) );
+					curl_close( $curl );
 				} else {
-					$url = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=$pmid&retmode=xml";
-					// fetch the article information from PubMed in XML format
-					// note: it's important to have retmode=xml, not rettype=xml!
-					// rettype=xml returns an HTML page with formatted XML-like text;
-					// retmode=xml returns raw XML.
-					if ( ini_get( 'allow_url_fopen' ) == true ) {
-						$this->medline = simplexml_load_file( $url );
-					} else if ( function_exists('curl_init') )  {
-						$curl = curl_init( $url );
-						curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
-						$this->medline = simplexml_load_string( curl_exec( $curl ) );
-						curl_close( $curl );
-					} else {
-						$this->status = PUBMEDPARSER_CANNOTDOWNLOAD;
-						return;
-					}
-
-
-					/* Check if Pubmed returned valid article data: If the PMID does not exist,
-					 * Pubmed will deliver invalid XML ("<ERROR>Empty id list - nothing todo</ERROR>").
-					 * In this case, the medline object will return false.
-					 */
-					if ( !$this->medline ) {
-						$this->status = PUBMEDPARSER_NODATA;
-						return;
-					}
-
-					/* Now that we have the data, let's attempt to store it locally
-					 * in the cache.
-					 */
-					if ( is_writable( $wgPubmedParserCache ) ) {
-						$this->medline->asXML( $cacheFile );
-					}
-				} // if file_exists
-				
-				if ( $this->medline ) {
-					$this->article = $this->medline->PubmedArticle->MedlineCitation->Article;
+					$this->status = PUBMEDPARSER_CANNOTDOWNLOAD;
+					return;
 				}
 
-				// If Pubmed did not return data (e.g., the server is down or the
-				// PMID does not exist), $this->article will not be set, and we
-				// set the status code to PUBMEDPARSER_NODATA
-				if ( !isset($this->article) ) {
+				/* Check if Pubmed returned valid article data: If the PMID does not exist,
+				 * Pubmed will deliver invalid XML ("<ERROR>Empty id list - nothing todo</ERROR>").
+				 * In this case, the medline object will return false.
+				 */
+				if ( !$this->medline ) {
 					$this->status = PUBMEDPARSER_NODATA;
-					unset ( $this->medline );
-				} else {
-					$this->status = PUBMEDPARSER_OK;
+					return;
 				}
-				
-			} // if ($pmid)
+
+				/* Now that we have the data, let's attempt to store it locally
+				 * in the cache.
+				 */
+				$this->storeInDb();
+			} // if no xml in database
+			
+			if ( $this->medline ) {
+				$this->article = $this->medline->PubmedArticle->MedlineCitation->Article;
+			}
+
+			// If Pubmed did not return data (e.g., the server is down or the
+			// PMID does not exist), $this->article will not be set, and we
+			// set the status code to PUBMEDPARSER_NODATA
+			if ( !isset($this->article) ) {
+				$this->status = PUBMEDPARSER_NODATA;
+				unset ( $this->medline );
+			};
+		}
+
+		// *************************************************************
+		// Database caching
+
+		/// Fetches a PMID record from the wiki database, if available.
+		/// @param $pmid Pubmed ID to look up. 
+		/// @return XML string containing the Pubmed record, of null if the 
+		/// record was not found.
+		/// @note $pmid must be an integer to prevent SQL injections. Since 
+		/// it is a scalar, specifying a typed parameter in the function 
+		/// signature does not work.
+		private function fetchFromDb( $pmid ) {
+			if ( is_int( $pmid ) ) {
+				$dbr = wfGetDB( DB_SLAVE );
+				$dbr->ignoreErrors( true );
+				$res = $dbr->select( 
+					'pubmed', 
+					'xml', 
+					'pmid = ' . $pmid, 
+					__METHOD__
+				);
+				if ( $dbr->lastErrno() == 0 ) {
+					if ( $res->numRows() == 1 ) {
+						wfDebug(__METHOD__ . ": Found!" );
+						$xml = $res->fetchObject()->xml;
+						return $xml;
+					} else {
+						return null;
+					}
+				} else {
+					$this->status = PUBMEDPARSER_DBERROR;
+				}
+			}
+		}
+
+		/// Stores the current PMID record in the wiki database.
+		private function storeInDb() {
+			$dbw = wfGetDB( DB_MASTER );
+			$dbw->insert( 'pubmed', array(
+				'pmid' => $this->id,
+				'xml' => $this->medline->asXML()
+				)
+			);
 		}
 
 		// *************************************************************
@@ -382,6 +421,8 @@
 				case PUBMEDPARSER_NODATA:
 					return $s . wfMsg( 'pubmedparser-error-nodata' )
 						. ' (PMID: [http://pubmed.gov/' . $this->id . ' ' . $this->id . '])';
+				case PUBMEDPARSER_DBERROR:
+					return $s . wfMsg( 'pubmedparser-error-dberror' );
 				default:
 					return 'Status code: #' . $this->status;
 			}
@@ -419,3 +460,4 @@
 		private $article; ///< $medline->PubmedArticle->MedlineCitation->Article
 		private $status;  ///< holds status information (0 if everything is ok)
 	}
+// vim: sw=4:ts=4:sts=4:noet:comments^=\:///

@@ -10,6 +10,7 @@ $messages['en'] = array(
 	'pubmedparser-error-nodata' => 'Pubmed did not return article data, please check the PMID or try again later.',
 	'pubmedparser-error-invalidpmid' => 'Invalid PMID, please check.',
 	'pubmedparser-error-cannotdownload' => 'Cannot download PubMed XML data since CURL library not present and ALLOW_URL_FOPEN not allowed.',
+	'pubmedparser-error-dberror' => 'The PubmedParser extension encountered a database error. Has the database schema been upgraded after installing the extension?',
 
 	// the following are the default template name and parameter names;
 	// no need to localize them, but we define them as messages to allow
@@ -41,7 +42,8 @@ $messages['de'] = array(
 	'pubmedparser-error' => 'PubmedParser-Fehler',
 	'pubmedparser-error-nodata' => 'Pubmed hat keine Daten geliefert, bitte PMID überprüfen oder später erneut probieren.',
 	'pubmedparser-error-invalidpmid' => 'Ungültige PMID, bitte überprüfen.',
-	'pubmedparser-error-cannotdownload' => 'Kein Zugriff auf PubMed-XML-Daten möglich, da CURL nicht installiert und ALLOW_URL_FOPEN nicht aktiviert.'
+	'pubmedparser-error-cannotdownload' => 'Kein Zugriff auf PubMed-XML-Daten möglich, da CURL nicht installiert und ALLOW_URL_FOPEN nicht aktiviert.',
+	'pubmedparser-error-dberror' => 'Die PubmedParser-Erweiterung hat einen Datenbankfehler verursacht. Ist nach dem Installieren das Datenbankschema aktualisiert worden?',
 );
 
 $magicWords = array();
