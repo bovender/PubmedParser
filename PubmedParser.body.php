@@ -33,6 +33,14 @@
 			return true;
 		}
 
+		/// Creates a Pubmed table in the Wiki database. This will hold XML 
+		/// strings downloaded from pubmed.gov.
+		public static function CreateTable( DatabaseUpdater $updater ) {
+			$updater->addExtensionTable( 'Pubmed',
+				dirname( __FILE__ ) . '/PubmedParser.table.sql', true );
+			return true;
+		}
+
 		/// Parser function.
 		/*! \param $parser     The parser; ignored by the function.
 		 *  \param $param1     The mandatory first parameter; expected to be a PMID.

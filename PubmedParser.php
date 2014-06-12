@@ -28,7 +28,7 @@
     'name'           => 'PubmedParser',
     'author'         => '[https://www.mediawiki.org/wiki/User:Bovender Daniel Kraus]', 
     'url'            => 'https://www.mediawiki.org/wiki/Extension:PubmedParser',
-    'version'        => '1.1.0',
+    'version'        => '2.0.0',
     'descriptionmsg' => 'pubmedparser-desc'
     );
 
@@ -45,6 +45,7 @@
 
   // Define a setup function
   $wgHooks['ParserFirstCallInit'][] = 'PubmedParser::Setup';
+  $wgHooks['LoadExtensionSchemaUpdates'][] = 'PubmedParser::CreateTable';
 
   /*! Path to the cache folder
    *  To enable caching, make sure this path exists and is writable for
