@@ -1,0 +1,491 @@
+<?xml version="1.0"?>
+<!DOCTYPE PubmedArticleSet PUBLIC "-//NLM//DTD PubMedArticle, 1st January 2014//EN" "http://www.ncbi.nlm.nih.gov/corehtml/query/DTD/pubmed_140101.dtd">
+<PubmedArticleSet>
+<PubmedArticle>
+    <MedlineCitation Owner="NLM" Status="MEDLINE">
+        <PMID Version="1">24717514</PMID>
+        <DateCreated>
+            <Year>2014</Year>
+            <Month>04</Month>
+            <Day>10</Day>
+        </DateCreated>
+        <DateCompleted>
+            <Year>2014</Year>
+            <Month>05</Month>
+            <Day>14</Day>
+        </DateCompleted>
+        <DateRevised>
+            <Year>2014</Year>
+            <Month>06</Month>
+            <Day>06</Day>
+        </DateRevised>
+        <Article PubModel="Print">
+            <Journal>
+                <ISSN IssnType="Electronic">1476-4687</ISSN>
+                <JournalIssue CitedMedium="Internet">
+                    <Volume>508</Volume>
+                    <Issue>7495</Issue>
+                    <PubDate>
+                        <Year>2014</Year>
+                        <Month>Apr</Month>
+                        <Day>10</Day>
+                    </PubDate>
+                </JournalIssue>
+                <Title>Nature</Title>
+                <ISOAbbreviation>Nature</ISOAbbreviation>
+            </Journal>
+            <ArticleTitle>Nicotinamide N-methyltransferase knockdown protects against diet-induced obesity.</ArticleTitle>
+            <Pagination>
+                <MedlinePgn>258-62</MedlinePgn>
+            </Pagination>
+            <ELocationID EIdType="doi" ValidYN="Y">10.1038/nature13198</ELocationID>
+            <Abstract>
+                <AbstractText>In obesity and type 2 diabetes, Glut4 glucose transporter expression is decreased selectively in adipocytes. Adipose-specific knockout or overexpression of Glut4 alters systemic insulin sensitivity. Here we show, using DNA array analyses, that nicotinamide N-methyltransferase (Nnmt) is the most strongly reciprocally regulated gene when comparing gene expression in white adipose tissue (WAT) from adipose-specific Glut4-knockout or adipose-specific Glut4-overexpressing mice with their respective controls. NNMT methylates nicotinamide (vitamin B3) using S-adenosylmethionine (SAM) as a methyl donor. Nicotinamide is a precursor of NAD(+), an important cofactor linking cellular redox states with energy metabolism. SAM provides propylamine for polyamine biosynthesis and donates a methyl group for histone methylation. Polyamine flux including synthesis, catabolism and excretion, is controlled by the rate-limiting enzymes ornithine decarboxylase (ODC) and spermidine-spermine N(1)-acetyltransferase (SSAT; encoded by Sat1) and by polyamine oxidase (PAO), and has a major role in energy metabolism. We report that NNMT expression is increased in WAT and liver of obese and diabetic mice. Nnmt knockdown in WAT and liver protects against diet-induced obesity by augmenting cellular energy expenditure. NNMT inhibition increases adipose SAM and NAD(+) levels and upregulates ODC and SSAT activity as well as expression, owing to the effects of NNMT on histone H3 lysine 4 methylation in adipose tissue. Direct evidence for increased polyamine flux resulting from NNMT inhibition includes elevated urinary excretion and adipocyte secretion of diacetylspermine, a product of polyamine metabolism. NNMT inhibition in adipocytes increases oxygen consumption in an ODC-, SSAT- and PAO-dependent manner. Thus, NNMT is a novel regulator of histone methylation, polyamine flux and NAD(+)-dependent SIRT1 signalling, and is a unique and attractive target for treating obesity and type 2 diabetes.</AbstractText>
+            </Abstract>
+            <AuthorList CompleteYN="Y">
+                <Author ValidYN="Y">
+                    <LastName>Kraus</LastName>
+                    <ForeName>Daniel</ForeName>
+                    <Initials>D</Initials>
+                    <Affiliation>1] Division of Endocrinology, Diabetes, and Metabolism, Department of Medicine, Beth Israel Deaconess Medical Center and Harvard Medical School, 330 Brookline Avenue, Boston, Massachusetts 02215, USA [2] [3] Division of Nephrology, Department of Internal Medicine I, W&#xFC;rzburg University Hospital, Oberd&#xFC;rrbacher Stra&#xDF;e 6, 97080 W&#xFC;rzburg, Germany (D.K.); Department of Medicine, Physiology and Biophysics, Center for Diabetes Research and Treatment, and Center for Epigenetics and Metabolism, University of California, Irvine, California 92697, USA (Q.Y.); Research Programs Unit, Molecular Neurology, Biomedicum Helsinki, University of Helsinki, 00290, Helsinki, Finland (E.P.); Department of Biochemistry and Molecular Biology, Faculty of Medicine, Dalhousie Medicine New Brunswick, Dalhousie University, Saint John, New Brunswick E2L4L5, USA (T.C.P.); Department of Endocrinology, Key Laboratory of Endocrinology of Ministry of Health, Peking Union Medical College Hospital, Chinese Academy of Medical Sciences and Peking Union Medical College, Beijing 100730, China (F.G.); School of Pharmacy, University of Eastern Finland, P.O. Box 1627, FI-70211 Kuopio, Finland (L.A.).</Affiliation>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Yang</LastName>
+                    <ForeName>Qin</ForeName>
+                    <Initials>Q</Initials>
+                    <Affiliation>1] Division of Endocrinology, Diabetes, and Metabolism, Department of Medicine, Beth Israel Deaconess Medical Center and Harvard Medical School, 330 Brookline Avenue, Boston, Massachusetts 02215, USA [2] [3] Division of Nephrology, Department of Internal Medicine I, W&#xFC;rzburg University Hospital, Oberd&#xFC;rrbacher Stra&#xDF;e 6, 97080 W&#xFC;rzburg, Germany (D.K.); Department of Medicine, Physiology and Biophysics, Center for Diabetes Research and Treatment, and Center for Epigenetics and Metabolism, University of California, Irvine, California 92697, USA (Q.Y.); Research Programs Unit, Molecular Neurology, Biomedicum Helsinki, University of Helsinki, 00290, Helsinki, Finland (E.P.); Department of Biochemistry and Molecular Biology, Faculty of Medicine, Dalhousie Medicine New Brunswick, Dalhousie University, Saint John, New Brunswick E2L4L5, USA (T.C.P.); Department of Endocrinology, Key Laboratory of Endocrinology of Ministry of Health, Peking Union Medical College Hospital, Chinese Academy of Medical Sciences and Peking Union Medical College, Beijing 100730, China (F.G.); School of Pharmacy, University of Eastern Finland, P.O. Box 1627, FI-70211 Kuopio, Finland (L.A.).</Affiliation>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Kong</LastName>
+                    <ForeName>Dong</ForeName>
+                    <Initials>D</Initials>
+                    <Affiliation>Division of Endocrinology, Diabetes, and Metabolism, Department of Medicine, Beth Israel Deaconess Medical Center and Harvard Medical School, 330 Brookline Avenue, Boston, Massachusetts 02215, USA.</Affiliation>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Banks</LastName>
+                    <ForeName>Alexander S</ForeName>
+                    <Initials>AS</Initials>
+                    <Affiliation>Department of Cancer Biology, Dana-Farber Cancer Institute, Harvard Medical School, Boston, Massachusetts 02115, USA.</Affiliation>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Zhang</LastName>
+                    <ForeName>Lin</ForeName>
+                    <Initials>L</Initials>
+                    <Affiliation>Division of Endocrinology, Diabetes, and Metabolism, Department of Medicine, Beth Israel Deaconess Medical Center and Harvard Medical School, 330 Brookline Avenue, Boston, Massachusetts 02215, USA.</Affiliation>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Rodgers</LastName>
+                    <ForeName>Joseph T</ForeName>
+                    <Initials>JT</Initials>
+                    <Affiliation>Department of Cancer Biology, Dana-Farber Cancer Institute, Harvard Medical School, Boston, Massachusetts 02115, USA.</Affiliation>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Pirinen</LastName>
+                    <ForeName>Eija</ForeName>
+                    <Initials>E</Initials>
+                    <Affiliation>1] Biotechnology and Molecular Medicine, A.I. Virtanen Institute for Molecular Sciences, Biocenter Kuopio, University of Eastern Finland, Kuopio Campus, PO Box 1627, FI-70211 Kuopio, Finland [2] Division of Nephrology, Department of Internal Medicine I, W&#xFC;rzburg University Hospital, Oberd&#xFC;rrbacher Stra&#xDF;e 6, 97080 W&#xFC;rzburg, Germany (D.K.); Department of Medicine, Physiology and Biophysics, Center for Diabetes Research and Treatment, and Center for Epigenetics and Metabolism, University of California, Irvine, California 92697, USA (Q.Y.); Research Programs Unit, Molecular Neurology, Biomedicum Helsinki, University of Helsinki, 00290, Helsinki, Finland (E.P.); Department of Biochemistry and Molecular Biology, Faculty of Medicine, Dalhousie Medicine New Brunswick, Dalhousie University, Saint John, New Brunswick E2L4L5, USA (T.C.P.); Department of Endocrinology, Key Laboratory of Endocrinology of Ministry of Health, Peking Union Medical College Hospital, Chinese Academy of Medical Sciences and Peking Union Medical College, Beijing 100730, China (F.G.); School of Pharmacy, University of Eastern Finland, P.O. Box 1627, FI-70211 Kuopio, Finland (L.A.).</Affiliation>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Pulinilkunnil</LastName>
+                    <ForeName>Thomas C</ForeName>
+                    <Initials>TC</Initials>
+                    <Affiliation>1] Division of Endocrinology, Diabetes, and Metabolism, Department of Medicine, Beth Israel Deaconess Medical Center and Harvard Medical School, 330 Brookline Avenue, Boston, Massachusetts 02215, USA [2] Division of Nephrology, Department of Internal Medicine I, W&#xFC;rzburg University Hospital, Oberd&#xFC;rrbacher Stra&#xDF;e 6, 97080 W&#xFC;rzburg, Germany (D.K.); Department of Medicine, Physiology and Biophysics, Center for Diabetes Research and Treatment, and Center for Epigenetics and Metabolism, University of California, Irvine, California 92697, USA (Q.Y.); Research Programs Unit, Molecular Neurology, Biomedicum Helsinki, University of Helsinki, 00290, Helsinki, Finland (E.P.); Department of Biochemistry and Molecular Biology, Faculty of Medicine, Dalhousie Medicine New Brunswick, Dalhousie University, Saint John, New Brunswick E2L4L5, USA (T.C.P.); Department of Endocrinology, Key Laboratory of Endocrinology of Ministry of Health, Peking Union Medical College Hospital, Chinese Academy of Medical Sciences and Peking Union Medical College, Beijing 100730, China (F.G.); School of Pharmacy, University of Eastern Finland, P.O. Box 1627, FI-70211 Kuopio, Finland (L.A.).</Affiliation>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Gong</LastName>
+                    <ForeName>Fengying</ForeName>
+                    <Initials>F</Initials>
+                    <Affiliation>1] Division of Endocrinology, Diabetes, and Metabolism, Department of Medicine, Beth Israel Deaconess Medical Center and Harvard Medical School, 330 Brookline Avenue, Boston, Massachusetts 02215, USA [2] Division of Nephrology, Department of Internal Medicine I, W&#xFC;rzburg University Hospital, Oberd&#xFC;rrbacher Stra&#xDF;e 6, 97080 W&#xFC;rzburg, Germany (D.K.); Department of Medicine, Physiology and Biophysics, Center for Diabetes Research and Treatment, and Center for Epigenetics and Metabolism, University of California, Irvine, California 92697, USA (Q.Y.); Research Programs Unit, Molecular Neurology, Biomedicum Helsinki, University of Helsinki, 00290, Helsinki, Finland (E.P.); Department of Biochemistry and Molecular Biology, Faculty of Medicine, Dalhousie Medicine New Brunswick, Dalhousie University, Saint John, New Brunswick E2L4L5, USA (T.C.P.); Department of Endocrinology, Key Laboratory of Endocrinology of Ministry of Health, Peking Union Medical College Hospital, Chinese Academy of Medical Sciences and Peking Union Medical College, Beijing 100730, China (F.G.); School of Pharmacy, University of Eastern Finland, P.O. Box 1627, FI-70211 Kuopio, Finland (L.A.).</Affiliation>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Wang</LastName>
+                    <ForeName>Ya-chin</ForeName>
+                    <Initials>YC</Initials>
+                    <Affiliation>Division of Endocrinology, Diabetes, and Metabolism, Department of Medicine, Beth Israel Deaconess Medical Center and Harvard Medical School, 330 Brookline Avenue, Boston, Massachusetts 02215, USA.</Affiliation>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Cen</LastName>
+                    <ForeName>Yana</ForeName>
+                    <Initials>Y</Initials>
+                    <Affiliation>Department of Pharmacology, Weill Medical College of Cornell University, 1300 York Avenue, New York, New York 10065, USA.</Affiliation>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Sauve</LastName>
+                    <ForeName>Anthony A</ForeName>
+                    <Initials>AA</Initials>
+                    <Affiliation>Department of Pharmacology, Weill Medical College of Cornell University, 1300 York Avenue, New York, New York 10065, USA.</Affiliation>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Asara</LastName>
+                    <ForeName>John M</ForeName>
+                    <Initials>JM</Initials>
+                    <Affiliation>Division of Signal Transduction, Beth Israel Deaconess Medical Center and Harvard Medical School, 330 Brookline Ave, Boston, Massachusetts 02215, USA.</Affiliation>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Peroni</LastName>
+                    <ForeName>Odile D</ForeName>
+                    <Initials>OD</Initials>
+                    <Affiliation>Division of Endocrinology, Diabetes, and Metabolism, Department of Medicine, Beth Israel Deaconess Medical Center and Harvard Medical School, 330 Brookline Avenue, Boston, Massachusetts 02215, USA.</Affiliation>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Monia</LastName>
+                    <ForeName>Brett P</ForeName>
+                    <Initials>BP</Initials>
+                    <Affiliation>Isis Pharmaceuticals, 1896 Rutherford Road, Carlsbad, California 92008-7326, USA.</Affiliation>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Bhanot</LastName>
+                    <ForeName>Sanjay</ForeName>
+                    <Initials>S</Initials>
+                    <Affiliation>Isis Pharmaceuticals, 1896 Rutherford Road, Carlsbad, California 92008-7326, USA.</Affiliation>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Alhonen</LastName>
+                    <ForeName>Leena</ForeName>
+                    <Initials>L</Initials>
+                    <Affiliation>1] Biotechnology and Molecular Medicine, A.I. Virtanen Institute for Molecular Sciences, Biocenter Kuopio, University of Eastern Finland, Kuopio Campus, PO Box 1627, FI-70211 Kuopio, Finland [2] Division of Nephrology, Department of Internal Medicine I, W&#xFC;rzburg University Hospital, Oberd&#xFC;rrbacher Stra&#xDF;e 6, 97080 W&#xFC;rzburg, Germany (D.K.); Department of Medicine, Physiology and Biophysics, Center for Diabetes Research and Treatment, and Center for Epigenetics and Metabolism, University of California, Irvine, California 92697, USA (Q.Y.); Research Programs Unit, Molecular Neurology, Biomedicum Helsinki, University of Helsinki, 00290, Helsinki, Finland (E.P.); Department of Biochemistry and Molecular Biology, Faculty of Medicine, Dalhousie Medicine New Brunswick, Dalhousie University, Saint John, New Brunswick E2L4L5, USA (T.C.P.); Department of Endocrinology, Key Laboratory of Endocrinology of Ministry of Health, Peking Union Medical College Hospital, Chinese Academy of Medical Sciences and Peking Union Medical College, Beijing 100730, China (F.G.); School of Pharmacy, University of Eastern Finland, P.O. Box 1627, FI-70211 Kuopio, Finland (L.A.).</Affiliation>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Puigserver</LastName>
+                    <ForeName>Pere</ForeName>
+                    <Initials>P</Initials>
+                    <Affiliation>Department of Cancer Biology, Dana-Farber Cancer Institute, Harvard Medical School, Boston, Massachusetts 02115, USA.</Affiliation>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Kahn</LastName>
+                    <ForeName>Barbara B</ForeName>
+                    <Initials>BB</Initials>
+                    <Affiliation>Division of Endocrinology, Diabetes, and Metabolism, Department of Medicine, Beth Israel Deaconess Medical Center and Harvard Medical School, 330 Brookline Avenue, Boston, Massachusetts 02215, USA.</Affiliation>
+                </Author>
+            </AuthorList>
+            <Language>eng</Language>
+            <DataBankList CompleteYN="Y">
+                <DataBank>
+                    <DataBankName>GEO</DataBankName>
+                    <AccessionNumberList>
+                        <AccessionNumber>GSE35378</AccessionNumber>
+                    </AccessionNumberList>
+                </DataBank>
+            </DataBankList>
+            <GrantList CompleteYN="Y">
+                <Grant>
+                    <GrantID>K08 DK090149</GrantID>
+                    <Acronym>DK</Acronym>
+                    <Agency>NIDDK NIH HHS</Agency>
+                    <Country>United States</Country>
+                </Grant>
+                <Grant>
+                    <GrantID>P01 CA120964</GrantID>
+                    <Acronym>CA</Acronym>
+                    <Agency>NCI NIH HHS</Agency>
+                    <Country>United States</Country>
+                </Grant>
+                <Grant>
+                    <GrantID>P01CA120964</GrantID>
+                    <Acronym>CA</Acronym>
+                    <Agency>NCI NIH HHS</Agency>
+                    <Country>United States</Country>
+                </Grant>
+                <Grant>
+                    <GrantID>P30 DK040561</GrantID>
+                    <Acronym>DK</Acronym>
+                    <Agency>NIDDK NIH HHS</Agency>
+                    <Country>United States</Country>
+                </Grant>
+                <Grant>
+                    <GrantID>P30 DK0460200</GrantID>
+                    <Acronym>DK</Acronym>
+                    <Agency>NIDDK NIH HHS</Agency>
+                    <Country>United States</Country>
+                </Grant>
+                <Grant>
+                    <GrantID>P30 DK046200</GrantID>
+                    <Acronym>DK</Acronym>
+                    <Agency>NIDDK NIH HHS</Agency>
+                    <Country>United States</Country>
+                </Grant>
+                <Grant>
+                    <GrantID>P30 DK057521</GrantID>
+                    <Acronym>DK</Acronym>
+                    <Agency>NIDDK NIH HHS</Agency>
+                    <Country>United States</Country>
+                </Grant>
+                <Grant>
+                    <GrantID>P30 DK57521</GrantID>
+                    <Acronym>DK</Acronym>
+                    <Agency>NIDDK NIH HHS</Agency>
+                    <Country>United States</Country>
+                </Grant>
+                <Grant>
+                    <GrantID>P30CA006516-46</GrantID>
+                    <Acronym>CA</Acronym>
+                    <Agency>NCI NIH HHS</Agency>
+                    <Country>United States</Country>
+                </Grant>
+                <Grant>
+                    <GrantID>R01 DK069966</GrantID>
+                    <Acronym>DK</Acronym>
+                    <Agency>NIDDK NIH HHS</Agency>
+                    <Country>United States</Country>
+                </Grant>
+                <Grant>
+                    <GrantID>R01 DK100385</GrantID>
+                    <Acronym>DK</Acronym>
+                    <Agency>NIDDK NIH HHS</Agency>
+                    <Country>United States</Country>
+                </Grant>
+                <Grant>
+                    <GrantID>R01 DK69966</GrantID>
+                    <Acronym>DK</Acronym>
+                    <Agency>NIDDK NIH HHS</Agency>
+                    <Country>United States</Country>
+                </Grant>
+                <Grant>
+                    <GrantID>R37 DK043051</GrantID>
+                    <Acronym>DK</Acronym>
+                    <Agency>NIDDK NIH HHS</Agency>
+                    <Country>United States</Country>
+                </Grant>
+                <Grant>
+                    <GrantID>R37 DK43051</GrantID>
+                    <Acronym>DK</Acronym>
+                    <Agency>NIDDK NIH HHS</Agency>
+                    <Country>United States</Country>
+                </Grant>
+            </GrantList>
+            <PublicationTypeList>
+                <PublicationType>Journal Article</PublicationType>
+                <PublicationType>Research Support, N.I.H., Extramural</PublicationType>
+                <PublicationType>Research Support, Non-U.S. Gov't</PublicationType>
+            </PublicationTypeList>
+        </Article>
+        <MedlineJournalInfo>
+            <Country>England</Country>
+            <MedlineTA>Nature</MedlineTA>
+            <NlmUniqueID>0410462</NlmUniqueID>
+            <ISSNLinking>0028-0836</ISSNLinking>
+        </MedlineJournalInfo>
+        <ChemicalList>
+            <Chemical>
+                <RegistryNumber>0</RegistryNumber>
+                <NameOfSubstance>Glucose Transporter Type 4</NameOfSubstance>
+            </Chemical>
+            <Chemical>
+                <RegistryNumber>0U46U6E8UK</RegistryNumber>
+                <NameOfSubstance>NAD</NameOfSubstance>
+            </Chemical>
+            <Chemical>
+                <RegistryNumber>25X51I8RD4</RegistryNumber>
+                <NameOfSubstance>Niacinamide</NameOfSubstance>
+            </Chemical>
+            <Chemical>
+                <RegistryNumber>2FZ7Y3VOQX</RegistryNumber>
+                <NameOfSubstance>Spermine</NameOfSubstance>
+            </Chemical>
+            <Chemical>
+                <RegistryNumber>77928-71-3</RegistryNumber>
+                <NameOfSubstance>N',N''-diacetylspermine</NameOfSubstance>
+            </Chemical>
+            <Chemical>
+                <RegistryNumber>7LP2MPO46S</RegistryNumber>
+                <NameOfSubstance>S-Adenosylmethionine</NameOfSubstance>
+            </Chemical>
+            <Chemical>
+                <RegistryNumber>EC 1.5.-</RegistryNumber>
+                <NameOfSubstance>Oxidoreductases Acting on CH-NH Group Donors</NameOfSubstance>
+            </Chemical>
+            <Chemical>
+                <RegistryNumber>EC 1.5.3.-</RegistryNumber>
+                <NameOfSubstance>polyamine oxidase</NameOfSubstance>
+            </Chemical>
+            <Chemical>
+                <RegistryNumber>EC 2.1.1.1</RegistryNumber>
+                <NameOfSubstance>Nicotinamide N-Methyltransferase</NameOfSubstance>
+            </Chemical>
+            <Chemical>
+                <RegistryNumber>EC 2.3.1.-</RegistryNumber>
+                <NameOfSubstance>Acetyltransferases</NameOfSubstance>
+            </Chemical>
+            <Chemical>
+                <RegistryNumber>EC 2.3.1.57</RegistryNumber>
+                <NameOfSubstance>diamine N-acetyltransferase</NameOfSubstance>
+            </Chemical>
+            <Chemical>
+                <RegistryNumber>EC 3.5.1.-</RegistryNumber>
+                <NameOfSubstance>Sirt1 protein, mouse</NameOfSubstance>
+            </Chemical>
+            <Chemical>
+                <RegistryNumber>EC 3.5.1.-</RegistryNumber>
+                <NameOfSubstance>Sirtuin 1</NameOfSubstance>
+            </Chemical>
+            <Chemical>
+                <RegistryNumber>EC 4.1.1.17</RegistryNumber>
+                <NameOfSubstance>Ornithine Decarboxylase</NameOfSubstance>
+            </Chemical>
+        </ChemicalList>
+        <CitationSubset>IM</CitationSubset>
+        <CommentsCorrectionsList>
+            <CommentsCorrections RefType="CommentIn">
+                <RefSource>Nature. 2014 Apr 10;508(7495):194-5</RefSource>
+                <PMID Version="1">24717510</PMID>
+            </CommentsCorrections>
+        </CommentsCorrectionsList>
+        <MeshHeadingList>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Acetyltransferases</DescriptorName>
+                <QualifierName MajorTopicYN="N">metabolism</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Adipocytes</DescriptorName>
+                <QualifierName MajorTopicYN="N">metabolism</QualifierName>
+                <QualifierName MajorTopicYN="N">secretion</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Adipose Tissue</DescriptorName>
+                <QualifierName MajorTopicYN="N">enzymology</QualifierName>
+                <QualifierName MajorTopicYN="N">metabolism</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Adipose Tissue, White</DescriptorName>
+                <QualifierName MajorTopicYN="N">enzymology</QualifierName>
+                <QualifierName MajorTopicYN="N">metabolism</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Animals</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Diabetes Mellitus, Type 2</DescriptorName>
+                <QualifierName MajorTopicYN="N">enzymology</QualifierName>
+                <QualifierName MajorTopicYN="N">metabolism</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="Y">Diet</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Energy Metabolism</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Fatty Liver</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Gene Knockdown Techniques</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Glucose Intolerance</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Glucose Transporter Type 4</DescriptorName>
+                <QualifierName MajorTopicYN="N">deficiency</QualifierName>
+                <QualifierName MajorTopicYN="N">genetics</QualifierName>
+                <QualifierName MajorTopicYN="N">metabolism</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Insulin Resistance</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Liver</DescriptorName>
+                <QualifierName MajorTopicYN="N">enzymology</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Male</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Mice</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Mice, Inbred C57BL</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">NAD</DescriptorName>
+                <QualifierName MajorTopicYN="N">metabolism</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Niacinamide</DescriptorName>
+                <QualifierName MajorTopicYN="N">metabolism</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Nicotinamide N-Methyltransferase</DescriptorName>
+                <QualifierName MajorTopicYN="Y">deficiency</QualifierName>
+                <QualifierName MajorTopicYN="N">genetics</QualifierName>
+                <QualifierName MajorTopicYN="Y">metabolism</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Obesity</DescriptorName>
+                <QualifierName MajorTopicYN="Y">enzymology</QualifierName>
+                <QualifierName MajorTopicYN="N">etiology</QualifierName>
+                <QualifierName MajorTopicYN="N">genetics</QualifierName>
+                <QualifierName MajorTopicYN="Y">prevention &amp; control</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Ornithine Decarboxylase</DescriptorName>
+                <QualifierName MajorTopicYN="N">metabolism</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Oxidoreductases Acting on CH-NH Group Donors</DescriptorName>
+                <QualifierName MajorTopicYN="N">metabolism</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">S-Adenosylmethionine</DescriptorName>
+                <QualifierName MajorTopicYN="N">metabolism</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Sirtuin 1</DescriptorName>
+                <QualifierName MajorTopicYN="N">metabolism</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Spermine</DescriptorName>
+                <QualifierName MajorTopicYN="N">analogs &amp; derivatives</QualifierName>
+                <QualifierName MajorTopicYN="N">metabolism</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Thinness</DescriptorName>
+                <QualifierName MajorTopicYN="N">enzymology</QualifierName>
+                <QualifierName MajorTopicYN="N">metabolism</QualifierName>
+            </MeshHeading>
+        </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+        <History>
+            <PubMedPubDate PubStatus="received">
+                <Year>2012</Year>
+                <Month>1</Month>
+                <Day>25</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="accepted">
+                <Year>2014</Year>
+                <Month>3</Month>
+                <Day>03</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="entrez">
+                <Year>2014</Year>
+                <Month>4</Month>
+                <Day>11</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="pubmed">
+                <Year>2014</Year>
+                <Month>4</Month>
+                <Day>11</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="medline">
+                <Year>2014</Year>
+                <Month>5</Month>
+                <Day>16</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+        </History>
+        <PublicationStatus>ppublish</PublicationStatus>
+        <ArticleIdList>
+            <ArticleId IdType="pii">nature13198</ArticleId>
+            <ArticleId IdType="doi">10.1038/nature13198</ArticleId>
+            <ArticleId IdType="pubmed">24717514</ArticleId>
+        </ArticleIdList>
+		
+    </PubmedData>
+</PubmedArticle>
+
+</PubmedArticleSet>

@@ -34,6 +34,12 @@
 			return true;
 		}
 
+
+		public static function onUnitTestsList( &$files ) {
+			$files = array_merge( $files, glob( __DIR__ . '/tests/*Test.php' ) );
+			return true;
+		}
+
 		/// Creates a Pubmed table in the Wiki database. This will hold XML 
 		/// strings downloaded from pubmed.gov.
 		public static function CreateTable( DatabaseUpdater $updater ) {
@@ -108,21 +114,24 @@
 		 * being parsed.
 		 */
 		private static function loadMessages() {
-			PubmedParser::$authors     = wfMessage( 'pubmedparser-authors' )->text();
-			PubmedParser::$authorsi    = wfMessage( 'pubmedparser-authorsi' )->text();
-			PubmedParser::$allauthors  = wfMessage( 'pubmedparser-allauthors' )->text();
-			PubmedParser::$allauthorsi = wfMessage( 'pubmedparser-allauthorsi' )->text();
-			PubmedParser::$journal     = wfMessage( 'pubmedparser-journal' )->text();
-			PubmedParser::$journalcaps = wfMessage( 'pubmedparser-journalcaps' )->text();
-			PubmedParser::$journala    = wfMessage( 'pubmedparser-journala' )->text();
-			PubmedParser::$journalanop = wfMessage( 'pubmedparser-journalanop' )->text();
-			PubmedParser::$year        = wfMessage( 'pubmedparser-year' )->text();
-			PubmedParser::$volume      = wfMessage( 'pubmedparser-volume' )->text();
-			PubmedParser::$pages       = wfMessage( 'pubmedparser-pages' )->text();
-			PubmedParser::$firstpage   = wfMessage( 'pubmedparser-firstpage' )->text();
-			PubmedParser::$doi         = wfMessage( 'pubmedparser-doi' )->text();
-			PubmedParser::$abstract    = wfMessage( 'pubmedparser-abstract' )->text();
-			PubmedParser::$title       = wfMessage( 'pubmedparser-title' )->text();
+			PubmedParser::$authors          = wfMessage( 'pubmedparser-authors' )->text();
+			PubmedParser::$authorsi         = wfMessage( 'pubmedparser-authorsi' )->text();
+			PubmedParser::$allauthors       = wfMessage( 'pubmedparser-allauthors' )->text();
+			PubmedParser::$allauthorsi      = wfMessage( 'pubmedparser-allauthorsi' )->text();
+			PubmedParser::$journal          = wfMessage( 'pubmedparser-journal' )->text();
+			PubmedParser::$journalcaps      = wfMessage( 'pubmedparser-journalcaps' )->text();
+			PubmedParser::$journala         = wfMessage( 'pubmedparser-journala' )->text();
+			PubmedParser::$journalanop      = wfMessage( 'pubmedparser-journalanop' )->text();
+			PubmedParser::$year             = wfMessage( 'pubmedparser-year' )->text();
+			PubmedParser::$volume           = wfMessage( 'pubmedparser-volume' )->text();
+			PubmedParser::$pages            = wfMessage( 'pubmedparser-pages' )->text();
+			PubmedParser::$firstpage        = wfMessage( 'pubmedparser-firstpage' )->text();
+			PubmedParser::$doi              = wfMessage( 'pubmedparser-doi' )->text();
+			PubmedParser::$abstract         = wfMessage( 'pubmedparser-abstract' )->text();
+			PubmedParser::$title            = wfMessage( 'pubmedparser-title' )->text();
+			PubmedParser::$etAl             = wfMessage( 'pubmedparser-etal' )->text();
+			PubmedParser::$initialPeriod    = wfMessage( 'pubmedparser-initialperiod' )->text();
+			PubmedParser::$initialSeparator = wfMessage( 'pubmedparser-initialseparator' )->text();
 		}
 
 		/*! Private members
@@ -142,5 +151,8 @@
     private static $doi;
     private static $abstract;
     private static $title;
+    private static $etAl;
+		private static $initialPeriod;
+		private static $initialSeparator;
 	}
 // vim: ts=2:sw=2:noet:comments^=\:///
