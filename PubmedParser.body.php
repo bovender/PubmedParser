@@ -30,6 +30,13 @@
 		public static function Setup( &$parser ) {
 			# Set a function hook associating the "pmid" magic word with our function
 			$parser->setFunctionHook( 'PubmedParser', 'PubmedParser::Render' );
+			PubmedParser::loadMessages();
+			return true;
+		}
+
+
+		public static function onUnitTestsList( &$files ) {
+			$files = array_merge( $files, glob( __DIR__ . '/tests/*Test.php' ) );
 			return true;
 		}
 
@@ -71,21 +78,21 @@
 			if ( $pm->statusCode() == PUBMEDPARSER_OK ) {
 				$output = '{{' . wfMessage( 'pubmedparser-templatename' )->text() . '|'
 					. 'pmid=' . $pm->pmid()
-					. '|' . wfMessage( 'pubmedparser-authors' )->text()    . '=' . $pm->authors()
-					. '|' . wfMessage( 'pubmedparser-authorsi' )->text()   . '=' . $pm->authors( true )
-					. '|' . wfMessage( 'pubmedparser-allauthors' )->text() . '=' . $pm->allAuthors()
-					. '|' . wfMessage( 'pubmedparser-allauthorsi' )->text(). '=' . $pm->allAuthors( true )
-					. '|' . wfMessage( 'pubmedparser-title' )->text()      . '=' . $pm->title()
-					. '|' . wfMessage( 'pubmedparser-journal' )->text()    . '=' . $pm->journal()
-					. '|' . wfMessage( 'pubmedparser-journalcaps' )->text(). '=' . $pm->journalCaps()
-					. '|' . wfMessage( 'pubmedparser-journala' )->text()   . '=' . $pm->journalAbbrev()
-					. '|' . wfMessage( 'pubmedparser-journalanop' )->text(). '=' . $pm->journalAbbrevNoPeriods()
-					. '|' . wfMessage( 'pubmedparser-year' )->text()       . '=' . $pm->year()
-					. '|' . wfMessage( 'pubmedparser-volume' )->text()     . '=' . $pm->volume()
-					. '|' . wfMessage( 'pubmedparser-pages' )->text()      . '=' . $pm->pages()
-					. '|' . wfMessage( 'pubmedparser-firstpage' )->text()  . '=' . $pm->firstPage()
-					. '|' . wfMessage( 'pubmedparser-doi' )->text()        . '=' . $pm->doi()
-					. '|' . wfMessage( 'pubmedparser-abstract' )->text()   . '=' . $pm->abstr()
+					. '|' . PubmedParser::$authors     . '=' . $pm->authors()
+					. '|' . PubmedParser::$authorsi    . '=' . $pm->authors( true )
+					. '|' . PubmedParser::$allauthors  . '=' . $pm->allAuthors()
+					. '|' . PubmedParser::$allauthorsi . '=' . $pm->allAuthors( true )
+					. '|' . PubmedParser::$journal     . '=' . $pm->journal()
+					. '|' . PubmedParser::$journalcaps . '=' . $pm->journalCaps()
+					. '|' . PubmedParser::$journala    . '=' . $pm->journalAbbrev()
+					. '|' . PubmedParser::$journalanop . '=' . $pm->journalAbbrevNoPeriods()
+					. '|' . PubmedParser::$year        . '=' . $pm->year()
+					. '|' . PubmedParser::$volume      . '=' . $pm->volume()
+					. '|' . PubmedParser::$pages       . '=' . $pm->pages()
+					. '|' . PubmedParser::$firstpage   . '=' . $pm->firstPage()
+					. '|' . PubmedParser::$doi         . '=' . $pm->doi()
+					. '|' . PubmedParser::$abstract    . '=' . $pm->abstr()
+					. '|' . PubmedParser::$title       . '=' . $pm->title()
 					. '}}';
 
 				if ( $refName != '' ) {
@@ -101,4 +108,51 @@
 			// (required for expansion of templates)
 			return array( $output, 'noparse' => false );    
 		}
+
+		/*! Initializes the static class members so that we don't have to
+		 * query the wiki database many times whenever a Pubmed citation is 
+		 * being parsed.
+		 */
+		private static function loadMessages() {
+			PubmedParser::$authors          = wfMessage( 'pubmedparser-authors' )->text();
+			PubmedParser::$authorsi         = wfMessage( 'pubmedparser-authorsi' )->text();
+			PubmedParser::$allauthors       = wfMessage( 'pubmedparser-allauthors' )->text();
+			PubmedParser::$allauthorsi      = wfMessage( 'pubmedparser-allauthorsi' )->text();
+			PubmedParser::$journal          = wfMessage( 'pubmedparser-journal' )->text();
+			PubmedParser::$journalcaps      = wfMessage( 'pubmedparser-journalcaps' )->text();
+			PubmedParser::$journala         = wfMessage( 'pubmedparser-journala' )->text();
+			PubmedParser::$journalanop      = wfMessage( 'pubmedparser-journalanop' )->text();
+			PubmedParser::$year             = wfMessage( 'pubmedparser-year' )->text();
+			PubmedParser::$volume           = wfMessage( 'pubmedparser-volume' )->text();
+			PubmedParser::$pages            = wfMessage( 'pubmedparser-pages' )->text();
+			PubmedParser::$firstpage        = wfMessage( 'pubmedparser-firstpage' )->text();
+			PubmedParser::$doi              = wfMessage( 'pubmedparser-doi' )->text();
+			PubmedParser::$abstract         = wfMessage( 'pubmedparser-abstract' )->text();
+			PubmedParser::$title            = wfMessage( 'pubmedparser-title' )->text();
+			PubmedParser::$etAl             = wfMessage( 'pubmedparser-etal' )->text();
+			PubmedParser::$initialPeriod    = wfMessage( 'pubmedparser-initialperiod' )->text();
+			PubmedParser::$initialSeparator = wfMessage( 'pubmedparser-initialseparator' )->text();
+		}
+
+		/*! Private members
+		 */
+		private static $authors;
+    private static $authorsi;
+    private static $allauthors;
+    private static $allauthorsi;
+    private static $journal;
+    private static $journalcaps;
+    private static $journala;
+    private static $journalanop;
+    private static $year;
+    private static $volume;
+    private static $pages;
+    private static $firstpage;
+    private static $doi;
+    private static $abstract;
+    private static $title;
+    private static $etAl;
+		private static $initialPeriod;
+		private static $initialSeparator;
 	}
+// vim: ts=2:sw=2:noet:comments^=\:///

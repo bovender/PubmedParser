@@ -83,9 +83,7 @@
 				}
 			};
 
-			if ( ! is_null( $xml ) ) {
-				$this->medline = simplexml_load_string( $xml );
-			} else {
+			if ( is_null( $xml ) ) {
 				// fetch the article information from PubMed in XML format
 				// note: it's important to have retmode=xml, not rettype=xml!
 				// rettype=xml returns an HTML page with formatted XML-like text;
@@ -96,19 +94,10 @@
 				} else if ( function_exists('curl_init') )  {
 					$curl = curl_init( $url );
 					curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
-					$this->medline = simplexml_load_string( curl_exec( $curl ) );
+					$xml = curl_exec( $curl );
 					curl_close( $curl );
 				} else {
 					$this->status = PUBMEDPARSER_CANNOTDOWNLOAD;
-					return;
-				}
-
-				/* Check if Pubmed returned valid article data: If the PMID does not exist,
-				 * Pubmed will deliver invalid XML ("<ERROR>Empty id list - nothing todo</ERROR>").
-				 * In this case, the medline object will return false.
-				 */
-				if ( !$this->medline ) {
-					$this->status = PUBMEDPARSER_NODATA;
 					return;
 				}
 
@@ -118,17 +107,12 @@
 				$this->storeInDb();
 			} // if no xml in database
 			
-			if ( $this->medline ) {
-				$this->article = $this->medline->PubmedArticle->MedlineCitation->Article;
+			if ( ! is_null( $xml ) ) {
+				$this->$article = new PubmedArticle( $pmid, $xml );
 			}
-
-			// If Pubmed did not return data (e.g., the server is down or the
-			// PMID does not exist), $this->article will not be set, and we
-			// set the status code to PUBMEDPARSER_NODATA
-			if ( !isset($this->article) ) {
+			else {
 				$this->status = PUBMEDPARSER_NODATA;
-				unset ( $this->medline );
-			};
+			}
 		}
 
 		// *************************************************************
@@ -197,7 +181,7 @@
 				$numauthors = count( $this->article->AuthorList->Author );
 				if ( $numauthors > 2 ) {
 					$a = $this->authorName( $this->article->AuthorList->Author[0], $useInitials )
-						. " " . wfMessage( 'pubmedparser-etal' )->text();
+						. " " . PubmedParser::$etAl;
 				} elseif ( $numauthors = 2 ) {
 					/* Sometimes, the number of authors is incorrectly given as 2,
 					 * even though there is only 1 author (cf. PMID 19782018).
@@ -252,97 +236,22 @@
 			} // if ( $this->medline )
 		}
 
-		/// Returns the last name of the article's first author.
-		function firstAuthor() {
-			if ( $this->medline ) {
-				return $this->article->AuthorList->Author[0]->LastName;
-			}
-		}
-
-		/// Returns the title of the article. A trailing period will be removed.
-		function title() {
-			if ( $this->medline ) {
-				return rtrim($this->article->ArticleTitle, '.');
-			}
-		}
-
-		/// Returns the journal name as stored in Pubmed.
-		function journal() {
-			if ( $this->medline ) {
-				return $this->article->Journal->Title;
-			}
-		}
-
-		/// Returns the journal name with all words capitalized.
-		function journalCaps() {
-			if ( $this->medline ) {
-				return ucwords( $this->article->Journal->Title );
-			}
-		}
-
-		/// Returns the ISO abbreviation for the journal, with periods.
-		function journalAbbrev() {
-			if ( $this->medline ) {
-				return $this->article->Journal->ISOAbbreviation;
-			}
-		}
-
-		function journalAbbrevNoPeriods() {
-			if ( $this->medline ) {
-				$j = $this->article->Journal->ISOAbbreviation;
-				$jwords = explode(' ', $j);
-				foreach ( $jwords as &$word ) { // note the ampersand!
-					$word = rtrim( $word, '.' );
-				}
-				$j = implode( ' ', $jwords );
-				return $j;
-			}
-		}
-
 		/// Returns the year the article was published.
 		function year() {
-			if ( $this->medline ) {
-				/* In some cases, the publication date is not saved as a <Year></Year> record,
-				 * but instead as a <MedlineDate></MedlineDate>.
-				 */
-				$y = $this->medline->PubmedArticle->MedlineCitation->Article->Journal->JournalIssue->PubDate->Year;
-				if ($y=='') {
-					$y = $this->medline->PubmedArticle->MedlineCitation->Article->Journal->JournalIssue->PubDate->MedlineDate;
-					// Find a four-digit number in MedlineDate; this will be the year of publication
-					preg_match( '/\d{4}/', $y, $m );
-					$y = $m[0];
-				};
-				return $y;
-			}
+			/* In some cases, the publication date is not saved as a <Year></Year> record,
+			 * but instead as a <MedlineDate></MedlineDate>.
+			 */
+			return $this->article->year;
+			/*
+			if ($y=='') {
+				$y = $this->medline->PubmedArticle->MedlineCitation->Article->Journal->JournalIssue->PubDate->MedlineDate;
+				// Find a four-digit number in MedlineDate; this will be the year of publication
+				preg_match( '/\d{4}/', $y, $m );
+				$y = $m[0];
+			};
+			 */
 		}
 
-		/// Returns the volume of the journal that the article was published in.
-		function volume() {
-			if ( $this->medline ) {
-				return $this->medline->PubmedArticle->MedlineCitation->Article->Journal->JournalIssue->Volume;
-			}
-		}
-
-		/// Returns the pagination of the article.
-		function pages() {
-			if ( $this->medline ) {
-				return $this->medline->PubmedArticle->MedlineCitation->Article->Pagination->MedlinePgn;
-			}
-		}
-
-		/// Returns the first page of the article.
-		function firstPage() {
-			if ( $this->medline ) {
-				$fp = explode('-', $this->medline->PubmedArticle->MedlineCitation->Article->Pagination->MedlinePgn);
-				return $fp[0];
-			}
-		}
-
-		/// Returns the PMID of the article.
-		function pmid()
-		{
-			return $this->id;
-		}
 
 		/*! Returns the digital object identifier (DOI).
 		 *  Note that not all Pubmed citations have this information.
@@ -395,14 +304,6 @@
 			return trim( $a );
 		}
 		
-
-		/// Returns the citation data as formatted XML.
-		function dumpData() {
-			if ( $this->medline ) {
-				return $this->medline->asXML();
-			}
-		}
-
 		/// Returns the status of the object
 		function statusCode() {
 			return $this->status;
@@ -445,7 +346,7 @@
 					} else {
 						return $n;
 					}
-				} else {
+				} else p
 					return $author->CollectiveName;
 				}
 			}
@@ -453,9 +354,8 @@
 
 		// =======================
 		// Private class elements
-		private $id;			///< holds the PMID
-		private $medline; ///< a SimpleXMLElement object that holds the Medline Data
-		private $article; ///< $medline->PubmedArticle->MedlineCitation->Article
+		private $id;      ///< holds the PMID
+		private $article; ///< instance of PubmedArticle
 		private $status;  ///< holds status information (0 if everything is ok)
 	}
 // vim: sw=4:ts=4:sts=4:noet:comments^=\:///

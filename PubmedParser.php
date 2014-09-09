@@ -43,10 +43,12 @@
 
   $wgAutoloadClasses['PubmedParser'] = dirname(__FILE__) . '/PubmedParser.body.php';
   $wgAutoloadClasses['PubmedParserFetcher'] = dirname(__FILE__) . '/PubmedParserFetcher.body.php';
+  $wgAutoloadClasses['PubmedArticle'] = dirname(__FILE__) . '/PubmedParser.Article.php';
 
   // Define a setup function
   $wgHooks['ParserFirstCallInit'][] = 'PubmedParser::Setup';
   $wgHooks['LoadExtensionSchemaUpdates'][] = 'PubmedParser::CreateTable';
+  $wgHooks['UnitTestsList'][] = 'PubmedParser::onUnitTestsList';
 
   /*! Path to the cache folder
    *  To enable caching, make sure this path exists and is writable for

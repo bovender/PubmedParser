@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<!DOCTYPE PubmedArticleSet PUBLIC "-//NLM//DTD PubMedArticle, 1st January 2014//EN" "http://www.ncbi.nlm.nih.gov/corehtml/query/DTD/pubmed_140101.dtd">
+<PubmedArticleSet>
+<PubmedArticle>
+    <MedlineCitation Owner="NLM" Status="In-Process">
+        <PMID Version="1">24346387</PMID>
+        <DateCreated>
+            <Year>2013</Year>
+            <Month>12</Month>
+            <Day>18</Day>
+        </DateCreated>
+        <Article PubModel="Print">
+            <Journal>
+                <ISSN IssnType="Print">0022-3859</ISSN>
+                <JournalIssue CitedMedium="Internet">
+                    <Volume>59</Volume>
+                    <Issue>4</Issue>
+                    <PubDate>
+                        <MedlineDate>2013 Oct-Dec</MedlineDate>
+                    </PubDate>
+                </JournalIssue>
+                <Title>Journal of postgraduate medicine</Title>
+                <ISOAbbreviation>J Postgrad Med</ISOAbbreviation>
+            </Journal>
+            <ArticleTitle>Renal angioplasty for atherosclerotic renal artery stenosis: Cardiologist's perspective.</ArticleTitle>
+            <Pagination>
+                <MedlinePgn>289-99</MedlinePgn>
+            </Pagination>
+            <ELocationID EIdType="doi" ValidYN="Y">10.4103/0022-3859.123157</ELocationID>
+            <Abstract>
+                <AbstractText>Atherosclerotic renal artery stenosis (ARAS) is frequently associated with concomitant coronary and peripheral arterial disease with a significant impact on cardiovascular morbidity and mortality. Renal angioplasty of ARAS is more challenging because of increased incidence of technical failures, complications, and restenosis; while there is barely perceptible control of hypertension and only marginal improvement in renal function. This is because most of the patient population in recent randomized trials had unmanifested or clinically silent renovascular disease. Manifestations of RAS should be looked for and incorporated in the management plan particularly before deciding for revascularization. In the absence of clinical manifestation like renovascular hypertension, ischemic nephropathy, left ventricular failure, or unstable coronary syndromes; mere presence of RAS is analogous to presence of concomitant peripheral arterial disease which increases risk of adverse coronary events. Dormant-RAS in the absence of any manifestations can be managed with masterly inactivity. Chronological sequence of events and clinical condition of the patient help in decision making by identifying progressive renovascular disease. Selecting patients for renal artery stenting who actually will benefit from revascularization shall also decrease the unnecessary complications inherent with any interventional procedure. The present review is an attempt to analyze the current view on the diagnostic and management issues more specifically about the need and rationale behind angioplasty.</AbstractText>
+            </Abstract>
+            <AuthorList CompleteYN="Y">
+                <Author ValidYN="Y">
+                    <LastName>Gulati</LastName>
+                    <ForeName>A S</ForeName>
+                    <Initials>AS</Initials>
+                    <Affiliation>Department of Cardiology, Nizam's Institute of Medical Sciences, Panjagutta, Hyderabad, Andhra Pradesh, India.</Affiliation>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Patnaik</LastName>
+                    <ForeName>A N</ForeName>
+                    <Initials>AN</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Barik</LastName>
+                    <ForeName>R</ForeName>
+                    <Initials>R</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Kumari</LastName>
+                    <ForeName>R</ForeName>
+                    <Initials>R</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Srinivas</LastName>
+                    <ForeName>S</ForeName>
+                    <Initials>S</Initials>
+                </Author>
+            </AuthorList>
+            <Language>eng</Language>
+            <PublicationTypeList>
+                <PublicationType>Journal Article</PublicationType>
+            </PublicationTypeList>
+        </Article>
+        <MedlineJournalInfo>
+            <Country>India</Country>
+            <MedlineTA>J Postgrad Med</MedlineTA>
+            <NlmUniqueID>2985196R</NlmUniqueID>
+            <ISSNLinking>0022-3859</ISSNLinking>
+        </MedlineJournalInfo>
+        <CitationSubset>IM</CitationSubset>
+    </MedlineCitation>
+    <PubmedData>
+        <History>
+            <PubMedPubDate PubStatus="entrez">
+                <Year>2013</Year>
+                <Month>12</Month>
+                <Day>19</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="pubmed">
+                <Year>2013</Year>
+                <Month>12</Month>
+                <Day>19</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="medline">
+                <Year>2013</Year>
+                <Month>12</Month>
+                <Day>19</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+        </History>
+        <PublicationStatus>ppublish</PublicationStatus>
+        <ArticleIdList>
+            <ArticleId IdType="pii">jpgm_2013_59_4_289_123157</ArticleId>
+            <ArticleId IdType="doi">10.4103/0022-3859.123157</ArticleId>
+            <ArticleId IdType="pubmed">24346387</ArticleId>
+        </ArticleIdList>
+    </PubmedData>
+</PubmedArticle>
+
+</PubmedArticleSet>
