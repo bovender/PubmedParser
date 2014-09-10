@@ -164,7 +164,6 @@ class PubmedArticle
 	 *  @param $useInitials [in] Boolean; if True, initials will be appended
 	 */
 	function allAuthors( $useInitials = false )	{
-		error_log( print_r( $this->authors, true ) );
 		$numAuthors = count( $this->authors );
 		$a = '';
 		if ( $numAuthors > 1 ) {

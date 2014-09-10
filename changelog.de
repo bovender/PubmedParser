@@ -1,6 +1,8 @@
 PubmedParser Changelog
 ======================
 
+3.0.1
+  Korrigiert:    Debug-Logging an Server-Log entfernt.
 3.0.0
   Verbessert:    Performancesteigerung.
 2.0.0
