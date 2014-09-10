@@ -36,6 +36,8 @@ class PubmedArticle
 	public $volume;
 	public $pages;
 	public $doi;
+	public $pmid;
+	public $xml;
 
 	/** Constructs a new article object from a given Pubmed XML string.
 	 */
@@ -101,15 +103,17 @@ class PubmedArticle
 		// Loop over the children of the AuthorList node and stop at the closing 
 		// tag of the AuthorList node.
 		while ( $reader->read() && ! ( $reader->name === 'AuthorList' ) ) {
-			switch ( $reader->name ) {
-				case 'LastName':
-					$this->authors[] = $reader->readInnerXML();
-					break;
-				case 'Initials':
-					$this->initials[] = $reader->readInnerXML();
-					break;
-				case 'CollectiveName':
-					$this->collectiveName = $reader->readInnerXML();
+			if ( $reader->nodeType == XMLReader::ELEMENT ) {
+				switch ( $reader->name ) {
+					case 'LastName':
+						$this->authors[] = $reader->readInnerXML();
+						break;
+					case 'Initials':
+						$this->initials[] = $reader->readInnerXML();
+						break;
+					case 'CollectiveName':
+						$this->collectiveName = $reader->readInnerXML();
+				}
 			}
 		}
 	}
@@ -134,6 +138,49 @@ class PubmedArticle
 				}
 			}
 		}	
+	}
+
+	/** Returns an abbreviated list of the authors. If there are two
+	 *  authors, it returns something like "Miller & Thomas"; with more
+	 *  than two authors, it returns "Miller et al."
+	 *  @param $useInitials [in] Boolean; if True, initials will be appended
+	 */
+	function authors( $useInitials = false ) {
+		$numAuthors = count( $this->authors );
+		if ( $numAuthors > 0 ) {
+			$a = $this->authorName( 0, $useInitials );
+			if ( $numAuthors > 2 ) {
+				$a .= " " . PubmedParser::$etAl;
+			} elseif ( $numAuthors = 2 ) {
+				$a .= ' ' . PubmedParser::$and .  ' '	. $this->authorName( 1, $useInitials );
+			}
+			return $a;
+		} else {
+			return $this->collectiveName;
+		}
+	} 
+
+	/** Returns a list of all authors of this article.
+	 *  @param $useInitials [in] Boolean; if True, initials will be appended
+	 */
+	function allAuthors( $useInitials = false )	{
+		error_log( print_r( $this->authors, true ) );
+		$numAuthors = count( $this->authors );
+		$a = '';
+		if ( $numAuthors > 1 ) {
+			for ( $i=0; $i < $numAuthors-1; $i++ ) {
+				$a .= $this->authorName( $i, $useInitials ) . ', ';
+			}
+			// Cut off the last ", ", add the "and" character or word, and append 
+			// the last author's name.
+			$a = substr( $a, 0, strlen( $a )-2 ) . ' ' . PubmedParser::$and 
+				. ' ' . $this->authorName( $i, $useInitials );
+		} elseif ( $numAuthors = 1 ) {
+			$a = $this->authorName( 0, $useInitials );
+		} else {
+			$a = $this->collectiveName;
+		}
+		return $a;
 	}
 
 	/// Returns the journal name with all words capitalized.
@@ -164,18 +211,18 @@ class PubmedArticle
 	 */
 	private function authorName( $index, $useInitial = false ) {
 		if ( $index < count( $this->authors ) ) {
+			$author = $this->authors[$index];
 			if ( $useInitial ) {
-				$i = $author->Initials;      // Initials is the concatenated string of initials
-				$iarray = str_split($i, 1);  // get the single initials
-				$i = implode( wfMessage( 'pubmedparser-initialperiod' )->text(), $iarray)
-					. wfMessage( 'pubmedparser-initialperiod' )->text();
-				$n = trim( $n . wfMessage( 'pubmedparser-initialseparator' )->text() . ' ' . $i, ' ');
-				return $n;
-			} else {
-				return $n;
+				$i = $this->initials[$index];
+				$iarray = str_split($i, 1);
+				$i = implode( PubmedParser::$initialPeriod, $iarray)
+					. PubmedParser::$initialPeriod;
+				$author = trim( $author . PubmedParser::$initialSeparator
+					. ' ' . $i, ' ');
 			}
+			return $author;
 		} else {
-			return $author->CollectiveName;
+			return $this->collectiveName;
 		}
 	}
 }
