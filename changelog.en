@@ -1,6 +1,11 @@
 PubmedParser Changelog
 ======================
 
+3.0.0
+	Improved: Increase performance.
+2.0.0
+	Changed:  No longer cache XML in file system, use database table
+	          instead.
 1.0.0
 	Improved: Download of PubMed XML data if ALLOW_URL_FOPEN is not set.
 0.2.9

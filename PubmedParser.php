@@ -28,7 +28,7 @@
     'name'           => 'PubmedParser',
     'author'         => '[https://www.mediawiki.org/wiki/User:Bovender Daniel Kraus]', 
     'url'            => 'https://www.mediawiki.org/wiki/Extension:PubmedParser',
-    'version'        => '2.0.0',
+    'version'        => '3.0.0',
     'descriptionmsg' => 'pubmedparser-desc'
     );
 
@@ -43,13 +43,9 @@
 
   $wgAutoloadClasses['PubmedParser'] = dirname(__FILE__) . '/PubmedParser.body.php';
   $wgAutoloadClasses['PubmedParserFetcher'] = dirname(__FILE__) . '/PubmedParserFetcher.body.php';
+  $wgAutoloadClasses['PubmedArticle'] = dirname(__FILE__) . '/PubmedParser.Article.php';
 
   // Define a setup function
   $wgHooks['ParserFirstCallInit'][] = 'PubmedParser::Setup';
   $wgHooks['LoadExtensionSchemaUpdates'][] = 'PubmedParser::CreateTable';
-
-  /*! Path to the cache folder
-   *  To enable caching, make sure this path exists and is writable for
-   *  the web server (chmod 777).
-   */
-  $wgPubmedParserCache = "$IP/cache/PubmedParser";
+  $wgHooks['UnitTestsList'][] = 'PubmedParser::onUnitTestsList';

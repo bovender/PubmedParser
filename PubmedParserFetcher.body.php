@@ -39,10 +39,10 @@
 	 */
   class PubmedParserFetcher
 	{
-		/*! Constructor.
-				$pmid is the unique Pubmed identifier; if given, the instance
-				of the class will immediately retrieve the article information
-				from pubmed. */
+		/** Constructor.
+		 * @param int $pmid Pubmed identifier.
+		 * @param boolean $reload Whether or not to force fetching data from Pubmed
+		 */
 		function __construct( $pmid = 0, $reload = false )
 		{
 			/* As long as there we have not retrieved any valid data, the
@@ -57,78 +57,62 @@
 			}
 		}
 
-		/*! Retrieves article data for PMID from PubMed.
+		/** Retrieves article data for PMID from PubMed.
 		 *  The function first attempts to locate a local copy of the XML
 		 *  data for the requested PMID. If not found, it checks Pubmed online.
 		 *	For this to work, the EUtilities application must be up and running
 		 *	on the NCBI server.
-		 *  \param $pmid [in] PMID (unique Pubmed identifier)
+		 *  @param $pmid [in] PMID (unique Pubmed identifier)
 		 */
 		function lookUp( $pmid = 0, $reload = false ) {
-			$this->id = $pmid;
+			$this->pmid = $pmid;
 
 			// First, let's check if the PMID consists of digits only
+			// This check is also important to prevent SQL injections!
 			if ( !ctype_digit2( $pmid ) ) {
 				$this->status = PUBMEDPARSER_INVALIDPMID;
 				return;
 			}
 
 			$this->status = PUBMEDPARSER_OK;
-			
 			$xml = null;
 			if ( ! $reload ) {
-				$xml = self::fetchFromDb( (int)$pmid );
+				$xml = self::fetchFromDb( $pmid );
 				if ( $this->status != PUBMEDPARSER_OK ) {
 					return;
 				}
 			};
 
-			if ( ! is_null( $xml ) ) {
-				$this->medline = simplexml_load_string( $xml );
-			} else {
+			if ( is_null( $xml ) ) {
 				// fetch the article information from PubMed in XML format
 				// note: it's important to have retmode=xml, not rettype=xml!
 				// rettype=xml returns an HTML page with formatted XML-like text;
 				// retmode=xml returns raw XML.
 				$url = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=$pmid&retmode=xml";
 				if ( ini_get( 'allow_url_fopen' ) == true ) {
-					$this->medline = simplexml_load_file( $url );
+					$xml = file_get_contents( $url );
 				} else if ( function_exists('curl_init') )  {
 					$curl = curl_init( $url );
 					curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
-					$this->medline = simplexml_load_string( curl_exec( $curl ) );
+					$xml = curl_exec( $curl );
 					curl_close( $curl );
 				} else {
 					$this->status = PUBMEDPARSER_CANNOTDOWNLOAD;
 					return;
 				}
 
-				/* Check if Pubmed returned valid article data: If the PMID does not exist,
-				 * Pubmed will deliver invalid XML ("<ERROR>Empty id list - nothing todo</ERROR>").
-				 * In this case, the medline object will return false.
-				 */
-				if ( !$this->medline ) {
-					$this->status = PUBMEDPARSER_NODATA;
-					return;
-				}
-
 				/* Now that we have the data, let's attempt to store it locally
 				 * in the cache.
 				 */
-				$this->storeInDb();
+				$this->storeInDb( $pmid, $xml );
 			} // if no xml in database
 			
-			if ( $this->medline ) {
-				$this->article = $this->medline->PubmedArticle->MedlineCitation->Article;
+			if ( ! is_null( $xml ) ) {
+				$this->article = new PubmedArticle( $pmid, $xml );
 			}
-
-			// If Pubmed did not return data (e.g., the server is down or the
-			// PMID does not exist), $this->article will not be set, and we
-			// set the status code to PUBMEDPARSER_NODATA
-			if ( !isset($this->article) ) {
+			else {
 				$this->status = PUBMEDPARSER_NODATA;
-				unset ( $this->medline );
-			};
+			}
 		}
 
 		// *************************************************************
@@ -140,267 +124,38 @@
 		/// record was not found.
 		/// @note $pmid must be an integer to prevent SQL injections. Since 
 		/// it is a scalar, specifying a typed parameter in the function 
-		/// signature does not work.
+		/// signature does not work. This is a private method that is called 
+		/// by PubmedParserFetcher::lookUp() which ensures that PMIDs are 
+		/// integers.
 		private function fetchFromDb( $pmid ) {
-			if ( is_int( $pmid ) ) {
-				$dbr = wfGetDB( DB_SLAVE );
-				$dbr->ignoreErrors( true );
-				$res = $dbr->select( 
-					'pubmed', 
-					'xml', 
-					'pmid = ' . $pmid, 
-					__METHOD__
-				);
-				if ( $dbr->lastErrno() == 0 ) {
-					if ( $res->numRows() == 1 ) {
-						$xml = $res->fetchObject()->xml;
-						return $xml;
-					} else {
-						return null;
-					}
+			$dbr = wfGetDB( DB_SLAVE );
+			$dbr->ignoreErrors( true );
+			$res = $dbr->select( 
+				'pubmed', 
+				'xml', 
+				'pmid = ' . $pmid, 
+				__METHOD__
+			);
+			if ( $dbr->lastErrno() == 0 ) {
+				if ( $res->numRows() == 1 ) {
+					$xml = $res->fetchObject()->xml;
+					return $xml;
 				} else {
-					$this->status = PUBMEDPARSER_DBERROR;
+					return null;
 				}
+			} else {
+				$this->status = PUBMEDPARSER_DBERROR;
 			}
 		}
 
 		/// Stores the current PMID record in the wiki database.
-		private function storeInDb() {
+		private function storeInDb( $pmid, $xml ) {
 			$dbw = wfGetDB( DB_MASTER );
 			$dbw->insert( 'pubmed', array(
-				'pmid' => $this->id,
-				'xml' => $this->medline->asXML()
+				'pmid' => $pmid,
+				'xml' => $xml
 				)
 			);
-		}
-
-		// *************************************************************
-		// The following functions all return information on the article.
-
-		/*! Returns an abbreviated list of the authors. If there are two
-		 *  authors, it returns something like "Miller & Thomas"; with more
-		 *  than two authors, it returns "Miller et al."
-		 *  \param $useInitials [in] Boolean; if True, initials will be appended
-		 */
-		function authors( $useInitials = false ) {
-			if ( $this->medline ) {
-				// SimpleXMLElement::count() supposedly returns the number of
-				// children of a node; however, this is not the behavior that I
-				// experienced. The count() method returns the number of siblings
-				// on my system! Therefore the notation AuthorList->Author->count().
-
-				/* One additional problem: the count() method of the SimpleXMLElement
-				 * does not work in PHP 5.2.x (as used by Lahno Webhosting); the
-				 * workaround is given below. This was taken from the user comments
-				 * on http://php.net/manual/en/simplexmlelement.count.php
-				 */
-				$numauthors = count( $this->article->AuthorList->Author );
-				if ( $numauthors > 2 ) {
-					$a = $this->authorName( $this->article->AuthorList->Author[0], $useInitials )
-						. " " . wfMessage( 'pubmedparser-etal' )->text();
-				} elseif ( $numauthors = 2 ) {
-					/* Sometimes, the number of authors is incorrectly given as 2,
-					 * even though there is only 1 author (cf. PMID 19782018).
-					 * As a workaround, if we are told there are 2 authors, we
-					 * check that the presumptive second author's name is not null.
-					 */
-					$a = $this->authorName( $this->article->AuthorList->Author[1], $useInitials );
-					if ( $a != '' ) {
-						$a = $this->authorName( $this->article->AuthorList->Author[0], $useInitials )
-							. ' ' . wfMessage( 'pubmedparser-and' )->text() . ' '	. $a;
-					} else {
-						$a = $this->authorName( $this->article->AuthorList->Author[0], $useInitials );
-					}
-				} else {
-					$a = $this->authorName( $this->article->AuthorList->Author[0], $useInitials );
-				}
-				return $a;
-			} // if ( $this->medline )
-		}
-
-		/*! Returns a list of all authors of this article.
-		 *  \param $useInitials [in] Boolean; if True, initials will be appended
-		 */
-		function allAuthors( $useInitials = false )	{
-			if ( $this->medline ) {
-				try {
-					/* If there are no authors (e.g., PMID 22077236), an ugly  warning
-					 * will be issued when we access the children() node. The easiest
-					 * way to circumvent this is to temporarily set the error_reporting
-					 */
-					$oldReporting = error_reporting();
-					error_reporting(E_ERROR);
-					$numauthors = count( $this->article->AuthorList->children() );
-					error_reporting($oldReporting);
-				}
-				catch (Exception $e) {
-					return "No authors.";
-				}
-
-				$a = '';
-				if ( $numauthors > 1 ) {
-					for ( $i=0; $i < $numauthors-1; $i++ ) {
-						$a .= $this->authorName( $this->article->AuthorList->Author[$i], $useInitials ) . ', ';
-					}
-					$a = substr( $a, 0, strlen( $a )-2 ); // cut off the last ', '
-					$a .= ' ' . wfMessage( 'pubmedparser-and' )->text() . ' '
-							. $this->authorName( $this->article->AuthorList->Author[$i], $useInitials );
-				} else { // only 1 author:
-					$a = $this->authorName( $this->article->AuthorList->Author, $useInitials );
-				}
-				return $a;
-			} // if ( $this->medline )
-		}
-
-		/// Returns the last name of the article's first author.
-		function firstAuthor() {
-			if ( $this->medline ) {
-				return $this->article->AuthorList->Author[0]->LastName;
-			}
-		}
-
-		/// Returns the title of the article. A trailing period will be removed.
-		function title() {
-			if ( $this->medline ) {
-				return rtrim($this->article->ArticleTitle, '.');
-			}
-		}
-
-		/// Returns the journal name as stored in Pubmed.
-		function journal() {
-			if ( $this->medline ) {
-				return $this->article->Journal->Title;
-			}
-		}
-
-		/// Returns the journal name with all words capitalized.
-		function journalCaps() {
-			if ( $this->medline ) {
-				return ucwords( $this->article->Journal->Title );
-			}
-		}
-
-		/// Returns the ISO abbreviation for the journal, with periods.
-		function journalAbbrev() {
-			if ( $this->medline ) {
-				return $this->article->Journal->ISOAbbreviation;
-			}
-		}
-
-		function journalAbbrevNoPeriods() {
-			if ( $this->medline ) {
-				$j = $this->article->Journal->ISOAbbreviation;
-				$jwords = explode(' ', $j);
-				foreach ( $jwords as &$word ) { // note the ampersand!
-					$word = rtrim( $word, '.' );
-				}
-				$j = implode( ' ', $jwords );
-				return $j;
-			}
-		}
-
-		/// Returns the year the article was published.
-		function year() {
-			if ( $this->medline ) {
-				/* In some cases, the publication date is not saved as a <Year></Year> record,
-				 * but instead as a <MedlineDate></MedlineDate>.
-				 */
-				$y = $this->medline->PubmedArticle->MedlineCitation->Article->Journal->JournalIssue->PubDate->Year;
-				if ($y=='') {
-					$y = $this->medline->PubmedArticle->MedlineCitation->Article->Journal->JournalIssue->PubDate->MedlineDate;
-					// Find a four-digit number in MedlineDate; this will be the year of publication
-					preg_match( '/\d{4}/', $y, $m );
-					$y = $m[0];
-				};
-				return $y;
-			}
-		}
-
-		/// Returns the volume of the journal that the article was published in.
-		function volume() {
-			if ( $this->medline ) {
-				return $this->medline->PubmedArticle->MedlineCitation->Article->Journal->JournalIssue->Volume;
-			}
-		}
-
-		/// Returns the pagination of the article.
-		function pages() {
-			if ( $this->medline ) {
-				return $this->medline->PubmedArticle->MedlineCitation->Article->Pagination->MedlinePgn;
-			}
-		}
-
-		/// Returns the first page of the article.
-		function firstPage() {
-			if ( $this->medline ) {
-				$fp = explode('-', $this->medline->PubmedArticle->MedlineCitation->Article->Pagination->MedlinePgn);
-				return $fp[0];
-			}
-		}
-
-		/// Returns the PMID of the article.
-		function pmid()
-		{
-			return $this->id;
-		}
-
-		/*! Returns the digital object identifier (DOI).
-		 *  Note that not all Pubmed citations have this information.
-		 */
-		function doi()
-		{
-			if ( $this->medline ) {
-				// look for the ArticleId node that has its IdType attribute
-				// set to "doi". Note that not all pubmed entries have this
-				// information.
-				$doi = '';
-				foreach ( $this->medline->PubmedArticle->PubmedData->ArticleIdList->ArticleId as $aid ) {
-					if ( $aid['IdType'] == 'doi' ) {
-						$doi = $aid;
-					}
-				}
-				return $doi;
-			}
-		}
-
-		/*! Returns the abstract of the article
-		 *  Note the naming of the function: abstr(); we cannot use abstract
-		 *  as it is a PHP keyword.
-		 */
-		function abstr() {
-			/* Sometimes, the foreach loop below will throw Warnings ("Invalid
-			 * argument supplied"). Since it was very tricky to find out why
-			 * this occurred, the error reporting is set to 'none' for this
-			 * bit.
-			 */
-			$oldReporting = error_reporting();
-			error_reporting(E_ERROR);
-			$a = '';
-			try {
-				foreach ( $this->medline->PubmedArticle->MedlineCitation->Article->Abstract->AbstractText as $p ) {
-					// Abstract paragraphs may be preceded by a label.
-					// The label is given as an XML parameter, e.g.:
-					//  <AbstractText Label="BACKGROUND" NlmCategory="BACKGROUND"></AbstractText>
-					$label = $p['Label'];
-					if ( strlen( $label ) ) {
-						$label .= ': ';
-					}
-					$a .= $label . $p . ' ';
-				}
-			}
-			catch (Exception $e) {
-				$a = $e->getMessage();
-			}
-			error_reporting($oldReporting);
-			return trim( $a );
-		}
-		
-
-		/// Returns the citation data as formatted XML.
-		function dumpData() {
-			if ( $this->medline ) {
-				return $this->medline->asXML();
-			}
 		}
 
 		/// Returns the status of the object
@@ -412,50 +167,23 @@
 		function statusMsg() {
 			$s = wfMessage( 'pubmedparser-error' )->text() . ': ';
 			switch ( $this->status ) {
-				case PUBMEDPARSER_OK:
-					return $s . 'ok'; // no i18n since this message will never be shown to the user
 				case PUBMEDPARSER_INVALIDPMID:
 					return $s . wfMessage( 'pubmedparser-error-invalidpmid' )->text();
 				case PUBMEDPARSER_NODATA:
 					return $s . wfMessage( 'pubmedparser-error-nodata' )->text()
-						. ' (PMID: [http://pubmed.gov/' . $this->id . ' ' . $this->id . '])';
+						. ' (PMID: [http://pubmed.gov/' . $this->pmid . ' '
+						. $this->pmid . '])';
 				case PUBMEDPARSER_DBERROR:
 					return $s . wfMessage( 'pubmedparser-error-dberror' )->text();
+				case PUBMEDPARSER_OK:
+					return $s . 'ok'; // no i18n since this message will never be shown to the user
 				default:
 					return 'Status code: #' . $this->status;
 			}
 		}
 
-		/*! A private function that returns either the author's last name or
-		 *  the "CollectiveName" is the author is a group.
-		 *  \param   $author must be an instance of SimpleXMLElement
-		 *  \returns         either the author's last name, or the group's collective name 
-		 */
-		private function authorName( $author, $useInitial = false ) {
-			if ( $author instanceof SimpleXMLElement ) {
-				$n = $author->LastName;
-				if ( $n ) {
-					if ( $useInitial ) {
-						$i = $author->Initials;      // Initials is the concatenated string of initials
-						$iarray = str_split($i, 1);  // get the single initials
-						$i = implode( wfMessage( 'pubmedparser-initialperiod' )->text(), $iarray)
-							. wfMessage( 'pubmedparser-initialperiod' )->text();
-						$n = trim( $n . wfMessage( 'pubmedparser-initialseparator' )->text() . ' ' . $i, ' ');
-						return $n;
-					} else {
-						return $n;
-					}
-				} else {
-					return $author->CollectiveName;
-				}
-			}
-		}
-
-		// =======================
-		// Private class elements
-		private $id;			///< holds the PMID
-		private $medline; ///< a SimpleXMLElement object that holds the Medline Data
-		private $article; ///< $medline->PubmedArticle->MedlineCitation->Article
+		public $pmid;     ///< holds the PMID
+		public $article;  ///< instance of PubmedArticle
 		private $status;  ///< holds status information (0 if everything is ok)
 	}
 // vim: sw=4:ts=4:sts=4:noet:comments^=\:///

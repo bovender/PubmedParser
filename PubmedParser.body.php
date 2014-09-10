@@ -30,6 +30,13 @@
 		public static function Setup( &$parser ) {
 			# Set a function hook associating the "pmid" magic word with our function
 			$parser->setFunctionHook( 'PubmedParser', 'PubmedParser::Render' );
+			PubmedParser::loadMessages();
+			return true;
+		}
+
+
+		public static function onUnitTestsList( &$files ) {
+			$files = array_merge( $files, glob( __DIR__ . '/tests/*Test.php' ) );
 			return true;
 		}
 
@@ -42,22 +49,13 @@
 		}
 
 		/// Parser function.
-		/*! \param $parser     The parser; ignored by the function.
-		 *  \param $param1     The mandatory first parameter; expected to be a PMID.
-		 *  \param $param2     The optional second parameter; can indicate a reference name.
+		/** @param $parser     The parser; ignored by the function.
+		 *  @param $param1     The mandatory first parameter; expected to be a PMID.
+		 *  @param $param2     The optional second parameter; can indicate a reference name.
 		 *                     If given, the output will be surrounded by <ref name="$param2"></ref>
-		 *                     tags (note that this requires the Cite extension).*/
+		 *                     tags (note that this requires the Cite extension).
+		 */
 		public static function Render( $parser, $param1 = '', $param2 = '', $param3 = '' ) {
-
-			/* New for version 0.2.1: Implement the ability to force a reload
-			 * of article data from Pubmed, e.g. if an online-first article 
-			 * has been published in print, and the Pubmed entry has been
-			 * updated.
-			 * Users can add an optional 'reload' parameter:
-			 *    {{#PMID:123456|reload}}
-			 * or {{#PMID:123456|ReferenceName|reload}}
-			 */
-
 			$refName = $param2;
 			if ( strtoupper( $refName ) == PUBMEDPARSER_RELOAD ) {
 				$reload = true;
@@ -66,26 +64,27 @@
 				strtoupper( $param3 ) == PUBMEDPARSER_RELOAD ? $reload = true : $reload = false;
 			}
 
-			$pm = new PubmedParserFetcher( $param1, $reload );
+			$fetcher = new PubmedParserFetcher( $param1, $reload );
 
-			if ( $pm->statusCode() == PUBMEDPARSER_OK ) {
-				$output = '{{' . wfMessage( 'pubmedparser-templatename' )->text() . '|'
-					. 'pmid=' . $pm->pmid()
-					. '|' . wfMessage( 'pubmedparser-authors' )->text()    . '=' . $pm->authors()
-					. '|' . wfMessage( 'pubmedparser-authorsi' )->text()   . '=' . $pm->authors( true )
-					. '|' . wfMessage( 'pubmedparser-allauthors' )->text() . '=' . $pm->allAuthors()
-					. '|' . wfMessage( 'pubmedparser-allauthorsi' )->text(). '=' . $pm->allAuthors( true )
-					. '|' . wfMessage( 'pubmedparser-title' )->text()      . '=' . $pm->title()
-					. '|' . wfMessage( 'pubmedparser-journal' )->text()    . '=' . $pm->journal()
-					. '|' . wfMessage( 'pubmedparser-journalcaps' )->text(). '=' . $pm->journalCaps()
-					. '|' . wfMessage( 'pubmedparser-journala' )->text()   . '=' . $pm->journalAbbrev()
-					. '|' . wfMessage( 'pubmedparser-journalanop' )->text(). '=' . $pm->journalAbbrevNoPeriods()
-					. '|' . wfMessage( 'pubmedparser-year' )->text()       . '=' . $pm->year()
-					. '|' . wfMessage( 'pubmedparser-volume' )->text()     . '=' . $pm->volume()
-					. '|' . wfMessage( 'pubmedparser-pages' )->text()      . '=' . $pm->pages()
-					. '|' . wfMessage( 'pubmedparser-firstpage' )->text()  . '=' . $pm->firstPage()
-					. '|' . wfMessage( 'pubmedparser-doi' )->text()        . '=' . $pm->doi()
-					. '|' . wfMessage( 'pubmedparser-abstract' )->text()   . '=' . $pm->abstr()
+			if ( $fetcher->statusCode() == PUBMEDPARSER_OK ) {
+				$article = $fetcher->article;
+				$output = '{{' . PubmedParser::$templateName . '|'
+					. 'pmid=' . $article->pmid
+					. '|' . PubmedParser::$authors     . '=' . $article->authors()
+					. '|' . PubmedParser::$authorsI    . '=' . $article->authors( true )
+					. '|' . PubmedParser::$allAuthors  . '=' . $article->allAuthors()
+					. '|' . PubmedParser::$allAuthorsI . '=' . $article->allAuthors( true )
+					. '|' . PubmedParser::$journal     . '=' . $article->journal
+					. '|' . PubmedParser::$journalCaps . '=' . $article->journalCaps()
+					. '|' . PubmedParser::$journalA    . '=' . $article->journalAbbrev
+					. '|' . PubmedParser::$journalANoP . '=' . $article->journalAbbrevNoPeriods()
+					. '|' . PubmedParser::$year        . '=' . $article->year
+					. '|' . PubmedParser::$volume      . '=' . $article->volume
+					. '|' . PubmedParser::$pages       . '=' . $article->pages
+					. '|' . PubmedParser::$firstPage   . '=' . $article->firstPage()
+					. '|' . PubmedParser::$doi         . '=' . $article->doi
+					. '|' . PubmedParser::$abstract    . '=' . $article->abstract
+					. '|' . PubmedParser::$title       . '=' . $article->title
 					. '}}';
 
 				if ( $refName != '' ) {
@@ -101,4 +100,53 @@
 			// (required for expansion of templates)
 			return array( $output, 'noparse' => false );    
 		}
+
+		/*! Initializes the static class members so that we don't have to
+		 * query the wiki database many times whenever a Pubmed citation is 
+		 * being parsed.
+		 */
+		private static function loadMessages() {
+			PubmedParser::$authors          = wfMessage( 'pubmedparser-authors' )->text();
+			PubmedParser::$authorsI         = wfMessage( 'pubmedparser-authorsi' )->text();
+			PubmedParser::$allAuthors       = wfMessage( 'pubmedparser-allauthors' )->text();
+			PubmedParser::$allAuthorsI      = wfMessage( 'pubmedparser-allauthorsi' )->text();
+			PubmedParser::$journal          = wfMessage( 'pubmedparser-journal' )->text();
+			PubmedParser::$journalCaps      = wfMessage( 'pubmedparser-journalcaps' )->text();
+			PubmedParser::$journalA         = wfMessage( 'pubmedparser-journala' )->text();
+			PubmedParser::$journalANoP      = wfMessage( 'pubmedparser-journalanop' )->text();
+			PubmedParser::$year             = wfMessage( 'pubmedparser-year' )->text();
+			PubmedParser::$volume           = wfMessage( 'pubmedparser-volume' )->text();
+			PubmedParser::$pages            = wfMessage( 'pubmedparser-pages' )->text();
+			PubmedParser::$firstPage        = wfMessage( 'pubmedparser-firstpage' )->text();
+			PubmedParser::$doi              = wfMessage( 'pubmedparser-doi' )->text();
+			PubmedParser::$abstract         = wfMessage( 'pubmedparser-abstract' )->text();
+			PubmedParser::$title            = wfMessage( 'pubmedparser-title' )->text();
+			PubmedParser::$etAl             = wfMessage( 'pubmedparser-etal' )->text();
+			PubmedParser::$and              = wfMessage( 'pubmedparser-and' )->text();
+			PubmedParser::$initialPeriod    = wfMessage( 'pubmedparser-initialperiod' )->text();
+			PubmedParser::$initialSeparator = wfMessage( 'pubmedparser-initialseparator' )->text();
+			PubmedParser::$templateName     = wfMessage( 'pubmedparser-templatename' )->text();
+		}
+
+		public static $authors;
+    public static $authorsI;
+    public static $allAuthors;
+    public static $allAuthorsI;
+    public static $journal;
+    public static $journalCaps;
+    public static $journalA;
+    public static $journalANoP;
+    public static $year;
+    public static $volume;
+    public static $pages;
+    public static $firstPage;
+    public static $doi;
+    public static $abstract;
+    public static $title;
+    public static $etAl;
+    public static $and;
+		public static $initialPeriod;
+		public static $initialSeparator;
+		public static $templateName;
 	}
+// vim: ts=2:sw=2:noet:comments^=\:///

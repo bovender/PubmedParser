@@ -1,0 +1,321 @@
+<?xml version="1.0"?>
+<!DOCTYPE PubmedArticleSet PUBLIC "-//NLM//DTD PubMedArticle, 1st January 2014//EN" "http://www.ncbi.nlm.nih.gov/corehtml/query/DTD/pubmed_140101.dtd">
+<PubmedArticleSet>
+<PubmedArticle>
+    <MedlineCitation Owner="NLM" Status="MEDLINE">
+        <PMID Version="1">23114903</PMID>
+        <DateCreated>
+            <Year>2012</Year>
+            <Month>11</Month>
+            <Day>01</Day>
+        </DateCreated>
+        <DateCompleted>
+            <Year>2013</Year>
+            <Month>02</Month>
+            <Day>11</Day>
+        </DateCompleted>
+        <DateRevised>
+            <Year>2013</Year>
+            <Month>11</Month>
+            <Day>25</Day>
+        </DateRevised>
+        <Article PubModel="Print">
+            <Journal>
+                <ISSN IssnType="Electronic">1460-2385</ISSN>
+                <JournalIssue CitedMedium="Internet">
+                    <Volume>27</Volume>
+                    <Issue>10</Issue>
+                    <PubDate>
+                        <Year>2012</Year>
+                        <Month>Oct</Month>
+                    </PubDate>
+                </JournalIssue>
+                <Title>Nephrology, dialysis, transplantation : official publication of the European Dialysis and Transplant Association - European Renal Association</Title>
+                <ISOAbbreviation>Nephrol. Dial. Transplant.</ISOAbbreviation>
+            </Journal>
+            <ArticleTitle>Best supportive care and therapeutic plasma exchange with or without eculizumab in Shiga-toxin-producing E. coli O104:H4 induced haemolytic-uraemic syndrome: an analysis of the German STEC-HUS registry.</ArticleTitle>
+            <Pagination>
+                <MedlinePgn>3807-15</MedlinePgn>
+            </Pagination>
+            <ELocationID EIdType="doi" ValidYN="Y">10.1093/ndt/gfs394</ELocationID>
+            <Abstract>
+                <AbstractText Label="BACKGROUND" NlmCategory="BACKGROUND">May 22nd marks the beginning of a Shiga-toxin-producing Escherichia coli (STEC) O104:H4 outbreak in Northern Germany. By its end on 27 July, it had claimed 53 deaths among 2987 STEC and 855 confirmed haemolytic-uraemic syndrome (HUS) cases.</AbstractText>
+                <AbstractText Label="METHODS" NlmCategory="METHODS">To describe short-term effectiveness of best supportive care (BSC), therapeutic plasma exchange (TPE) and TPE with eculizumab (TPE-Ecu) in 631 patients with suspected HUS treated in 84 hospitals in Germany, Sweden and the Netherlands using the web-based registry of the DGfN (online since 27 May).</AbstractText>
+                <AbstractText Label="RESULTS" NlmCategory="RESULTS">Of 631 entries, 491 fulfilled the definition of HUS (median age 46 years; 71% females). The median (inter-quartile range) hospital stay was 22 (14-31) days. Two hundred and eighty-one (57%) patients underwent dialysis and 114 (23%) mechanical ventilation. Fifty-seven patients received BSC, 241 TPE and 193 TPE-Ecu. Treatment strategy was dependent on disease severity (laboratory signs of haemolysis, thrombocytopenia, peak creatinine level, need for dialysis, neurological symptoms, frequency of seizures) which was lower in BSC than in TPE and TPE-Ecu patients. At study endpoint (hospital discharge or death), the median creatinine was lower in BSC [1.1 mg/dL (0.9-1.3)] than in TPE [1.2 mg/dL (1.0-1.5), P &lt; 0.05] and TPE-Ecu [1.4 mg/dL (1.0-2.2), P &lt; 0.001], while need for dialysis was not different between BSC (0.0%, n = 0), TPE (3.7%; n = 9) and TPE-Ecu (4.7%, n = 9). Seizures were absent in BSC and rare in TPE (0.4%; n = 1) and TPE-Ecu (2.6%; n = 5) patients. Total hospital mortality in HUS patients was 4.1% (n = 20) and did not differ significantly between the TPE and TPE-Ecu groups.</AbstractText>
+                <AbstractText Label="CONCLUSIONS" NlmCategory="CONCLUSIONS">Despite frequent renal impairment, advanced neurological disorders and severe respiratory failure, short-term outcome was better than expected when compared with previous reports. Within the limitations of a retrospective registry analysis, our data do not support the notion of a short-term benefit of Ecu in comparison to TPE alone in the treatment of STEC-HUS. A randomized trial comparing BSC, TPE and Ecu seems to be prudent and necessary prior to establishing new treatment guidelines for STEC-HUS.</AbstractText>
+            </Abstract>
+            <AuthorList CompleteYN="Y">
+                <Author ValidYN="Y">
+                    <LastName>Kielstein</LastName>
+                    <ForeName>Jan T</ForeName>
+                    <Initials>JT</Initials>
+                    <Affiliation>Hannover Medical School, Hannover, Germany.</Affiliation>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Beutel</LastName>
+                    <ForeName>Gernot</ForeName>
+                    <Initials>G</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Fleig</LastName>
+                    <ForeName>Susanne</ForeName>
+                    <Initials>S</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Steinhoff</LastName>
+                    <ForeName>J&#xFC;rgen</ForeName>
+                    <Initials>J</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Meyer</LastName>
+                    <ForeName>Tobias N</ForeName>
+                    <Initials>TN</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Hafer</LastName>
+                    <ForeName>Carsten</ForeName>
+                    <Initials>C</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Kuhlmann</LastName>
+                    <ForeName>Uwe</ForeName>
+                    <Initials>U</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Bramstedt</LastName>
+                    <ForeName>J&#xF6;rn</ForeName>
+                    <Initials>J</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Panzer</LastName>
+                    <ForeName>Ulf</ForeName>
+                    <Initials>U</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Vischedyk</LastName>
+                    <ForeName>Martin</ForeName>
+                    <Initials>M</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Busch</LastName>
+                    <ForeName>Veit</ForeName>
+                    <Initials>V</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Ries</LastName>
+                    <ForeName>Wolfgang</ForeName>
+                    <Initials>W</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Mitzner</LastName>
+                    <ForeName>Steffen</ForeName>
+                    <Initials>S</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Mees</LastName>
+                    <ForeName>Stefan</ForeName>
+                    <Initials>S</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Stracke</LastName>
+                    <ForeName>Sylvia</ForeName>
+                    <Initials>S</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>N&#xFC;rnberger</LastName>
+                    <ForeName>Jens</ForeName>
+                    <Initials>J</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Gerke</LastName>
+                    <ForeName>Peter</ForeName>
+                    <Initials>P</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Wiesner</LastName>
+                    <ForeName>Monika</ForeName>
+                    <Initials>M</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Sucke</LastName>
+                    <ForeName>Bernd</ForeName>
+                    <Initials>B</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Abu-Tair</LastName>
+                    <ForeName>Miriam</ForeName>
+                    <Initials>M</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Kribben</LastName>
+                    <ForeName>Andreas</ForeName>
+                    <Initials>A</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Klause</LastName>
+                    <ForeName>Norbert</ForeName>
+                    <Initials>N</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Schindler</LastName>
+                    <ForeName>Ralf</ForeName>
+                    <Initials>R</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Merkel</LastName>
+                    <ForeName>Frank</ForeName>
+                    <Initials>F</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Schnatter</LastName>
+                    <ForeName>Sabine</ForeName>
+                    <Initials>S</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Dorresteijn</LastName>
+                    <ForeName>Eiske M</ForeName>
+                    <Initials>EM</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Samuelsson</LastName>
+                    <ForeName>Ola</ForeName>
+                    <Initials>O</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Brunkhorst</LastName>
+                    <ForeName>Reinhard</ForeName>
+                    <Initials>R</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <CollectiveName>Collaborators of the DGfN STEC-HUS registry</CollectiveName>
+                </Author>
+            </AuthorList>
+            <Language>eng</Language>
+            <PublicationTypeList>
+                <PublicationType>Journal Article</PublicationType>
+                <PublicationType>Research Support, Non-U.S. Gov't</PublicationType>
+            </PublicationTypeList>
+        </Article>
+        <MedlineJournalInfo>
+            <Country>England</Country>
+            <MedlineTA>Nephrol Dial Transplant</MedlineTA>
+            <NlmUniqueID>8706402</NlmUniqueID>
+            <ISSNLinking>0931-0509</ISSNLinking>
+        </MedlineJournalInfo>
+        <ChemicalList>
+            <Chemical>
+                <RegistryNumber>0</RegistryNumber>
+                <NameOfSubstance>Antibodies, Monoclonal, Humanized</NameOfSubstance>
+            </Chemical>
+            <Chemical>
+                <RegistryNumber>A3ULP0F556</RegistryNumber>
+                <NameOfSubstance>eculizumab</NameOfSubstance>
+            </Chemical>
+        </ChemicalList>
+        <CitationSubset>IM</CitationSubset>
+        <CommentsCorrectionsList>
+            <CommentsCorrections RefType="CommentIn">
+                <RefSource>Nephrol Dial Transplant. 2012 Oct;27(10):3669-74</RefSource>
+                <PMID Version="1">23114892</PMID>
+            </CommentsCorrections>
+        </CommentsCorrectionsList>
+        <MeshHeadingList>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Adult</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Aged</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Aged, 80 and over</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Antibodies, Monoclonal, Humanized</DescriptorName>
+                <QualifierName MajorTopicYN="Y">therapeutic use</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Epidemics</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Escherichia coli Infections</DescriptorName>
+                <QualifierName MajorTopicYN="Y">complications</QualifierName>
+                <QualifierName MajorTopicYN="N">epidemiology</QualifierName>
+                <QualifierName MajorTopicYN="N">microbiology</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Female</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N" Type="Geographic">Germany</DescriptorName>
+                <QualifierName MajorTopicYN="N">epidemiology</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Hemolytic-Uremic Syndrome</DescriptorName>
+                <QualifierName MajorTopicYN="Y">etiology</QualifierName>
+                <QualifierName MajorTopicYN="N">mortality</QualifierName>
+                <QualifierName MajorTopicYN="Y">therapy</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Humans</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Male</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Middle Aged</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="Y">Plasma Exchange</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Registries</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Retrospective Studies</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Shiga-Toxigenic Escherichia coli</DescriptorName>
+                <QualifierName MajorTopicYN="Y">pathogenicity</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Treatment Outcome</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Young Adult</DescriptorName>
+            </MeshHeading>
+        </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+        <History>
+            <PubMedPubDate PubStatus="entrez">
+                <Year>2012</Year>
+                <Month>11</Month>
+                <Day>2</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="pubmed">
+                <Year>2012</Year>
+                <Month>11</Month>
+                <Day>2</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="medline">
+                <Year>2013</Year>
+                <Month>2</Month>
+                <Day>12</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+        </History>
+        <PublicationStatus>ppublish</PublicationStatus>
+        <ArticleIdList>
+            <ArticleId IdType="pii">gfs394</ArticleId>
+            <ArticleId IdType="doi">10.1093/ndt/gfs394</ArticleId>
+            <ArticleId IdType="pubmed">23114903</ArticleId>
+        </ArticleIdList>
+    </PubmedData>
+</PubmedArticle>
+
+</PubmedArticleSet>

@@ -1,6 +1,11 @@
 PubmedParser Changelog
 ======================
 
+3.0.0
+  Verbessert:    Performancesteigerung.
+2.0.0
+  Verändert:     XML-Daten werden nicht mehr im Dateisystem, sondern in
+                 einer Datenbank-Tabelle gespeichert.
 1.0.0
   Verbessert:    Download der XML-Daten, wenn ALLOW_URL_FOPEN nicht gesetzt
 				 ist.
