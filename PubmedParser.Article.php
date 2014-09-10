@@ -217,8 +217,13 @@ class PubmedArticle
 				$iarray = str_split($i, 1);
 				$i = implode( PubmedParser::$initialPeriod, $iarray)
 					. PubmedParser::$initialPeriod;
+				// Spaces in the "Pubmedparser-initialperiod" system message must be 
+				// encoded as "&nbsp;", lest they be removed by MediaWiki's text 
+				// processing. In order to remove the trailing "&nbsp;" after 
+				// concatenating all authors and initials, we use the trim function 
+				// with " \xc2\xa0".
 				$author = trim( $author . PubmedParser::$initialSeparator
-					. ' ' . $i, ' ');
+					. ' ' . $i, " \xc2\xa0");
 			}
 			return $author;
 		} else {
