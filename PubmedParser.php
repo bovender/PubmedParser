@@ -49,9 +49,3 @@
   $wgHooks['ParserFirstCallInit'][] = 'PubmedParser::Setup';
   $wgHooks['LoadExtensionSchemaUpdates'][] = 'PubmedParser::CreateTable';
   $wgHooks['UnitTestsList'][] = 'PubmedParser::onUnitTestsList';
-
-  /*! Path to the cache folder
-   *  To enable caching, make sure this path exists and is writable for
-   *  the web server (chmod 777).
-   */
-  $wgPubmedParserCache = "$IP/cache/PubmedParser";
