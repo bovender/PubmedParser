@@ -53,6 +53,7 @@ class Core
 			$this->reload = true;
 			$this->reference = $param2;
 		}
+		$this->lookUp();
 	}
 
 	/** Central function of this class.
@@ -60,7 +61,7 @@ class Core
 	 */
 	function execute() {
 		if ( $this->statusCode() == PUBMEDPARSER_OK ) {
-			$output = $this->buildTemplate();
+			$output = $this->buildTemplate( $this->article );
 			if ( $this->reference ) {
 				$output = "<ref name=\"{$this->reference}\">$output</ref>";
 			}
@@ -113,15 +114,14 @@ class Core
 	function lookUp() {
 		// First, let's check if the PMID consists of digits only
 		// This check is also important to prevent SQL injections!
-		if ( !ctype_digit2( $pmid ) ) {
+		if ( !ctype_digit2( $this->pmid ) ) {
 			$this->status = PUBMEDPARSER_INVALIDPMID;
 			return;
 		}
-		$this->pmid = $pmid;
 		
 		$this->status = PUBMEDPARSER_OK;
-		if ( ! $reload ) {
-			$xml = self::fetchFromDb( $pmid );
+		if ( ! $this->reload ) {
+			$xml = self::fetchFromDb( $this->pmid );
 			if ( $this->status != PUBMEDPARSER_OK ) {
 				return;
 			}
@@ -132,7 +132,8 @@ class Core
 			// note: it's important to have retmode=xml, not rettype=xml!
 			// rettype=xml returns an HTML page with formatted XML-like text;
 			// retmode=xml returns raw XML.
-			$url = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=$pmid&retmode=xml";
+			$url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi'
+				. "?db=pubmed&id={$this->pmid}&retmode=xml";
 			try {
 				$xml = file_get_contents( $url );
 			}
@@ -153,12 +154,12 @@ class Core
 				/* Now that we have the data, let's attempt to store it locally
 				 * in the cache.
 				 */
-				$this->storeInDb( $pmid, $xml );
+				$this->storeInDb( $this->pmid, $xml );
 			}
 		} // if no xml in database
 		
 		if ( $xml ) {
-			$this->article = new PubmedArticle( $pmid, $xml );
+			$this->article = new Article( $this->pmid, $xml );
 			if ( !$this->article->xml ) {
 				$this->status = PUBMEDPARSER_INVALIDXML;
 			}
@@ -219,7 +220,9 @@ class Core
 		$s = wfMessage( 'pubmedparser-error' )->text() . ': ';
 		switch ( $this->status ) {
 			case PUBMEDPARSER_INVALIDPMID:
-				return $s . wfMessage( 'pubmedparser-error-invalidpmid' )->text();
+				return $s . wfMessage( 'pubmedparser-error-invalidpmid' )->text()
+					. ' (PMID: [http://pubmed.gov/' . $this->pmid . ' '
+					. $this->pmid . '])';
 			case PUBMEDPARSER_NODATA:
 				return $s . wfMessage( 'pubmedparser-error-nodata' )->text()
 					. ' (PMID: [http://pubmed.gov/' . $this->pmid . ' '

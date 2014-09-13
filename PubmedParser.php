@@ -32,7 +32,7 @@
     'descriptionmsg' => 'pubmedparser-desc'
     );
 
-  define( 'PUBMEDPARSER_OK',             1); ///< Status code: okay
+  define( 'PUBMEDPARSER_OK',             0); ///< Status code: okay
   define( 'PUBMEDPARSER_INVALIDPMID',    2); ///< Status code: PMID is invalid
   define( 'PUBMEDPARSER_NODATA',         3); ///< Status code: Pubmed returned no data
   define( 'PUBMEDPARSER_CANNOTDOWNLOAD', 4); ///< Status code: cannot download XML data
