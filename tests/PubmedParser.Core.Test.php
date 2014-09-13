@@ -1,10 +1,14 @@
 <?php
+namespace PubmedParser;
+
 /**
  * Unit tests for the PubmedParserFetcher class.
  * @group Database
  * @covers PubmedParser
  */
-class PubmedParserTest extends MediaWikiTestCase {
+class CoreTest extends \MediaWikiTestCase {
+	private $testPmid = 454545;
+
 	/** An array of template fields that are used to build the reference. The 
 		* keys of this associative array map to the public static properties of 
 		* the PubmedParserFetcher class.
@@ -30,42 +34,45 @@ class PubmedParserTest extends MediaWikiTestCase {
 		'firstPage',
 	);
 
-	/**
-	 * Tests that invalid PMIDs produce errors.
-	 * @covers PubmedParserFetcher::Render()
-	 * @dataProvider invalidPmidProvider
-	 */
-	public function testRenderWithInvalidPmidOutputsError( $pmid ) {
-		$mockParser = $this->getMock( 'Parser' );
-		$result = PubmedParser::Render( $mockParser, $pmid );
-		$this->assertRegExp('/span class="pubmedparser-error/',
-		 	$result[0], 'No error was reported dispite invalid PMID');
-	}
-
-	/**
-	 * @covers PubmedParser::buildTemplate
-	 * @dataProvider pubmedXmlProvider
-	 */
-	public function testBuildTemplate( $xml ) {
+	public function setUp() {
+		parent::setUp();
 		// Since wfMessage returns empty strings, prepare the messages.
 		foreach ( $this->templateFields as $key => $value ) {
 			// Two $$ to use the content of $key as variable name.
-			PubmedParser::$$key = strtolower( $key );
+			Extension::$$key = strtolower( $key );
 		};
 		foreach ( $this->untestedFields as $key ) {
 			// Two $$ to use the content of $key as variable name.
-			PubmedParser::$$key = strtolower( $key );
+			Extension::$$key = strtolower( $key );
 		};
 
 		// Manually set the template name; this cannot be done with the 
 		// $templateFields array since there is no corresponding value, and we 
 		// loop over the entire array further below to assert correctness of the 
 		// template transclusion that was built.
-		PubmedParser::$templateName = "pubmed";
+		Extension::$templateName = "pubmed";
+	}
 
-		$article = new PubmedArticle( 123, $xml );
-		$template = PubmedParser::buildTemplate( $article );
-		$year = PubmedParser::$year;
+	/**
+	 * Tests that invalid PMIDs produce errors.
+	 * @covers PubmedParserFetcher::Render()
+	 * @dataProvider invalidPmidProvider
+	 */
+	public function testRenderWithInvalidPmidOutputsError( $pmid ) {
+		$null = null;
+		$result = Extension::render( $null, $pmid );
+		$this->assertRegExp('/span class="pubmedparser-error/',
+		 	$result[0], 'No error was reported despite invalid PMID');
+	}
+
+	/**
+	 * @covers PubmedParser::buildTemplate
+	 * @dataProvider pubmedXmlProvider
+	 */
+	public function testBuildTemplate( $pmid, $xml ) {
+		$article = new Article( $pmid, $xml );
+		$core = new Core();
+		$template = $core->buildTemplate( $article );
 		foreach ( $this->templateFields as $field => $value ) {
 			$s = strtolower( $field );
 			$this->assertRegExp( "/$s=$value/", $template,
@@ -82,7 +89,7 @@ class PubmedParserTest extends MediaWikiTestCase {
 
 	public function pubmedXmlProvider() {
 		return array(
-			array( <<<EOF
+			array( $this->testPmid, <<<EOF
 <!-- Note that this is not a complete XML structure, just
      a reduced set of nodes for testing purposes -->
 <PubmedArticleSet>
@@ -120,7 +127,7 @@ class PubmedParserTest extends MediaWikiTestCase {
     <PubmedData>
         <ArticleIdList>
             <ArticleId IdType="doi">{$this->templateFields['doi']}</ArticleId>
-            <ArticleId IdType="pubmed">24717514</ArticleId>
+            <ArticleId IdType="pubmed">{$this->testPmid}</ArticleId>
         </ArticleIdList>
     </PubmedData>
 </PubmedArticle>

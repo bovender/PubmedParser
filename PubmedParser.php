@@ -42,11 +42,11 @@
   
   $wgExtensionMessagesFiles['PubmedParser'] = dirname( __FILE__ ) . '/PubmedParser.i18n.php';
 
-  $wgAutoloadClasses['PubmedParser'] = dirname(__FILE__) . '/PubmedParser.body.php';
-  $wgAutoloadClasses['PubmedParserFetcher'] = dirname(__FILE__) . '/PubmedParserFetcher.body.php';
-  $wgAutoloadClasses['PubmedArticle'] = dirname(__FILE__) . '/PubmedParser.Article.php';
+  $wgAutoloadClasses['PubmedParser\Extension'] = dirname(__FILE__) . '/PubmedParser.Extension.php';
+  $wgAutoloadClasses['PubmedParser\Core'] = dirname(__FILE__) . '/PubmedParser.Core.php';
+  $wgAutoloadClasses['PubmedParser\Article'] = dirname(__FILE__) . '/PubmedParser.Article.php';
 
   // Define a setup function
-  $wgHooks['ParserFirstCallInit'][] = 'PubmedParser::setup';
-  $wgHooks['LoadExtensionSchemaUpdates'][] = 'PubmedParser::createTable';
-  $wgHooks['UnitTestsList'][] = 'PubmedParser::onUnitTestsList';
+  $wgHooks['ParserFirstCallInit'][] = 'PubmedParser\Extension::setup';
+  $wgHooks['LoadExtensionSchemaUpdates'][] = 'PubmedParser\Extension::createTable';
+  $wgHooks['UnitTestsList'][] = 'PubmedParser\Extension::onUnitTestsList';

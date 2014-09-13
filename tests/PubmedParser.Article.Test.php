@@ -2,9 +2,11 @@
 /**
  * Unit tests for the PubmedParser extension.
  * group Database
- * @covers PubmedArticle
+ * @covers PubmedParser\Article
  */
-class PubmedArticleTest extends MediaWikiTestCase {
+namespace PubmedParser;
+
+class ArticleTest extends \MediaWikiTestCase {
 	/**
 	 * Main unit test for PubmedArticle properties.
 	 * This test contains lots of assertions which is not considered good 
@@ -16,7 +18,7 @@ class PubmedArticleTest extends MediaWikiTestCase {
 	 * @dataProvider xmlProvider
 	 */
 	public function testProperties( $pmid, $xml ) {
-		$article = new PubmedArticle( $pmid, $xml );
+		$article = new Article( $pmid, $xml );
 		$simple = simplexml_load_string( $xml );
 		$simpleArticle = $simple->PubmedArticle->MedlineCitation->Article;
 		$this->assertEquals( $article->pmid, $pmid, 'PMID incorrect' );
