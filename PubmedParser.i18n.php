@@ -11,6 +11,7 @@ $messages['en'] = array(
 	'pubmedparser-error-invalidpmid' => 'Invalid PMID, please check.',
 	'pubmedparser-error-cannotdownload' => 'Cannot download PubMed XML data since CURL library not present and ALLOW_URL_FOPEN not allowed.',
 	'pubmedparser-error-dberror' => 'The PubmedParser extension encountered a database error. Has the database schema been upgraded after installing the extension?',
+	'pubmedparser-error-invalidxml' => 'The PubmedParser extension received invalid XML data.',
 
 	// the following are the default template name and parameter names;
 	// no need to localize them, but we define them as messages to allow
@@ -44,6 +45,7 @@ $messages['de'] = array(
 	'pubmedparser-error-invalidpmid' => 'Ungültige PMID, bitte überprüfen.',
 	'pubmedparser-error-cannotdownload' => 'Kein Zugriff auf PubMed-XML-Daten möglich, da CURL nicht installiert und ALLOW_URL_FOPEN nicht aktiviert.',
 	'pubmedparser-error-dberror' => 'Die PubmedParser-Erweiterung hat einen Datenbankfehler verursacht. Ist nach dem Installieren das Datenbankschema aktualisiert worden?',
+	'pubmedparser-error-invalidxml' => 'Die PubmedParser-Erweiterung hat ungültige XML-Daten erhalten.',
 );
 
 $magicWords = array();
