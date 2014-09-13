@@ -4,7 +4,7 @@
  * group Database
  * @covers PubmedArticle
  */
-class PubmedArticleTest extends PHPUnit_Framework_TestCase {
+class PubmedArticleTest extends MediaWikiTestCase {
 	/**
 	 * Main unit test for PubmedArticle properties.
 	 * This test contains lots of assertions which is not considered good 

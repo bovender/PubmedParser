@@ -2,7 +2,7 @@
 /*
  *      \file PubmedParser.php
  *      
- *      Copyright 2011-2013 Daniel Kraus <krada@gmx.net>
+ *      Copyright 2011-2014 Daniel Kraus <krada@gmx.net>
  *      
  *      This program is free software; you can redistribute it and/or modify
  *      it under the terms of the GNU General Public License as published by
@@ -37,6 +37,7 @@
   define( 'PUBMEDPARSER_NODATA',         3); ///< Status code: Pubmed returned no data
   define( 'PUBMEDPARSER_CANNOTDOWNLOAD', 4); ///< Status code: cannot download XML data
   define( 'PUBMEDPARSER_DBERROR',        5);
+  define( 'PUBMEDPARSER_INVALIDXML',     6); ///< Status code: Invalid XML data received
   define( 'PUBMEDPARSER_RELOAD',      'RELOAD'); ///< Name of the 'reload' option (must be upper case!).
   
   $wgExtensionMessagesFiles['PubmedParser'] = dirname( __FILE__ ) . '/PubmedParser.i18n.php';
@@ -46,6 +47,6 @@
   $wgAutoloadClasses['PubmedArticle'] = dirname(__FILE__) . '/PubmedParser.Article.php';
 
   // Define a setup function
-  $wgHooks['ParserFirstCallInit'][] = 'PubmedParser::Setup';
-  $wgHooks['LoadExtensionSchemaUpdates'][] = 'PubmedParser::CreateTable';
+  $wgHooks['ParserFirstCallInit'][] = 'PubmedParser::setup';
+  $wgHooks['LoadExtensionSchemaUpdates'][] = 'PubmedParser::createTable';
   $wgHooks['UnitTestsList'][] = 'PubmedParser::onUnitTestsList';

@@ -43,12 +43,15 @@ class PubmedArticle
 	 */
 	function __construct( $pmid, $xml )
 	{
-		$reader = XMLReader::xml( $xml );
-		if ( $reader )
-		{
+		try {
+			$reader = XMLReader::xml( $xml );
 			$this->pmid = $pmid;
 			$this->xml = $xml;
 			$this->parse( $reader );
+		}
+		catch ( Exception $e ) {
+			$this->xml = false;
+			// echo( $e );
 		}
 	}
 

@@ -75,7 +75,6 @@
 			}
 
 			$this->status = PUBMEDPARSER_OK;
-			$xml = null;
 			if ( ! $reload ) {
 				$xml = self::fetchFromDb( $pmid );
 				if ( $this->status != PUBMEDPARSER_OK ) {
@@ -89,16 +88,20 @@
 				// rettype=xml returns an HTML page with formatted XML-like text;
 				// retmode=xml returns raw XML.
 				$url = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=$pmid&retmode=xml";
-				if ( ini_get( 'allow_url_fopen' ) == true ) {
+				try {
 					$xml = file_get_contents( $url );
-				} else if ( function_exists('curl_init') )  {
-					$curl = curl_init( $url );
-					curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
-					$xml = curl_exec( $curl );
-					curl_close( $curl );
-				} else {
-					$this->status = PUBMEDPARSER_CANNOTDOWNLOAD;
-					return;
+				}
+				catch (Exception $e) {
+					try {
+						$curl = curl_init( $url );
+						curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
+						$xml = curl_exec( $curl );
+						curl_close( $curl );
+					}
+					catch (Exception $e) {
+						$this->status = PUBMEDPARSER_CANNOTDOWNLOAD;
+						return;
+				   	}
 				}
 
 				/* Now that we have the data, let's attempt to store it locally
@@ -107,8 +110,11 @@
 				$this->storeInDb( $pmid, $xml );
 			} // if no xml in database
 			
-			if ( ! is_null( $xml ) ) {
+			if ( $xml ) {
 				$this->article = new PubmedArticle( $pmid, $xml );
+				if ( $this->article->xml ) {
+					$this->status = PUBMEDPARSER_INVALIDXML;
+				}
 			}
 			else {
 				$this->status = PUBMEDPARSER_NODATA;
