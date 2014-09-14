@@ -172,18 +172,18 @@ class Core
 	// *************************************************************
 	// Database caching
 
-	/// Fetches a PMID record from the wiki database, if available.
-	/// @param $pmid Pubmed ID to look up. 
-	/// @return XML string containing the Pubmed record, of null if the 
-	/// record was not found.
-	/// @note $pmid must be an integer to prevent SQL injections. Since 
-	/// it is a scalar, specifying a typed parameter in the function 
-	/// signature does not work. This is a private method that is called 
-	/// by PubmedParserFetcher::lookUp() which ensures that PMIDs are 
-	/// integers.
+	/** Fetches a PMID record from the wiki database, if available.
+	 * @param $pmid Pubmed ID to look up. 
+	 * @return XML string containing the Pubmed record, of null if the 
+	 * record was not found.
+	 * @note $pmid must be an integer to prevent SQL injections. Since 
+	 * it is a scalar, specifying a typed parameter in the function 
+	 * signature does not work. This is a private method that is called 
+	 * by PubmedParserFetcher::lookUp() which ensures that PMIDs are 
+	 * integers.
+	 */
 	private function fetchFromDb( $pmid ) {
-		$dbr = wfGetDB( DB_SLAVE );
-		$dbr->ignoreErrors( true );
+		$dbr = $this->getReadDb();
 		$res = $dbr->select( 
 			'pubmed', 
 			'xml', 
@@ -197,12 +197,31 @@ class Core
 			}
 		} else {
 			$this->status = PUBMEDPARSER_DBERROR;
+			return $null;
 		}
 	}
 
-	/// Stores the current PMID record in the wiki database.
+	private static $_readDb = null;
+
+	/** Accessor for the current database read connection.
+	 * The connection will be created if it does not exist yet.
+	 * @return Database object as created by MediaWiki's wfGetDb().
+	 */
+	protected function getReadDb() {
+		if ( !$_readDb ) {
+			self::$_readDb = wfGetDB( DB_SLAVE );
+			self::$_readDb->ignoreErrors( true );
+		};
+		return self::$_readDb;
+	}
+
+	/** Stores the current PMID record in the wiki database.
+	 * @param integer $pmid Pubmed identifier
+	 * @param string  $xml  Pubmed XML to store (will be escaped by MediaWiki)
+	 * @return undefined
+	 */
 	private function storeInDb( $pmid, $xml ) {
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = $this->getWriteDb();
 		$dbw->insert( 'pubmed', array(
 			'pmid' => $pmid,
 			'xml' => $xml
@@ -210,7 +229,21 @@ class Core
 		);
 	}
 
-	/// Returns the status of the object
+	private static $_writeDb = null;
+
+	/** Accessor for the current database write connection.
+	 * The connection will be created if it does not exist yet.
+	 * @return Database object as created by MediaWiki's wfGetDb().
+	 */
+	protected function getWriteDb() {
+		if ( !$_writeDb ) {
+			self::$_writeDb = wfGetDB( DB_MASTER );
+		};
+		return self::$_writeDb;
+	}
+
+	/** Returns the status of the object
+	 */
 	function statusCode() {
 		return $this->status;
 	}
