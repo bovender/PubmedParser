@@ -7,6 +7,11 @@
 namespace PubmedParser;
 
 class ArticleTest extends \MediaWikiTestCase {
+
+	protected function setUp() {
+		parent:setUp();
+	}
+
 	/**
 	 * Main unit test for PubmedArticle properties.
 	 * This test contains lots of assertions which is not considered good 
