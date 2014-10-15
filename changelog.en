@@ -1,6 +1,8 @@
 PubmedParser Changelog
 ======================
 
+3.1.1
+	Fixed:    Display version number.
 3.1.0
 	New:      Alternative template name can be given with leading '#'.
 	Changed:  Name of the 'reload' option can be customized in system messages.
