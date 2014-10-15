@@ -93,6 +93,7 @@ class Extension {
 		self::$initialPeriod    = wfMessage( 'pubmedparser-initialperiod' )->text();
 		self::$initialSeparator = wfMessage( 'pubmedparser-initialseparator' )->text();
 		self::$templateName     = wfMessage( 'pubmedparser-templatename' )->text();
+		self::$reload           = wfMessage( 'pubmedparser-reload' )->text();
 	}
 
 	
@@ -116,6 +117,7 @@ class Extension {
 	public static $initialPeriod;
 	public static $initialSeparator;
 	public static $templateName;
+	public static $reload;
 }
 
 // vim: ts=2:sw=2:noet:comments^=\:///
