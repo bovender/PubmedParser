@@ -36,6 +36,7 @@ $messages['en'] = array(
 	'pubmedparser-etal'         => '\'\'et al.\'\'',
 	'pubmedparser-initialseparator' => '',  // how to separate initials from last name
 	'pubmedparser-initialperiod'=> '',      // character to place after an initial
+	'pubmedparser-reload'       => 'reload',
 );
 
 $messages['de'] = array(

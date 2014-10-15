@@ -43,17 +43,37 @@ class Core
 	/**
 	 * Constructor
 	 * @param $pmid Pubmed identifier for the article; must be an integer.
-	 * @param $params[]
+	 * @note The optional parameters $param1 and $param2 may contain one of 
+	 * three parametrs: The name of a <ref name="..."></ref> structure, the name 
+	 * of the template to use to build the citation, or the keyword 'reload' to 
+	 * force reloading the Pubmed XML data from the internet. Note that to be 
+	 * able to distinguish a template name from a reference name, the template 
+	 * name MUST be prefixed with '#' (configurable in MediaWiki system 
+	 * messages).
 	 */
 	function __construct( $pmid = 0, $param1 = '', $param2 = '' ) {
 		$this->status = PUBMEDPARSER_INVALIDPMID;
+		$this->template = Extension::$templateName;
 		$this->pmid = $pmid;
-		$this->reference = $param1;
-		if ( strtoupper( $param1 ) === PUBMEDPARSER_RELOAD ) {
-			$this->reload = true;
-			$this->reference = $param2;
-		}
+		$this->parseParam( $param1 );
+		$this->parseParam( $param2 );
 		$this->lookUp();
+	}
+
+	/**
+	 * Parses a parameter and sets private fields accordingly.
+	 */
+	private function parseParam( $param ) {
+		// Is the parameter meant to indicate the template name?
+		if ( substr( $param, 0, 1 ) === PUBMEDPARSER_TEMPLATECHAR ) {
+			$this->template = substr( $param, 1 );
+		}
+		elseif ( $param === Extension::$reload ) {
+			$this->reload = true;
+		}
+		elseif ( strlen( $param ) > 0 ) {
+			$this->reference = $param;
+		}
 	}
 
 	/** Central function of this class.
@@ -85,7 +105,7 @@ class Core
 	 * @note Article is given as a parameter to facilitate unit testing.
 	 */
 	function buildTemplate( Article $article ) {
-		return '{{' . Extension::$templateName . '|'
+		return '{{' . $this->template . '|'
 			. 'pmid=' . $article->pmid
 			. '|' . Extension::$authors     . '=' . $article->authors()
 			. '|' . Extension::$authorsI    . '=' . $article->authors( true )
@@ -277,6 +297,6 @@ class Core
 	private $reload;    ///< If true, force reloading the XML from the web.
 	private $reference; ///< Optional name of a footnote reference.
 	private $status;  ///< holds status information (0 if everything is ok)
-
+	private $template; ///< Name of the template to use.
 }
-// vim: ts=2:sw=2:noet:comments^=\:///
+// vim: tw=78:ts=2:sw=2:noet:comments^=\:///
