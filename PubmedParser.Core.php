@@ -208,7 +208,7 @@ class Core
 	 * @return Database object as created by MediaWiki's wfGetDb().
 	 */
 	protected function getReadDb() {
-		if ( !$_readDb ) {
+		if ( !self::$_readDb ) {
 			self::$_readDb = wfGetDB( DB_SLAVE );
 			self::$_readDb->ignoreErrors( true );
 		};
