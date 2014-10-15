@@ -2,7 +2,7 @@
 /*
  *      \file PubmedParser.php
  *      
- *      Copyright 2011-2013 Daniel Kraus <krada@gmx.net>
+ *      Copyright 2011-2014 Daniel Kraus <krada@gmx.net>
  *      
  *      This program is free software; you can redistribute it and/or modify
  *      it under the terms of the GNU General Public License as published by
@@ -32,20 +32,21 @@
     'descriptionmsg' => 'pubmedparser-desc'
     );
 
-  define( 'PUBMEDPARSER_OK',             1); ///< Status code: okay
+  define( 'PUBMEDPARSER_OK',             0); ///< Status code: okay
   define( 'PUBMEDPARSER_INVALIDPMID',    2); ///< Status code: PMID is invalid
   define( 'PUBMEDPARSER_NODATA',         3); ///< Status code: Pubmed returned no data
   define( 'PUBMEDPARSER_CANNOTDOWNLOAD', 4); ///< Status code: cannot download XML data
   define( 'PUBMEDPARSER_DBERROR',        5);
-  define( 'PUBMEDPARSER_RELOAD',      'RELOAD'); ///< Name of the 'reload' option (must be upper case!).
+  define( 'PUBMEDPARSER_INVALIDXML',     6); ///< Status code: Invalid XML data received
+  define( 'PUBMEDPARSER_TEMPLATECHAR',   '#'); ///< Indicates template name parameter
   
   $wgExtensionMessagesFiles['PubmedParser'] = dirname( __FILE__ ) . '/PubmedParser.i18n.php';
 
-  $wgAutoloadClasses['PubmedParser'] = dirname(__FILE__) . '/PubmedParser.body.php';
-  $wgAutoloadClasses['PubmedParserFetcher'] = dirname(__FILE__) . '/PubmedParserFetcher.body.php';
-  $wgAutoloadClasses['PubmedArticle'] = dirname(__FILE__) . '/PubmedParser.Article.php';
+  $wgAutoloadClasses['PubmedParser\Extension'] = dirname(__FILE__) . '/PubmedParser.Extension.php';
+  $wgAutoloadClasses['PubmedParser\Core'] = dirname(__FILE__) . '/PubmedParser.Core.php';
+  $wgAutoloadClasses['PubmedParser\Article'] = dirname(__FILE__) . '/PubmedParser.Article.php';
 
   // Define a setup function
-  $wgHooks['ParserFirstCallInit'][] = 'PubmedParser::Setup';
-  $wgHooks['LoadExtensionSchemaUpdates'][] = 'PubmedParser::CreateTable';
-  $wgHooks['UnitTestsList'][] = 'PubmedParser::onUnitTestsList';
+  $wgHooks['ParserFirstCallInit'][] = 'PubmedParser\Extension::setup';
+  $wgHooks['LoadExtensionSchemaUpdates'][] = 'PubmedParser\Extension::createTable';
+  $wgHooks['UnitTestsList'][] = 'PubmedParser\Extension::onUnitTestsList';

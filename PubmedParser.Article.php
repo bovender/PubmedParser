@@ -19,12 +19,13 @@
  *      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  *      MA 02110-1301, USA.
  */
+namespace PubmedParser;
  
 if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'Not an entry point.' );
 }
 
-class PubmedArticle
+class Article
 {
 	public $authors = array();
 	public $collectiveName;
@@ -38,25 +39,29 @@ class PubmedArticle
 	public $doi;
 	public $pmid;
 	public $xml;
+	public $message; ///< May hold an exception message.
 
 	/** Constructs a new article object from a given Pubmed XML string.
 	 */
 	function __construct( $pmid, $xml )
 	{
-		$reader = XMLReader::xml( $xml );
-		if ( $reader )
-		{
+		try {
+			$reader = \XMLReader::xml( $xml );
 			$this->pmid = $pmid;
 			$this->xml = $xml;
 			$this->parse( $reader );
+		}
+		catch ( Exception $e ) {
+			$this->xml = false;
+			$this->message = $e->getMessage();
 		}
 	}
 
 	/** Parses Pubmed XML
 	 */
-	private function parse( XMLReader $reader ) {
+	private function parse( \XMLReader $reader ) {
 		while ( $reader->read() ) {
-			if ( $reader->nodeType == XMLReader::ELEMENT ) {
+			if ( $reader->nodeType == \XMLReader::ELEMENT ) {
 				switch ( $reader->name ) {
 					case 'AuthorList':
 						$this->parseAuthors( $reader );
@@ -99,11 +104,11 @@ class PubmedArticle
 	/** Parse the authors node and build an array of last names and initials. 
 	 * If a collective name is encountered, save it.
 	 */
-	protected function parseAuthors( XMLReader $reader ) {
+	protected function parseAuthors( \XMLReader $reader ) {
 		// Loop over the children of the AuthorList node and stop at the closing 
 		// tag of the AuthorList node.
 		while ( $reader->read() && ! ( $reader->name === 'AuthorList' ) ) {
-			if ( $reader->nodeType == XMLReader::ELEMENT ) {
+			if ( $reader->nodeType == \XMLReader::ELEMENT ) {
 				switch ( $reader->name ) {
 					case 'LastName':
 						$this->authors[] = $reader->readInnerXML();
@@ -123,9 +128,9 @@ class PubmedArticle
 	 * Sometimes, there will be no such node; in these cases, we use the 
 	 * 'MedlineDate' node that is a child of 'JournalIssue'.
 	 */
-	protected function parseDate( XMLReader $reader) {
+	protected function parseDate( \XMLReader $reader) {
 		while ( $reader->read() && ! ( $reader->name === 'PubDate' ) ) {
-			if ( $reader->nodeType == XMLReader::ELEMENT ) {
+			if ( $reader->nodeType == \XMLReader::ELEMENT ) {
 				if ( $reader->name === 'Year' ) {
 					$this->year = $reader->readInnerXML();
 				}
@@ -150,9 +155,9 @@ class PubmedArticle
 		if ( $numAuthors > 0 ) {
 			$a = $this->authorName( 0, $useInitials );
 			if ( $numAuthors > 2 ) {
-				$a .= " " . PubmedParser::$etAl;
+				$a .= " " . Extension::$etAl;
 			} elseif ( $numAuthors = 2 ) {
-				$a .= ' ' . PubmedParser::$and .  ' '	. $this->authorName( 1, $useInitials );
+				$a .= ' ' . Extension::$and .  ' '	. $this->authorName( 1, $useInitials );
 			}
 			return $a;
 		} else {
@@ -172,7 +177,7 @@ class PubmedArticle
 			}
 			// Cut off the last ", ", add the "and" character or word, and append 
 			// the last author's name.
-			$a = substr( $a, 0, strlen( $a )-2 ) . ' ' . PubmedParser::$and 
+			$a = substr( $a, 0, strlen( $a )-2 ) . ' ' . Extension::$and 
 				. ' ' . $this->authorName( $i, $useInitials );
 		} elseif ( $numAuthors = 1 ) {
 			$a = $this->authorName( 0, $useInitials );
@@ -214,14 +219,14 @@ class PubmedArticle
 			if ( $useInitial ) {
 				$i = $this->initials[$index];
 				$iarray = str_split($i, 1);
-				$i = implode( PubmedParser::$initialPeriod, $iarray)
-					. PubmedParser::$initialPeriod;
+				$i = implode( Extension::$initialPeriod, $iarray)
+					. Extension::$initialPeriod;
 				// Spaces in the "Pubmedparser-initialperiod" system message must be 
 				// encoded as "&nbsp;", lest they be removed by MediaWiki's text 
 				// processing. In order to remove the trailing "&nbsp;" after 
 				// concatenating all authors and initials, we use the trim function 
 				// with " \xc2\xa0".
-				$author = trim( $author . PubmedParser::$initialSeparator
+				$author = trim( $author . Extension::$initialSeparator
 					. ' ' . $i, " \xc2\xa0");
 			}
 			return $author;

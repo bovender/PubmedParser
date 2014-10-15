@@ -1,6 +1,10 @@
 PubmedParser Changelog
 ======================
 
+3.1.0
+  Neu:           Alternativer Vorlagenname kann mit '#' angegeben werden.
+  Änderung:      Name der 'reload'-Option ist jetzt konfigurierbar.
+  Korrigiert:    Wiederverwenden der Datenbankverbindung.
 3.0.1
   Korrigiert:    Debug-Logging an Server-Log entfernt.
 3.0.0
