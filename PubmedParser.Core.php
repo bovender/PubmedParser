@@ -133,6 +133,13 @@ class Core
 	 *	on the NCBI server.
 	 */
 	function lookUp() {
+		// If a PMCID is given, attempt to convert it to a PMID.
+		if (preg_match('/PMC\d+/', $this->pmid)) {
+			if (Helpers::Pmc2Pmid($this->pmid, $lookup_pmid)) {
+				$this->pmid = $lookup_pmid;
+			}
+		}
+
 		// First, let's check if the PMID consists of digits only
 		// This check is also important to prevent SQL injections!
 		if ( !ctype_digit2( $this->pmid ) ) {
@@ -155,20 +162,9 @@ class Core
 			// retmode=xml returns raw XML.
 			$url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi'
 				. "?db=pubmed&id={$this->pmid}&retmode=xml";
-			try {
-				$xml = file_get_contents( $url );
-			}
-			catch (Exception $e) {
-				try {
-					$curl = curl_init( $url );
-					curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
-					$xml = curl_exec( $curl );
-					curl_close( $curl );
-				}
-				catch (Exception $e) {
-					$this->status = PUBMEDPARSER_CANNOTDOWNLOAD;
-					return;
-				}
+			if (!Helpers::FetchRemote($url, $xml)) {
+				$this->status = PUBMEDPARSER_CANNOTDOWNLOAD;
+				return;
 			}
 
 			if ( $xml ) {

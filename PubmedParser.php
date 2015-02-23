@@ -45,6 +45,7 @@
   $wgAutoloadClasses['PubmedParser\Extension'] = dirname(__FILE__) . '/PubmedParser.Extension.php';
   $wgAutoloadClasses['PubmedParser\Core'] = dirname(__FILE__) . '/PubmedParser.Core.php';
   $wgAutoloadClasses['PubmedParser\Article'] = dirname(__FILE__) . '/PubmedParser.Article.php';
+  $wgAutoloadClasses['PubmedParser\Helpers'] = dirname(__FILE__) . '/PubmedParser.Helpers.php';
 
   // Define a setup function
   $wgHooks['ParserFirstCallInit'][] = 'PubmedParser\Extension::setup';
