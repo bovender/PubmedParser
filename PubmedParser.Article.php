@@ -38,6 +38,7 @@ class Article
 	public $pages;
 	public $doi;
 	public $pmid;
+	public $pmc;
 	public $xml;
 	public $message; ///< May hold an exception message.
 
@@ -85,6 +86,9 @@ class Article
 						$this->pages = $reader->readInnerXML();
 						break;
 					case 'ArticleId':
+						if ( $reader->getAttribute( 'IdType' ) === 'pmc' ) {
+							$this->pmc = $reader->readInnerXML();
+						}
 						if ( $reader->getAttribute( 'IdType' ) === 'doi' ) {
 							$this->doi = $reader->readInnerXML();
 						}

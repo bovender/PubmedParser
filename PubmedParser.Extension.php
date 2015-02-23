@@ -86,6 +86,7 @@ class Extension {
 		self::$pages            = wfMessage( 'pubmedparser-pages' )->text();
 		self::$firstPage        = wfMessage( 'pubmedparser-firstpage' )->text();
 		self::$doi              = wfMessage( 'pubmedparser-doi' )->text();
+		self::$pmc              = wfMessage( 'pubmedparser-pmc' )->text();
 		self::$abstract         = wfMessage( 'pubmedparser-abstract' )->text();
 		self::$title            = wfMessage( 'pubmedparser-title' )->text();
 		self::$etAl             = wfMessage( 'pubmedparser-etal' )->text();
@@ -110,6 +111,7 @@ class Extension {
 	public static $pages;
 	public static $firstPage;
 	public static $doi;
+	public static $pmc;
 	public static $abstract;
 	public static $title;
 	public static $etAl;

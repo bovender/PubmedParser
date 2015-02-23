@@ -120,6 +120,7 @@ class Core
 			. '|' . Extension::$pages       . '=' . $article->pages
 			. '|' . Extension::$firstPage   . '=' . $article->firstPage()
 			. '|' . Extension::$doi         . '=' . $article->doi
+			. '|' . Extension::$pmc         . '=' . $article->pmc
 			. '|' . Extension::$abstract    . '=' . $article->abstract
 			. '|' . Extension::$title       . '=' . $article->title
 			. '}}';

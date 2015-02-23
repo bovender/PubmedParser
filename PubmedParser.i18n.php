@@ -30,6 +30,7 @@ $messages['en'] = array(
 	'pubmedparser-firstpage'    => 'firstpage',
 	'pubmedparser-year'         => 'year',
 	'pubmedparser-doi'          => 'doi',
+	'pubmedparser-pmc'          => 'pmc',
 	'pubmedparser-title'        => 'title',
 	'pubmedparser-abstract'     => 'abstract',
 	'pubmedparser-and'          => '&',
