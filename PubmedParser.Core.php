@@ -134,7 +134,7 @@ class Core
 	 */
 	function lookUp() {
 		// If a PMCID is given, attempt to convert it to a PMID.
-		if (preg_match('/PMC\d+/', $this->pmid)) {
+		if (preg_match('/PMC\d+/i', $this->pmid)) {
 			if (Helpers::Pmc2Pmid($this->pmid, $lookup_pmid)) {
 				$this->pmid = $lookup_pmid;
 			}
