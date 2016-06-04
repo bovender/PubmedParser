@@ -54,7 +54,7 @@ class Extension {
 	/** Creates a Pubmed table in the Wiki database. This will hold XML 
 	 * strings downloaded from pubmed.gov.
 	 */
-	public static function createTable( DatabaseUpdater $updater ) {
+	public static function createTable( \DatabaseUpdater $updater ) {
 		$updater->addExtensionTable( 'Pubmed',
 			dirname( __FILE__ ) . '/PubmedParser.table.sql', true );
 		return true;
