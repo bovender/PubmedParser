@@ -1,5 +1,3 @@
-[![Total number of downloads from this site](https://img.shields.io/github/downloads/bovender/PubmedParser/total.svg?maxAge=2592000)]()
-
 PubmedParser extension for MediaWiki
 ====================================
 
