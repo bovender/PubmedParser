@@ -227,7 +227,6 @@ class Core
 	protected function getReadDb() {
 		if ( !self::$_readDb ) {
 			self::$_readDb = wfGetDB( DB_SLAVE );
-			self::$_readDb->ignoreErrors( true );
 		};
 		return self::$_readDb;
 	}
