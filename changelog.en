@@ -1,7 +1,10 @@
 PubmedParser Changelog
 ======================
 
-3.1.2
+3.2.0
+	New:	  Ability to use PubmedCentral IDs in addition to PMIDs when 
+		  looking for articles.
+	New:      Ability to output PubmedCentral ID.
 	Fixed:	  Fatal error with MediaWiki version 1.26.x.
 3.1.1
 	Fixed:    Display version number.
@@ -46,5 +49,5 @@ PubmedParser Changelog
 						
 0.2.1
 	New:      'reload' option to force updating the data from Pubmed (if
-              using the cache option).
+                  using the cache option).
 	Improved:  A link to Pubmed is provided if a 'no data' error occurs.
