@@ -2,7 +2,7 @@
 /*
  *      \file PubmedParser.body.php
  *      
- *      Copyright 2011-2014 Daniel Kraus <krada@gmx.net>
+ *      Copyright 2011-2016 Daniel Kraus <bovender@bovender.de>
  *      
  *      This program is free software; you can redistribute it and/or modify
  *      it under the terms of the GNU General Public License as published by

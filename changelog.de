@@ -1,6 +1,10 @@
 PubmedParser Changelog
 ======================
 
+3.2.0
+  Neu:           Es können jetzt auch PubmedCentral-IDs (beginnend mit PMC...)
+                 angegeben und auch ausgegeben werden.
+  Korrigiert:    Fehlermeldung mit MediaWiki 1.26.x.
 3.1.1
   Korrigiert:    Versionsnummern-Anzeige
 3.1.0
