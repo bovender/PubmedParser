@@ -1,6 +1,8 @@
 PubmedParser Changelog
 ======================
 
+3.1.2
+  Korrigiert:    Fehlermeldung mit MediaWiki 1.26.x.
 3.1.1
   Korrigiert:    Versionsnummern-Anzeige
 3.1.0
