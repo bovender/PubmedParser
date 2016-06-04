@@ -2,7 +2,7 @@
 /*
  *      \file PubmedParser.php
  *      
- *      Copyright 2011-2014 Daniel Kraus <krada@gmx.net>
+ *      Copyright 2011-2016 Daniel Kraus <bovender@bovender.de>
  *      
  *      This program is free software; you can redistribute it and/or modify
  *      it under the terms of the GNU General Public License as published by
@@ -26,9 +26,9 @@
   $wgExtensionCredits['parserhook'][] = array(
     'path'           => __FILE__,
     'name'           => 'PubmedParser',
-    'author'         => '[https://www.mediawiki.org/wiki/User:Bovender Daniel Kraus]', 
+    'author'         => '[https://www.mediawiki.org/wiki/User:Bovender Daniel Kraus (bovender)]', 
     'url'            => 'https://www.mediawiki.org/wiki/Extension:PubmedParser',
-    'version'        => '3.1.1',
+    'version'        => '3.1.2',
     'descriptionmsg' => 'pubmedparser-desc'
     );
 
@@ -45,6 +45,7 @@
   $wgAutoloadClasses['PubmedParser\Extension'] = dirname(__FILE__) . '/PubmedParser.Extension.php';
   $wgAutoloadClasses['PubmedParser\Core'] = dirname(__FILE__) . '/PubmedParser.Core.php';
   $wgAutoloadClasses['PubmedParser\Article'] = dirname(__FILE__) . '/PubmedParser.Article.php';
+  $wgAutoloadClasses['PubmedParser\Helpers'] = dirname(__FILE__) . '/PubmedParser.Helpers.php';
 
   // Define a setup function
   $wgHooks['ParserFirstCallInit'][] = 'PubmedParser\Extension::setup';

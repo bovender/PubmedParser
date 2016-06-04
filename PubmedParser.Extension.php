@@ -2,7 +2,7 @@
 /*
  *      \file PubmedParser.body.php
  *      
- *      Copyright 2011-2014 Daniel Kraus <krada@gmx.net>
+ *      Copyright 2011-2016 Daniel Kraus <bovender@bovender.de>
  *      
  *      This program is free software; you can redistribute it and/or modify
  *      it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ class Extension {
 	/** Creates a Pubmed table in the Wiki database. This will hold XML 
 	 * strings downloaded from pubmed.gov.
 	 */
-	public static function createTable( DatabaseUpdater $updater ) {
+	public static function createTable( \DatabaseUpdater $updater ) {
 		$updater->addExtensionTable( 'Pubmed',
 			dirname( __FILE__ ) . '/PubmedParser.table.sql', true );
 		return true;
@@ -86,6 +86,7 @@ class Extension {
 		self::$pages            = wfMessage( 'pubmedparser-pages' )->text();
 		self::$firstPage        = wfMessage( 'pubmedparser-firstpage' )->text();
 		self::$doi              = wfMessage( 'pubmedparser-doi' )->text();
+		self::$pmc              = wfMessage( 'pubmedparser-pmc' )->text();
 		self::$abstract         = wfMessage( 'pubmedparser-abstract' )->text();
 		self::$title            = wfMessage( 'pubmedparser-title' )->text();
 		self::$etAl             = wfMessage( 'pubmedparser-etal' )->text();
@@ -110,6 +111,7 @@ class Extension {
 	public static $pages;
 	public static $firstPage;
 	public static $doi;
+	public static $pmc;
 	public static $abstract;
 	public static $title;
 	public static $etAl;

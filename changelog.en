@@ -1,6 +1,8 @@
 PubmedParser Changelog
 ======================
 
+3.1.2
+	Fixed:	  Fatal error with MediaWiki version 1.26.x.
 3.1.1
 	Fixed:    Display version number.
 3.1.0
