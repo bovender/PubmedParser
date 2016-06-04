@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  *      \file PubmedParser.php
  *      
  *      Copyright 2011-2016 Daniel Kraus <bovender@bovender.de>
@@ -19,35 +19,42 @@
  *      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  *      MA 02110-1301, USA.
  */
-  if ( !defined( 'MEDIAWIKI' ) ) {
-    die( 'Not an entry point.' );
-  }
+ 
+// Ensure that the script cannot be executed outside of MediaWiki
+if ( !defined( 'MEDIAWIKI' ) ) {
+  die( 'This is an extension to MediaWiki and cannot be run standalone.' );
+}
 
-  $wgExtensionCredits['parserhook'][] = array(
-    'path'           => __FILE__,
-    'name'           => 'PubmedParser',
-    'author'         => '[https://www.mediawiki.org/wiki/User:Bovender Daniel Kraus (bovender)]', 
-    'url'            => 'https://www.mediawiki.org/wiki/Extension:PubmedParser',
-    'version'        => '3.2.1',
-    'descriptionmsg' => 'pubmedparser-desc'
-    );
+// Display extension's information on "Special:Version"
+$wgExtensionCredits['parserhook'][] = array(
+  'path'           => __FILE__,
+  'name'           => 'PubmedParser',
+  'author'         => '[https://www.mediawiki.org/wiki/User:Bovender Daniel Kraus (bovender)]', 
+  'url'            => 'https://www.mediawiki.org/wiki/Extension:PubmedParser',
+  'version'        => '3.2.1',
+  'descriptionmsg' => 'pubmedparser-desc',
+  'license-name'   => 'GPL-2.0+'
+);
 
-  define( 'PUBMEDPARSER_OK',             0); ///< Status code: okay
-  define( 'PUBMEDPARSER_INVALIDPMID',    2); ///< Status code: PMID is invalid
-  define( 'PUBMEDPARSER_NODATA',         3); ///< Status code: Pubmed returned no data
-  define( 'PUBMEDPARSER_CANNOTDOWNLOAD', 4); ///< Status code: cannot download XML data
-  define( 'PUBMEDPARSER_DBERROR',        5);
-  define( 'PUBMEDPARSER_INVALIDXML',     6); ///< Status code: Invalid XML data received
-  define( 'PUBMEDPARSER_TEMPLATECHAR',   '#'); ///< Indicates template name parameter
-  
-  $wgExtensionMessagesFiles['PubmedParser'] = dirname( __FILE__ ) . '/PubmedParser.i18n.php';
+// Define extension's status codes
+define( 'PUBMEDPARSER_OK',             0); ///< Status code: okay
+define( 'PUBMEDPARSER_INVALIDPMID',    2); ///< Status code: PMID is invalid
+define( 'PUBMEDPARSER_NODATA',         3); ///< Status code: Pubmed returned no data
+define( 'PUBMEDPARSER_CANNOTDOWNLOAD', 4); ///< Status code: cannot download XML data
+define( 'PUBMEDPARSER_DBERROR',        5);
+define( 'PUBMEDPARSER_INVALIDXML',     6); ///< Status code: Invalid XML data received
+define( 'PUBMEDPARSER_TEMPLATECHAR',   '#'); ///< Indicates template name parameter
 
-  $wgAutoloadClasses['PubmedParser\Extension'] = dirname(__FILE__) . '/PubmedParser.Extension.php';
-  $wgAutoloadClasses['PubmedParser\Core'] = dirname(__FILE__) . '/PubmedParser.Core.php';
-  $wgAutoloadClasses['PubmedParser\Article'] = dirname(__FILE__) . '/PubmedParser.Article.php';
-  $wgAutoloadClasses['PubmedParser\Helpers'] = dirname(__FILE__) . '/PubmedParser.Helpers.php';
+// Register extension messages
+$wgExtensionMessagesFiles['PubmedParser'] = __DIR__ . '/PubmedParser.i18n.php';
 
-  // Define a setup function
-  $wgHooks['ParserFirstCallInit'][] = 'PubmedParser\Extension::setup';
-  $wgHooks['LoadExtensionSchemaUpdates'][] = 'PubmedParser\Extension::createTable';
-  $wgHooks['UnitTestsList'][] = 'PubmedParser\Extension::onUnitTestsList';
+// Load exension's classes
+$wgAutoloadClasses['PubmedParser\Extension'] = __DIR__ . '/PubmedParser.Extension.php';
+$wgAutoloadClasses['PubmedParser\Core'] = __DIR__ . '/PubmedParser.Core.php';
+$wgAutoloadClasses['PubmedParser\Article'] = __DIR__ . '/PubmedParser.Article.php';
+$wgAutoloadClasses['PubmedParser\Helpers'] = __DIR__ . '/PubmedParser.Helpers.php';
+
+// Define a setup function
+$wgHooks['ParserFirstCallInit'][] = 'PubmedParser\Extension::setup';
+$wgHooks['LoadExtensionSchemaUpdates'][] = 'PubmedParser\Extension::createTable';
+$wgHooks['UnitTestsList'][] = 'PubmedParser\Extension::onUnitTestsList';
