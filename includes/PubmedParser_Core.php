@@ -22,7 +22,7 @@
 namespace PubmedParser;
  
 if ( !defined( 'MEDIAWIKI' ) ) {
-	die( 'Not an entry point.' );
+	die( 'This is an extension to MediaWiki and cannot be run standalone.' );
 }
 
 /*! Replacement for ctype_digit, to properly handle (via return value false) nulls,
