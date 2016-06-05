@@ -1,0 +1,9 @@
+{
+        "pubmedparser-desc": "Fügt das Parser-Schlüsselwort #PMID hinzu, mit dem Artikel anhand ihrer PMID-Nummer in Pubmed nachgeschlagen werden können.",
+        "pubmedparser-error": "PubmedParser-Fehler",
+        "pubmedparser-error-nodata": "Pubmed hat keine Daten geliefert, bitte PMID überprüfen oder später erneut probieren.",
+        "pubmedparser-error-invalidpmid": "Ungültige PMID, bitte überprüfen.",
+        "pubmedparser-error-cannotdownload": "Kein Zugriff auf PubMed-XML-Daten möglich, da CURL nicht installiert und ALLOW_URL_FOPEN nicht aktiviert.",
+        "pubmedparser-error-dberror": "Die PubmedParser-Erweiterung hat einen Datenbankfehler verursacht. Ist nach dem Installieren das Datenbankschema aktualisiert worden?",
+        "pubmedparser-error-invalidxml": "Die PubmedParser-Erweiterung hat ungültige XML-Daten erhalten."
+}

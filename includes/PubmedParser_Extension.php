@@ -1,6 +1,6 @@
 <?php
 /*
- *      \file PubmedParser.body.php
+ *      \file PubmedParser_body.php
  *      
  *      Copyright 2011-2016 Daniel Kraus <bovender@bovender.de>
  *      
@@ -22,7 +22,7 @@
 namespace PubmedParser;
  
 if ( !defined( 'MEDIAWIKI' ) ) {
-	die( 'Not an entry point.' );
+	die( 'This is an extension to MediaWiki and cannot be run standalone.' );
 }
 
 /**
@@ -37,8 +37,14 @@ class Extension {
 	 * Associates the "pmid" magic word with the efPubmedParser_Render function.
 	 */
 	public static function setup( &$parser ) {
-		# Set a function hook associating the "pmid" magic word with our function
-		$parser->setFunctionHook( 'PubmedParser', 'PubmedParser\Extension::render' );
+		$parser->setFunctionHook( 'pmid', 'PubmedParser\Extension::render' );
+		define( 'PUBMEDPARSER_OK',             0); ///< Status code: okay
+		define( 'PUBMEDPARSER_INVALIDPMID',    2); ///< Status code: PMID is invalid
+		define( 'PUBMEDPARSER_NODATA',         3); ///< Status code: Pubmed returned no data
+		define( 'PUBMEDPARSER_CANNOTDOWNLOAD', 4); ///< Status code: cannot download XML data
+		define( 'PUBMEDPARSER_DBERROR',        5);
+		define( 'PUBMEDPARSER_INVALIDXML',     6); ///< Status code: Invalid XML data received
+		define( 'PUBMEDPARSER_TEMPLATECHAR',   '#'); ///< Indicates template name parameter
 		self::loadMessages();
 		return true;
 	}
@@ -56,7 +62,7 @@ class Extension {
 	 */
 	public static function createTable( \DatabaseUpdater $updater ) {
 		$updater->addExtensionTable( 'Pubmed',
-			dirname( __FILE__ ) . '/PubmedParser.table.sql', true );
+			dirname( __FILE__ ) . '/includes/PubmedParser.table.sql', true );
 		return true;
 	}
 

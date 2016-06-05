@@ -1,0 +1,35 @@
+{
+        "author": "[https://www.mediawiki.org/wiki/User:Bovender Daniel Kraus (bovender)]", 
+        "name": "PubmedParser",
+        "type": "parserhook",
+        "url": "https://www.mediawiki.org/wiki/Extension:PubmedParser",
+        "version": "4.0.0",
+        "license-name": "GPL-2.0+",
+        "descriptionmsg": "pubmedparser-desc",
+        "AutoloadClasses": {
+                "PubmedParser\\Extension": "includes/PubmedParser_Extension.php",
+                "PubmedParser\\Core": "includes/PubmedParser_Core.php",
+                "PubmedParser\\Article": "includes/PubmedParser_Article.php",
+                "PubmedParser\\Helpers": "includes/PubmedParser_Helpers.php"
+        },
+        "Hooks": {
+                "ParserFirstCallInit": [
+                        "PubmedParser\\Extension::setup"
+                ],
+                "LoadExtensionSchemaUpdates": [
+                        "PubmedParser\\Extension::createTable"
+                ],
+                "UnitTestsList": [
+                        "PubmedParser\\Extension::onUnitTestsList"
+                ]
+        },
+        "ExtensionMessagesFiles": {
+                "PubmedParserMagic": "includes/PubmedParser_Magic.php"
+        },
+        "MessagesDirs": {
+                "PubmedParser": [
+                        "i18n"
+                ]
+        },
+        "manifest_version": 1
+}
