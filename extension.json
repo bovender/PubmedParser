@@ -7,7 +7,7 @@
         "license-name": "GPL-2.0+",
         "descriptionmsg": "pubmedparser-desc",
         "AutoloadClasses": {
-                "PubmedParser\\Extension": "PubmedParser_body.php",
+                "PubmedParser\\Extension": "includes/PubmedParser_Extension.php",
                 "PubmedParser\\Core": "includes/PubmedParser_Core.php",
                 "PubmedParser\\Article": "includes/PubmedParser_Article.php",
                 "PubmedParser\\Helpers": "includes/PubmedParser_Helpers.php"
