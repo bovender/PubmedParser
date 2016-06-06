@@ -1,6 +1,6 @@
 <?php
 /*
- *      \file PubmedParser_body.php
+ *      \file PubmedParser_Extension.php
  *      
  *      Copyright 2011-2016 Daniel Kraus <bovender@bovender.de>
  *      
@@ -62,7 +62,7 @@ class Extension {
 	 */
 	public static function createTable( \DatabaseUpdater $updater ) {
 		$updater->addExtensionTable( 'Pubmed',
-			dirname( __FILE__ ) . '/includes/PubmedParser.table.sql', true );
+			dirname( __FILE__ ) . '../db/PubmedParser_Migration.sql', true );
 		return true;
 	}
 
