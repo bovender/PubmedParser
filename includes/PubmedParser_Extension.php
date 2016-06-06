@@ -62,7 +62,7 @@ class Extension {
 	 */
 	public static function createTable( \DatabaseUpdater $updater ) {
 		$updater->addExtensionTable( 'Pubmed',
-			dirname( __FILE__ ) . '../db/PubmedParser_Migration.sql', true );
+			__DIR__ . '/../db/PubmedParser_Migration.sql', true );
 		return true;
 	}
 
