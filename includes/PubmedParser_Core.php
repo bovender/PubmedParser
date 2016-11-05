@@ -22,7 +22,7 @@
 namespace PubmedParser;
  
 if ( !defined( 'MEDIAWIKI' ) ) {
-	die( 'Not an entry point.' );
+	die( 'This is an extension to MediaWiki and cannot be run standalone.' );
 }
 
 /*! Replacement for ctype_digit, to properly handle (via return value false) nulls,
@@ -148,6 +148,7 @@ class Core
 		}
 		
 		$this->status = PUBMEDPARSER_OK;
+		$xml = null;
 		if ( ! $this->reload ) {
 			$xml = self::fetchFromDb( $this->pmid );
 			if ( $this->status != PUBMEDPARSER_OK ) {
@@ -218,8 +219,6 @@ class Core
 		}
 	}
 
-	private static $_readDb = null;
-
 	/** Accessor for the current database read connection.
 	 * The connection will be created if it does not exist yet.
 	 * @return Database object as created by MediaWiki's wfGetDb().
@@ -234,25 +233,23 @@ class Core
 	/** Stores the current PMID record in the wiki database.
 	 * @param integer $pmid Pubmed identifier
 	 * @param string  $xml  Pubmed XML to store (will be escaped by MediaWiki)
-	 * @return undefined
+	 * @return result of call to DatabaseBase::upsert
 	 */
 	private function storeInDb( $pmid, $xml ) {
 		$dbw = $this->getWriteDb();
-		$dbw->insert( 'pubmed', array(
+		$row = array(
 			'pmid' => $pmid,
 			'xml' => $xml
-			)
 		);
+		return $dbw->upsert( 'pubmed', $row, array( 'pmid' ), $row );
 	}
-
-	private static $_writeDb = null;
 
 	/** Accessor for the current database write connection.
 	 * The connection will be created if it does not exist yet.
 	 * @return Database object as created by MediaWiki's wfGetDb().
 	 */
 	protected function getWriteDb() {
-		if ( !$_writeDb ) {
+		if ( !self::$_writeDb ) {
 			self::$_writeDb = wfGetDB( DB_MASTER );
 		};
 		return self::$_writeDb;
@@ -294,5 +291,7 @@ class Core
 	private $reference; ///< Optional name of a footnote reference.
 	private $status;  ///< holds status information (0 if everything is ok)
 	private $template; ///< Name of the template to use.
+	private static $_readDb = null;
+	private static $_writeDb = null;
 }
 // vim: tw=78:ts=2:sw=2:noet:comments^=\:///

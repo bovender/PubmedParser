@@ -22,7 +22,7 @@
 namespace PubmedParser;
  
 if ( !defined( 'MEDIAWIKI' ) ) {
-	die( 'Not an entry point.' );
+	die( 'This is an extension to MediaWiki and cannot be run standalone.' );
 }
 
 class Article
@@ -47,7 +47,8 @@ class Article
 	function __construct( $pmid, $xml )
 	{
 		try {
-			$reader = \XMLReader::xml( $xml );
+			$reader = new \XMLReader;
+			$reader->xml( $xml );
 			$this->pmid = $pmid;
 			$this->xml = $xml;
 			$this->parse( $reader );
