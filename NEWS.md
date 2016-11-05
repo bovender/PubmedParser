@@ -1,3 +1,15 @@
+Version 4.0.0 (2016-11-05)
+------------------------------------------------------------------------
+
+- FIX: Prevent database errors on updating a citation with 'reload'.
+- FIX: The caching table in the database is now created in a database transaction.
+- FIX: The caching table in the database now uses the custom table prefix (you may want to manually rename an existing Pubmed table to include the prefix before running the new version of the extension.)
+- FIX: Undefined variable errors.
+- NEW: Compatibility with MediaWiki 1.25 and newer. The extension is not compatible with MediaWiki 1.24 and older.
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+
 Version 3.2.1 (2016-06-04)
 ------------------------------------------------------------------------
 
