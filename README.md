@@ -3,7 +3,7 @@ PubmedParser extension for MediaWiki
 
 This is an extension for the [MediaWiki](https://www.mediawiki.org) wiki 
 software that facilitates retrieval and display of scientific citations 
-from [Pubmed](http://pubmed.gov).
+from [Pubmed](https://pubmed.gov).
 
 For installation and usage instructions, please see: 
 <https://www.mediawiki.org/wiki/Extension:PubmedParser>
