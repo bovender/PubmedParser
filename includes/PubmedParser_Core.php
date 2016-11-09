@@ -161,7 +161,7 @@ class Core
 			// note: it's important to have retmode=xml, not rettype=xml!
 			// rettype=xml returns an HTML page with formatted XML-like text;
 			// retmode=xml returns raw XML.
-			$url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi'
+			$url = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi'
 				. "?db=pubmed&id={$this->pmid}&retmode=xml";
 			if (!Helpers::FetchRemote($url, $xml)) {
 				$this->status = PUBMEDPARSER_CANNOTDOWNLOAD;
@@ -267,11 +267,11 @@ class Core
 		switch ( $this->status ) {
 			case PUBMEDPARSER_INVALIDPMID:
 				return $s . wfMessage( 'pubmedparser-error-invalidpmid' )->text()
-					. ' (PMID: [http://pubmed.gov/' . $this->pmid . ' '
+					. ' (PMID: [https://pubmed.gov/' . $this->pmid . ' '
 					. $this->pmid . '])';
 			case PUBMEDPARSER_NODATA:
 				return $s . wfMessage( 'pubmedparser-error-nodata' )->text()
-					. ' (PMID: [http://pubmed.gov/' . $this->pmid . ' '
+					. ' (PMID: [https://pubmed.gov/' . $this->pmid . ' '
 					. $this->pmid . '])';
 			case PUBMEDPARSER_DBERROR:
 				return $s . wfMessage( 'pubmedparser-error-dberror' )->text();
