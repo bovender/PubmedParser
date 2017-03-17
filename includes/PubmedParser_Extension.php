@@ -1,35 +1,35 @@
 <?php
 /*
  *      \file PubmedParser_Extension.php
- *      
+ *
  *      Copyright 2011-2016 Daniel Kraus <bovender@bovender.de>
- *      
+ *
  *      This program is free software; you can redistribute it and/or modify
  *      it under the terms of the GNU General Public License as published by
  *      the Free Software Foundation; either version 2 of the License, or
  *      (at your option) any later version.
- *      
+ *
  *      This program is distributed in the hope that it will be useful,
  *      but WITHOUT ANY WARRANTY; without even the implied warranty of
  *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *      GNU General Public License for more details.
- *      
+ *
  *      You should have received a copy of the GNU General Public License
  *      along with this program; if not, write to the Free Software
  *      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  *      MA 02110-1301, USA.
  */
 namespace PubmedParser;
- 
+
 if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'This is an extension to MediaWiki and cannot be run standalone.' );
 }
 
 /**
  * Core class of the extension.
- * This class consists of several public, static functions that will be 
- * called by MediaWiki. In order to facilitate unit testing, the actual 
- * execution code was encapsulated in instance methods. The static methods 
+ * This class consists of several public, static functions that will be
+ * called by MediaWiki. In order to facilitate unit testing, the actual
+ * execution code was encapsulated in instance methods. The static methods
  * create an instance of this class and call upon the instance methods.
  */
 class Extension {
@@ -38,13 +38,15 @@ class Extension {
 	 */
 	public static function setup( &$parser ) {
 		$parser->setFunctionHook( 'pmid', 'PubmedParser\Extension::render' );
-		define( 'PUBMEDPARSER_OK',             0); ///< Status code: okay
-		define( 'PUBMEDPARSER_INVALIDPMID',    2); ///< Status code: PMID is invalid
-		define( 'PUBMEDPARSER_NODATA',         3); ///< Status code: Pubmed returned no data
-		define( 'PUBMEDPARSER_CANNOTDOWNLOAD', 4); ///< Status code: cannot download XML data
-		define( 'PUBMEDPARSER_DBERROR',        5);
-		define( 'PUBMEDPARSER_INVALIDXML',     6); ///< Status code: Invalid XML data received
-		define( 'PUBMEDPARSER_TEMPLATECHAR',   '#'); ///< Indicates template name parameter
+		if ( !defined( 'PUBMEDPARSER_OK' ) ) {
+			define( 'PUBMEDPARSER_OK',             0); ///< Status code: okay
+			define( 'PUBMEDPARSER_INVALIDPMID',    2); ///< Status code: PMID is invalid
+			define( 'PUBMEDPARSER_NODATA',         3); ///< Status code: Pubmed returned no data
+			define( 'PUBMEDPARSER_CANNOTDOWNLOAD', 4); ///< Status code: cannot download XML data
+			define( 'PUBMEDPARSER_DBERROR',        5);
+			define( 'PUBMEDPARSER_INVALIDXML',     6); ///< Status code: Invalid XML data received
+			define( 'PUBMEDPARSER_TEMPLATECHAR',   '#'); ///< Indicates template name parameter
+		}
 		self::loadMessages();
 		return true;
 	}
@@ -57,7 +59,7 @@ class Extension {
 		return true;
 	}
 
-	/** Creates a Pubmed table in the Wiki database. This will hold XML 
+	/** Creates a Pubmed table in the Wiki database. This will hold XML
 	 * strings downloaded from pubmed.gov.
 	 */
 	public static function createTable( \DatabaseUpdater $updater ) {
@@ -75,7 +77,7 @@ class Extension {
 	}
 
 	/*! Initializes the static class members so that we don't have to
-	 * query the wiki database many times whenever a Pubmed citation is 
+	 * query the wiki database many times whenever a Pubmed citation is
 	 * being parsed.
 	 */
 	private static function loadMessages() {
@@ -103,7 +105,7 @@ class Extension {
 		self::$reload           = wfMessage( 'pubmedparser-reload' )->text();
 	}
 
-	
+
 	public static $authors;
 	public static $authorsI;
 	public static $allAuthors;
