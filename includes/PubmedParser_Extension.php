@@ -2,7 +2,7 @@
 /*
  *      \file PubmedParser_Extension.php
  *
- *      Copyright 2011-2016 Daniel Kraus <bovender@bovender.de>
+ *      Copyright 2011-2017 Daniel Kraus <bovender@bovender.de>
  *
  *      This program is free software; you can redistribute it and/or modify
  *      it under the terms of the GNU General Public License as published by
