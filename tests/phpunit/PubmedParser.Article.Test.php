@@ -1,7 +1,8 @@
 <?php
 /**
  * Unit tests for the PubmedParser extension.
- * group Database
+ * @group Database
+ * @group bovender
  * @covers PubmedParser\Article
  */
 namespace PubmedParser;
