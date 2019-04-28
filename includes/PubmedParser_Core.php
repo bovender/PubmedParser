@@ -1,26 +1,26 @@
 <?php
 /*
  *      \file PubmedParserFetcher.body.php
- *      
- *      Copyright 2011-2017 Daniel Kraus <bovender@bovender.de>
- *      
+ *
+ *      Copyright 2011-2019 Daniel Kraus <bovender@bovender.de>
+ *
  *      This program is free software; you can redistribute it and/or modify
  *      it under the terms of the GNU General Public License as published by
  *      the Free Software Foundation; either version 2 of the License, or
  *      (at your option) any later version.
- *      
+ *
  *      This program is distributed in the hope that it will be useful,
  *      but WITHOUT ANY WARRANTY; without even the implied warranty of
  *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *      GNU General Public License for more details.
- *      
+ *
  *      You should have received a copy of the GNU General Public License
  *      along with this program; if not, write to the Free Software
  *      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  *      MA 02110-1301, USA.
  */
 namespace PubmedParser;
- 
+
 if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'This is an extension to MediaWiki and cannot be run standalone.' );
 }
@@ -29,9 +29,9 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  *  booleans, objects, resources, etc.
  *  Taken from: http://www.php.net/manual/en/function.ctype-digit.php#87113
  */
-function ctype_digit2 ($str) { 
-	 return (is_string($str) || is_int($str) || is_float($str)) && 
-			 preg_match('/^\d+\z/', $str); 
+function ctype_digit2 ($str) {
+	 return (is_string($str) || is_int($str) || is_float($str)) &&
+			 preg_match('/^\d+\z/', $str);
 }
 
 /*! The central class of the PubmedParser extension.
@@ -43,12 +43,12 @@ class Core
 	/**
 	 * Constructor
 	 * @param $pmid Pubmed identifier for the article; must be an integer.
-	 * @note The optional parameters $param1 and $param2 may contain one of 
-	 * three parametrs: The name of a <ref name="..."></ref> structure, the name 
-	 * of the template to use to build the citation, or the keyword 'reload' to 
-	 * force reloading the Pubmed XML data from the internet. Note that to be 
-	 * able to distinguish a template name from a reference name, the template 
-	 * name MUST be prefixed with '#' (configurable in MediaWiki system 
+	 * @note The optional parameters $param1 and $param2 may contain one of
+	 * three parametrs: The name of a <ref name="..."></ref> structure, the name
+	 * of the template to use to build the citation, or the keyword 'reload' to
+	 * force reloading the Pubmed XML data from the internet. Note that to be
+	 * able to distinguish a template name from a reference name, the template
+	 * name MUST be prefixed with '#' (configurable in MediaWiki system
 	 * messages).
 	 */
 	function __construct( $pmid = 0, $param1 = '', $param2 = '' ) {
@@ -94,12 +94,12 @@ class Core
 
 		// set noparse to false to enable full parsing of the output
 		// (required for expansion of templates)
-		return array( $output, 'noparse' => false );    
+		return array( $output, 'noparse' => false );
 	}
 
 	/**
 	 * Builds a wiki template with Pubmed data.
-	 * @param PubmedArticle $article PubmedArticle object that contains the 
+	 * @param PubmedArticle $article PubmedArticle object that contains the
 	 * data.
 	 * @return String containing a Wiki template with parametrized Pubmed data.
 	 * @note Article is given as a parameter to facilitate unit testing.
@@ -146,7 +146,7 @@ class Core
 			$this->status = PUBMEDPARSER_INVALIDPMID;
 			return;
 		}
-		
+
 		$this->status = PUBMEDPARSER_OK;
 		$xml = null;
 		if ( ! $this->reload ) {
@@ -156,7 +156,7 @@ class Core
 			}
 		};
 
-		if ( !$xml ) {
+		if ( ! is_string( $xml ) ) {
 			// fetch the article information from PubMed in XML format
 			// note: it's important to have retmode=xml, not rettype=xml!
 			// rettype=xml returns an HTML page with formatted XML-like text;
@@ -168,15 +168,15 @@ class Core
 				return;
 			}
 
-			if ( $xml ) {
+			if ( is_string( $xml ) ) {
 				/* Now that we have the data, let's attempt to store it locally
 				 * in the cache.
 				 */
 				$this->storeInDb( $this->pmid, $xml );
 			}
 		} // if no xml in database
-		
-		if ( $xml ) {
+
+		if ( is_string( $xml ) ) {
 			$this->article = new Article( $this->pmid, $xml );
 			if ( !$this->article->xml ) {
 				$this->status = PUBMEDPARSER_INVALIDXML;
@@ -191,21 +191,21 @@ class Core
 	// Database caching
 
 	/** Fetches a PMID record from the wiki database, if available.
-	 * @param $pmid Pubmed ID to look up. 
-	 * @return XML string containing the Pubmed record, of null if the 
+	 * @param $pmid Pubmed ID to look up.
+	 * @return XML string containing the Pubmed record, of null if the
 	 * record was not found.
-	 * @note $pmid must be an integer to prevent SQL injections. Since 
-	 * it is a scalar, specifying a typed parameter in the function 
-	 * signature does not work. This is a private method that is called 
-	 * by PubmedParserFetcher::lookUp() which ensures that PMIDs are 
+	 * @note $pmid must be an integer to prevent SQL injections. Since
+	 * it is a scalar, specifying a typed parameter in the function
+	 * signature does not work. This is a private method that is called
+	 * by PubmedParserFetcher::lookUp() which ensures that PMIDs are
 	 * integers.
 	 */
 	private function fetchFromDb( $pmid ) {
 		$dbr = $this->getReadDb();
-		$res = $dbr->select( 
-			'pubmed', 
-			'xml', 
-			'pmid = ' . $pmid, 
+		$res = $dbr->select(
+			'pubmed',
+			'xml',
+			'pmid = ' . $pmid,
 			__METHOD__
 		);
 		if ( $dbr->lastErrno() == 0 ) {

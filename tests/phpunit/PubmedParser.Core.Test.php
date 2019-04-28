@@ -4,7 +4,7 @@ namespace PubmedParser;
 /**
  * Unit tests for the PubmedParserFetcher class.
  * @group Database
- * @covers PubmedParser
+ * @group bovender
  */
 class CoreTest extends \MediaWikiTestCase {
 	private $testPmid = 454545;
@@ -55,7 +55,6 @@ class CoreTest extends \MediaWikiTestCase {
 
 	/**
 	 * Tests that invalid PMIDs produce errors.
-	 * @covers PubmedParserFetcher::Render()
 	 * @dataProvider invalidPmidProvider
 	 */
 	public function testRenderWithInvalidPmidOutputsError( $pmid ) {
@@ -66,7 +65,6 @@ class CoreTest extends \MediaWikiTestCase {
 	}
 
 	/**
-	 * @covers PubmedParser::buildTemplate
 	 * @dataProvider pubmedXmlProvider
 	 */
 	public function testBuildTemplate( $pmid, $xml ) {
