@@ -2,7 +2,7 @@
 /*
  *      \file PubmedParser.helpers.php
  *
- *      Copyright 2011-2017 Daniel Kraus <krada@gmx.net>
+ *      Copyright 2011-2019 Daniel Kraus <krada@gmx.net>
  *
  *      This program is free software; you can redistribute it and/or modify
  *      it under the terms of the GNU General Public License as published by
