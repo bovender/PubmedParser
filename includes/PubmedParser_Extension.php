@@ -47,7 +47,6 @@ class Extension {
 			define( 'PUBMEDPARSER_INVALIDXML',     6); ///< Status code: Invalid XML data received
 			define( 'PUBMEDPARSER_TEMPLATECHAR',   '#'); ///< Indicates template name parameter
 		}
-		self::loadMessages();
 		return true;
 	}
 
@@ -74,6 +73,7 @@ class Extension {
 	 * Static function that is hooked to the 'pmid' magic hook.
 	 */
 	public static function render( &$parser, $param1 = '', $param2 = '', $param3 = '' ) {
+		if ( ! is_string( self::$authors ) ) self::loadMessages();
 		$core = new Core( $param1, $param2, $param3 );
 		return $core->execute();
 	}
