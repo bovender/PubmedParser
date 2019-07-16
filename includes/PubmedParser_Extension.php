@@ -63,8 +63,10 @@ class Extension {
 	 * strings downloaded from pubmed.gov.
 	 */
 	public static function createTable( \DatabaseUpdater $updater ) {
+		global $wgDBtype;
+		$dbTag = $wgDBtype == 'postgres' ? '_Postgres' : '';
 		$updater->addExtensionTable( 'Pubmed',
-			__DIR__ . '/../db/PubmedParser_Migration.sql', true );
+			__DIR__ . '/../db/PubmedParser' . $dbTag . '_Migration.sql', true );
 		return true;
 	}
 
