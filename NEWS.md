@@ -7,9 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- Caching is now only performed if Pubmed provided actual article data.
+
 ### Fixed
 
 - Database migration now works with Postgres database as well.
+- Fixed detection of empty data sets.
 
 ## [4.0.3][] - 2019-04-28
 

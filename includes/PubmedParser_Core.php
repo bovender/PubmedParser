@@ -156,29 +156,32 @@ class Core
 			}
 		};
 
-		if ( ! is_string( $xml ) ) {
+		if ( is_string( $xml ) ) {
+			$found_in_cache = true;
+		}
+		else {
+			$found_in_cache = false;
+
 			// fetch the article information from PubMed in XML format
 			// note: it's important to have retmode=xml, not rettype=xml!
 			// rettype=xml returns an HTML page with formatted XML-like text;
 			// retmode=xml returns raw XML.
 			$url = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi'
 				. "?db=pubmed&id={$this->pmid}&retmode=xml";
-			if (!Helpers::FetchRemote($url, $xml)) {
+			if ( !Helpers::FetchRemote( $url, $xml ) ) {
 				$this->status = PUBMEDPARSER_CANNOTDOWNLOAD;
 				return;
-			}
-
-			if ( is_string( $xml ) ) {
-				/* Now that we have the data, let's attempt to store it locally
-				 * in the cache.
-				 */
-				$this->storeInDb( $this->pmid, $xml );
 			}
 		} // if no xml in database
 
 		if ( is_string( $xml ) ) {
 			$this->article = new Article( $this->pmid, $xml );
-			if ( !$this->article->xml ) {
+			if ( $this->article->hasTitle() ) {
+				if ( ! $found_in_cache ) {
+					$this->storeInDb( $this->pmid, $xml );
+				}
+			}
+			else {
 				$this->status = PUBMEDPARSER_INVALIDXML;
 			}
 		}

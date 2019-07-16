@@ -59,6 +59,10 @@ class Article
 		}
 	}
 
+	public function hasTitle() {
+		return is_string( $this->title ) && \strlen( $this->title ) > 0;
+	}
+
 	/** Parses Pubmed XML
 	 */
 	private function parse( \XMLReader $reader ) {

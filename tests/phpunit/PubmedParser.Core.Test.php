@@ -69,7 +69,7 @@ class CoreTest extends \MediaWikiTestCase {
 	 */
 	public function testBuildTemplate( $pmid, $xml ) {
 		$article = new Article( $pmid, $xml );
-		$core = new Core();
+		$core = new Core( $pmid );
 		$template = $core->buildTemplate( $article );
 		foreach ( $this->templateFields as $field => $value ) {
 			$s = strtolower( $field );
