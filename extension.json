@@ -3,11 +3,11 @@
         "name": "PubmedParser",
         "type": "parserhook",
         "url": "https://www.mediawiki.org/wiki/Extension:PubmedParser",
-        "version": "4.0.3",
+        "version": "5.0.1",
         "license-name": "GPL-2.0+",
         "descriptionmsg": "pubmedparser-desc",
         "requires": {
-                "MediaWiki": ">= 1.25.0"
+                "MediaWiki": ">= 1.28.0"
         },
         "AutoloadClasses": {
                 "PubmedParser\\Extension": "includes/PubmedParser_Extension.php",
