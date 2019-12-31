@@ -25,6 +25,9 @@ line `$wgDBPrefix = '<YourPrefix>';` in your `LocalSettings.php`. Caveat: Don't
 change this MediaWiki setting after installation; otherwise, you'll need to 
 manually rename all your database tables!
 
+## Contributing
+
+Please issue pull requests against the **develop** branch.
 
 ## License
 
