@@ -4,7 +4,7 @@
         "type": "parserhook",
         "url": "https://www.mediawiki.org/wiki/Extension:PubmedParser",
         "version": "5.0.1",
-        "license-name": "GPL-2.0+",
+        "license-name": "GPL-2.0-or-later",
         "descriptionmsg": "pubmedparser-desc",
         "requires": {
                 "MediaWiki": ">= 1.28.0"
