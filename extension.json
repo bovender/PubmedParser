@@ -1,5 +1,8 @@
 {
-        "author": "[https://www.mediawiki.org/wiki/User:Bovender Daniel Kraus (bovender)]", 
+        "author": [
+                "[https://www.mediawiki.org/wiki/User:Bovender Daniel Kraus (bovender)]",
+                "[https://professional.wiki Karsten Hoffmeyer (kghbln)"
+        ],
         "name": "PubmedParser",
         "type": "parserhook",
         "url": "https://www.mediawiki.org/wiki/Extension:PubmedParser",
