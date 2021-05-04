@@ -1,3 +1,9 @@
+> **HEADS UP!**  
+> **THE MAIN BRANCH HAS BEEN RENAMED FROM "MASTER" TO "MAIN".**  
+> **TO UPDATE AN EXISTING LOCAL COPY OF THIS REPOSITORY:**  
+> **`git fetch`**  
+> **`git checkout -t origin/main`**
+
 # Extension PubmedParser
 
 The **PubmedParser** extension provides a parser keyword (`#pmid`) to fetch
@@ -203,15 +209,12 @@ line `$wgDBPrefix = '<YourPrefix>';` in your `LocalSettings.php`. Caveat: Don't
 change this MediaWiki setting after installation; otherwise, you'll need to
 manually rename all your database tables!
 
-## Contributing
-
-Please issue pull requests against the **develop** branch.
 
 ## License
 
 PubmedParser
 
-Copyright (C) 2011-2020 Daniel Kraus ([bovender](https://www.bovender.de))
+Copyright (C) 2011-2021 Daniel Kraus ([bovender](https://www.bovender.de))
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
