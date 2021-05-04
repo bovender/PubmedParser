@@ -8,14 +8,16 @@
 
 # Extension PubmedParser
 
-The **PubmedParser** extension provides a parser keyword (`#pmid`) to fetch
-article information by unique ID from the [Pubmed][] database. It outputs the
-article information formatted as Wiki markup for a template. The template can
-be defined inside the Wiki and adjusted as needed. Compared with the other,
-very useful extension [Pubmed][Pubmed extension] (which, however, has not been
-updated in a while), this extension can be fully configured using Wiki messages
-(see the special page `Sytem Messages` in your wiki). It does not require
-editing configuration files on the server.
+<https://www.mediawiki.org/wiki/Extension:PubmedParser>
+
+**PubmedParser** is an extension for [MediaWiki][]. It provides a parser
+keyword (`#pmid`) to fetch article information by unique ID from the [Pubmed][]
+database. It outputs the article information formatted as Wiki markup for a
+template. The template can be defined inside the Wiki and adjusted as needed.
+Compared with the other, very useful extension [Pubmed][Pubmed extension]
+(which, however, has not been updated in a while), this extension can be fully
+[configured](#customization) using Wiki messages. It does not require editing
+configuration files on the server.
 
 PubmedParser fetches information on a single article at a time only. If you
 would like to generate lists of articles, please have a look at the
@@ -299,6 +301,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 [Digital Object Identifier]: https://www.doi.org
 [Git]: https://git-scm.com
 [Github releases page]: https://github.com/bovender/PubmedParser/releases
+[MediaWiki]: https://www.mediawiki.org
 [ParserFunctions]: https://mediawiki.org/wiki/Extension:ParserFunctions
 [Pubmed]: https://pubmed.gov
 [Pubmed extension]: https://www.mediawiki.org/wiki/Extension:Pubmed
