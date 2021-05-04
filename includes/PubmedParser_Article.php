@@ -52,8 +52,7 @@ class Article
 			$this->pmid = $pmid;
 			$this->xml = $xml;
 			$this->parse( $reader );
-		}
-		catch ( Exception $e ) {
+		} catch (\Exception $e) {
 			$this->xml = false;
 			$this->message = $e->getMessage();
 		}
@@ -79,6 +78,9 @@ class Article
 						$this->journal = $reader->readInnerXML();
 						break;
 					case 'ISOAbbreviation':
+						$this->journalAbbrev = $reader->readInnerXML();
+						break;
+					case 'MedlineTA':
 						$this->journalAbbrev = $reader->readInnerXML();
 						break;
 					case 'PubDate':
