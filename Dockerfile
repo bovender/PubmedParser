@@ -1,7 +1,7 @@
 # This Dockerfile can be used to create a Docker image/container
 # that runs the unit tests on the PubmedParser extension.
 FROM mediawiki:1.34
-MAINTAINER Daniel Kraus (https://www.bovender.de)
+LABEL maintainer Daniel Kraus (https://www.bovender.de)
 RUN apt update -yqq && \
     apt install -yqq \
 	php7.0-sqlite \
