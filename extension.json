@@ -1,41 +1,33 @@
 {
-        "author": [
-                "[https://www.mediawiki.org/wiki/User:Bovender Daniel Kraus (bovender)]",
-                "[https://professional.wiki Karsten Hoffmeyer (kghbln)]"
-        ],
-        "name": "PubmedParser",
-        "type": "parserhook",
-        "url": "https://www.mediawiki.org/wiki/Extension:PubmedParser",
-        "version": "5.0.1",
-        "license-name": "GPL-2.0-or-later",
-        "descriptionmsg": "pubmedparser-desc",
-        "requires": {
-                "MediaWiki": ">= 1.28.0"
-        },
-        "AutoloadClasses": {
-                "PubmedParser\\Extension": "includes/PubmedParser_Extension.php",
-                "PubmedParser\\Core": "includes/PubmedParser_Core.php",
-                "PubmedParser\\Article": "includes/PubmedParser_Article.php",
-                "PubmedParser\\Helpers": "includes/PubmedParser_Helpers.php"
-        },
-        "Hooks": {
-                "ParserFirstCallInit": [
-                        "PubmedParser\\Extension::setup"
-                ],
-                "LoadExtensionSchemaUpdates": [
-                        "PubmedParser\\Extension::createTable"
-                ],
-                "UnitTestsList": [
-                        "PubmedParser\\Extension::onUnitTestsList"
-                ]
-        },
-        "ExtensionMessagesFiles": {
-                "PubmedParserMagic": "includes/PubmedParser_Magic.php"
-        },
-        "MessagesDirs": {
-                "PubmedParser": [
-                        "i18n"
-                ]
-        },
-        "manifest_version": 1
+  "author": [
+    "[https://www.mediawiki.org/wiki/User:Bovender Daniel Kraus (bovender)]",
+    "[https://professional.wiki Karsten Hoffmeyer (kghbln)]"
+  ],
+  "name": "PubmedParser",
+  "type": "parserhook",
+  "url": "https://www.mediawiki.org/wiki/Extension:PubmedParser",
+  "version": "5.0.2",
+  "license-name": "GPL-2.0-or-later",
+  "descriptionmsg": "pubmedparser-desc",
+  "requires": {
+    "MediaWiki": ">= 1.28.0"
+  },
+  "AutoloadClasses": {
+    "PubmedParser\\Extension": "includes/PubmedParser_Extension.php",
+    "PubmedParser\\Core": "includes/PubmedParser_Core.php",
+    "PubmedParser\\Article": "includes/PubmedParser_Article.php",
+    "PubmedParser\\Helpers": "includes/PubmedParser_Helpers.php"
+  },
+  "Hooks": {
+    "ParserFirstCallInit": ["PubmedParser\\Extension::setup"],
+    "LoadExtensionSchemaUpdates": ["PubmedParser\\Extension::createTable"],
+    "UnitTestsList": ["PubmedParser\\Extension::onUnitTestsList"]
+  },
+  "ExtensionMessagesFiles": {
+    "PubmedParserMagic": "includes/PubmedParser_Magic.php"
+  },
+  "MessagesDirs": {
+    "PubmedParser": ["i18n"]
+  },
+  "manifest_version": 1
 }
