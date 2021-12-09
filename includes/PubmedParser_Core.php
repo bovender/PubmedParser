@@ -81,7 +81,7 @@ class Core
 	 */
 	private function getApiKey() {
 		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'PubmedParser' );
-		return $config->get( 'ApiKey' ) ?? '';
+		return $config->get( 'PubmedParserApiKey' ) ?? '';
 	}
 
 	/** Central function of this class.
