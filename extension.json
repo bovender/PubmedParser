@@ -35,6 +35,9 @@
   "config": {
     "PubmedParserApiKey": {
       "value": ""
+    },
+    "PubmedParserUseFileGetContents": {
+      "value": true
     }
   },
   "manifest_version": 1
