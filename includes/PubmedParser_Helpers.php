@@ -28,7 +28,15 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 class Helpers
 {
 	public static function FetchRemote($uri, &$result) {
+		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'PubmedParser' );
+		$useFGC = $config->get( 'PubmedParserUseFileGetContents' ) ?? true;
+
 		try {
+			if ( $useFGC === false ) {
+				// A bit hacky, but moves on to cURL
+				throw new Exception('');
+			}
+			
 			$result = file_get_contents( $uri );
 		}
 		catch (Exception $e) {
