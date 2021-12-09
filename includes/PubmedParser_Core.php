@@ -18,6 +18,7 @@
  *      MA 02110-1301, USA.
  */
 namespace PubmedParser;
+
 use MediaWiki\MediaWikiServices;
 
 if ( !defined( 'MEDIAWIKI' ) ) {
