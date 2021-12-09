@@ -29,5 +29,8 @@
   "MessagesDirs": {
     "PubmedParser": ["i18n"]
   },
+  "config": {
+    "PubmedParserApiKey": ""
+  },
   "manifest_version": 1
 }
