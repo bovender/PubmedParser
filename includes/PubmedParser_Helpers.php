@@ -19,6 +19,8 @@
  */
 namespace PubmedParser;
 
+use MediaWiki\MediaWikiServices;
+
 if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'This is an extension to MediaWiki and cannot be run standalone.' );
 }
