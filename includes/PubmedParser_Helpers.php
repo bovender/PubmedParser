@@ -36,19 +36,19 @@ class Helpers
 		try {
 			if ( $useFGC === false ) {
 				// A bit hacky, but moves on to cURL
-				throw new Exception('');
+				throw new \Exception('');
 			}
 			
 			$result = file_get_contents( $uri );
 		}
-		catch (Exception $e) {
+		catch (\Exception $e) {
 			try {
 				$curl = curl_init( $uri );
 				curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
 				$result = curl_exec( $curl );
 				curl_close( $curl );
 			}
-			catch (Exception $e) {
+			catch (\Exception $e) {
 				return false;
 			}
 		}
