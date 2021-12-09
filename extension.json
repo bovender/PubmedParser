@@ -29,6 +29,9 @@
   "MessagesDirs": {
     "PubmedParser": ["i18n"]
   },
+  "ConfigRegistry": {
+    "PubmedParser": "GlobalVarConfig::newInstance"
+  },
   "config": {
     "PubmedParserApiKey": {
       "value": ""
