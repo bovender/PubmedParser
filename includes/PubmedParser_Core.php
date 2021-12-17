@@ -19,6 +19,8 @@
  */
 namespace PubmedParser;
 
+use MediaWiki\MediaWikiServices;
+
 if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'This is an extension to MediaWiki and cannot be run standalone.' );
 }
@@ -53,6 +55,7 @@ class Core
 		$this->status = PUBMEDPARSER_INVALIDPMID;
 		$this->template = Extension::$templateName;
 		$this->pmid = $pmid;
+		$this->apiKey = $this->getApiKey();
 		$this->parseParam( $param1 );
 		$this->parseParam( $param2 );
 		$this->lookUp();
@@ -72,6 +75,14 @@ class Core
 		elseif ( strlen( $param ) > 0 ) {
 			$this->reference = $param;
 		}
+	}
+	
+	/**
+	 * Retrieves API key
+	 */
+	private function getApiKey() {
+		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'PubmedParser' );
+		return $config->get( 'PubmedParserApiKey' ) ?? '';
 	}
 
 	/** Central function of this class.
@@ -166,6 +177,11 @@ class Core
 			// retmode=xml returns raw XML.
 			$url = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi'
 				. "?db=pubmed&id={$this->pmid}&retmode=xml";
+			
+			if ( isset($this->apiKey) && $this->apiKey !== '' ) {
+				$url .= "&api_key={$this->apiKey}";
+			}
+			
 			if ( !Helpers::FetchRemote( $url, $xml ) ) {
 				$this->status = PUBMEDPARSER_CANNOTDOWNLOAD;
 				return;

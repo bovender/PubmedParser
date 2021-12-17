@@ -6,7 +6,7 @@
   "name": "PubmedParser",
   "type": "parserhook",
   "url": "https://www.mediawiki.org/wiki/Extension:PubmedParser",
-  "version": "5.0.2",
+  "version": "5.1",
   "license-name": "GPL-2.0-or-later",
   "descriptionmsg": "pubmedparser-desc",
   "requires": {
@@ -28,6 +28,17 @@
   },
   "MessagesDirs": {
     "PubmedParser": ["i18n"]
+  },
+  "ConfigRegistry": {
+    "PubmedParser": "GlobalVarConfig::newInstance"
+  },
+  "config": {
+    "PubmedParserApiKey": {
+      "value": ""
+    },
+    "PubmedParserUseFileGetContents": {
+      "value": true
+    }
   },
   "manifest_version": 1
 }

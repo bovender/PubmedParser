@@ -19,6 +19,8 @@
  */
 namespace PubmedParser;
 
+use MediaWiki\MediaWikiServices;
+
 if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'This is an extension to MediaWiki and cannot be run standalone.' );
 }
@@ -28,17 +30,25 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 class Helpers
 {
 	public static function FetchRemote($uri, &$result) {
+		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'PubmedParser' );
+		$useFGC = $config->get( 'PubmedParserUseFileGetContents' ) ?? true;
+
 		try {
+			if ( $useFGC === false ) {
+				// A bit hacky, but moves on to cURL
+				throw new \Exception('');
+			}
+			
 			$result = file_get_contents( $uri );
 		}
-		catch (Exception $e) {
+		catch (\Exception $e) {
 			try {
 				$curl = curl_init( $uri );
 				curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
 				$result = curl_exec( $curl );
 				curl_close( $curl );
 			}
-			catch (Exception $e) {
+			catch (\Exception $e) {
 				return false;
 			}
 		}
