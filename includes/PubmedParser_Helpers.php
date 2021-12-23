@@ -67,14 +67,14 @@ class Helpers
 	public static function Pmc2Pmid($pmc, &$pmid) {
 		$result = false;
 		$url = 'https://www.ncbi.nlm.nih.gov/pmc/utils/idconv/v1.0/' .
-			"?tool=PubmedParser&email=krada@gmx.net&ids=$pmc&format=json&versions=no";
+			"?tool=PubmedParser&email=bovender@bovender.de&ids=$pmc&format=json&versions=no";
 		if (self::FetchRemote($url, $json)) {
 			$data = json_decode($json, true);
 			try {
 				$pmid = $data['records'][0]['pmid'];
 				$result = true;
 			}
-			catch (Exception $e) { }
+			catch (\Exception $e) { }
 		}
 		return $result;
 	}
