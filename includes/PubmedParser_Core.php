@@ -76,7 +76,7 @@ class Core
 			$this->reference = $param;
 		}
 	}
-	
+
 	/**
 	 * Retrieves API key
 	 */
@@ -159,7 +159,7 @@ class Core
 		$this->status = PUBMEDPARSER_OK;
 		$xml = null;
 		if ( ! $this->reload ) {
-			$xml = self::fetchFromDb( $this->pmid );
+			$xml = $this->fetchFromDb( $this->pmid );
 			if ( $this->status != PUBMEDPARSER_OK ) {
 				return;
 			}
@@ -177,11 +177,11 @@ class Core
 			// retmode=xml returns raw XML.
 			$url = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi'
 				. "?db=pubmed&id={$this->pmid}&retmode=xml";
-			
+
 			if ( isset($this->apiKey) && $this->apiKey !== '' ) {
 				$url .= "&api_key={$this->apiKey}";
 			}
-			
+
 			if ( !Helpers::FetchRemote( $url, $xml ) ) {
 				$this->status = PUBMEDPARSER_CANNOTDOWNLOAD;
 				return;
@@ -232,7 +232,7 @@ class Core
 			}
 		} else {
 			$this->status = PUBMEDPARSER_DBERROR;
-			return $null;
+			return null;
 		}
 	}
 
