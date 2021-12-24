@@ -34,7 +34,8 @@
   },
   "config": {
     "PubmedParserApiKey": {
-      "value": ""
+      "value": "",
+      "description": "Site-wide NCBI API key to lift the rate limit."
     },
     "PubmedParserUseFileGetContents": {
       "value": true
