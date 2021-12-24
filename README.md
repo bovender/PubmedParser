@@ -35,6 +35,8 @@ reusably references into your Wiki page.
 <!-- TOC -->
 
 - [Installation](#installation)
+- [Configuration](#configuration)
+  - [NCBI API key](#ncbi-api-key)
 - [Usage](#usage)
   - [Template variables](#template-variables)
   - [Example template pubmed](#example-template-pubmed)
@@ -68,6 +70,39 @@ be able to fetch XML data from PubMed. Since there are security concerns over
 using this parameter, from version 1.0.0 on, PubmedParser will also work if
 this option is not set. In that case, it will require the Curl library. Many
 PHP servers are configured to work with Curl.
+
+## Configuration
+
+### NCBI API key
+
+**NCBI/Pubmed imposes a limit to the number of requests per second.** If you
+expect your wiki to issue more than three requests per second (> 3/s), you will
+need an API key. The API key is a hexadecimal number with 36 digits. _With an API
+key, the limit is raised to 10 per second_.
+See "[New API Keys for the E-utilities][]"
+and "[A General Introduction to the E-utilities][]" at NCBI for more information.
+
+Please note that this rate limit applies to your _server_, not to the users'
+browsers. If you edit a page and have more than 3 new `#pmid` keywords in the
+text, your server will issue as many calls to the Pubmed API, and this may
+exceed the rate limit. If you edit a page with pre-existing `#pmid` keywords,
+no additional calls to the Pubmed API will be issued, because those records
+can be fetched from cache. You can [obtain][] an API key from the NCBI Account
+Settings page.
+
+In a similar vein, if there is a possibility that more than three users of your
+wiki edit pages containing a `#pmid` keyword at the same time, you may also want
+to [obtain][obtain-api] and configure an API key in order to prevent error
+messages from Pubmed.
+
+Once you have your API key, place it in your `LocalSetings.php` as follows:
+
+```php
+$wgPubmedParserApiKey = `<your personal 36 hexadecimal digits>';
+```
+
+Keep your API key private to prevent abuse (which would be tracked back to
+your NCBI account).
 
 ## Usage
 
@@ -297,11 +332,14 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 [19782018]: https://pubmed.gov/19782018
+[A General Introduction to the E-utilities]: https://www.ncbi.nlm.nih.gov/books/NBK25497
 [Cite]: https://mediawiki.org/wiki/Extension:Cite
 [Digital Object Identifier]: https://www.doi.org
 [Git]: https://git-scm.com
 [Github releases page]: https://github.com/bovender/PubmedParser/releases
 [MediaWiki]: https://www.mediawiki.org
+[New API Keys for the E-utilities]: https://ncbiinsights.ncbi.nlm.nih.gov/2017/11/02/new-api-keys-for-the-e-utilities
+[obtain-key]: https://www.ncbi.nlm.nih.gov/account/settings
 [ParserFunctions]: https://mediawiki.org/wiki/Extension:ParserFunctions
 [Pubmed]: https://pubmed.gov
 [Pubmed extension]: https://www.mediawiki.org/wiki/Extension:Pubmed
