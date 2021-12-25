@@ -87,12 +87,12 @@ browsers. If you edit a page and have more than 3 new `#pmid` keywords in the
 text, your server will issue as many calls to the Pubmed API, and this may
 exceed the rate limit. If you edit a page with pre-existing `#pmid` keywords,
 no additional calls to the Pubmed API will be issued, because those records
-can be fetched from cache. You can [obtain][] an API key from the NCBI Account
-Settings page.
+can be fetched from cache. You can [obtain][obtain-key] an API key from the NCBI
+Account Settings page.
 
 In a similar vein, if there is a possibility that more than three users of your
 wiki edit pages containing a `#pmid` keyword at the same time, you may also want
-to [obtain][obtain-api] and configure an API key in order to prevent error
+to [obtain][obtain-key] and configure an API key in order to prevent error
 messages from Pubmed.
 
 Once you have your API key, place it in your `LocalSetings.php` as follows:
