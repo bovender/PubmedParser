@@ -37,8 +37,9 @@
       "value": "",
       "description": "Site-wide NCBI API key to lift the rate limit."
     },
-    "PubmedParserUseFileGetContents": {
-      "value": true
+    "PubmedParserRemoteFetchMethod": {
+      "value": "file_get_contents",
+      "description": "Use either 'file_get_contents' (default) or 'curl' to fetch article data."
     }
   },
   "manifest_version": 1

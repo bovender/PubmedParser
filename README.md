@@ -37,6 +37,7 @@ reusably references into your Wiki page.
 - [Installation](#installation)
 - [Configuration](#configuration)
   - [NCBI API key](#ncbi-api-key)
+  - [Remote fetch method](#remote-fetch-method)
 - [Usage](#usage)
   - [Template variables](#template-variables)
   - [Example template pubmed](#example-template-pubmed)
@@ -95,7 +96,7 @@ wiki edit pages containing a `#pmid` keyword at the same time, you may also want
 to [obtain][obtain-key] and configure an API key in order to prevent error
 messages from Pubmed.
 
-Once you have your API key, place it in your `LocalSetings.php` as follows:
+Once you have your API key, place it in your `LocalSettings.php` as follows:
 
 ```php
 $wgPubmedParserApiKey = `<your personal 36 hexadecimal digits>';
@@ -103,6 +104,17 @@ $wgPubmedParserApiKey = `<your personal 36 hexadecimal digits>';
 
 Keep your API key private to prevent abuse (which would be tracked back to
 your NCBI account).
+
+### Remote fetch method
+
+By default, PubmedParser will attempt to use the PHP function
+[`file_get_contents()`][fgc] to fetch article information from the remote NCBI
+servers. You can change this to [`cURL`][curl] if you wish -- for instance,
+if `file_get_contents()` is not available to you:
+
+```php
+$wgPubmedParserRemoteFetchMethod = 'curl'; // default is 'file_get_contents'
+```
 
 ## Usage
 
@@ -334,7 +346,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 [19782018]: https://pubmed.gov/19782018
 [A General Introduction to the E-utilities]: https://www.ncbi.nlm.nih.gov/books/NBK25497
 [Cite]: https://mediawiki.org/wiki/Extension:Cite
+[curl]: https://www.php.net/manual/book.curl.php
 [Digital Object Identifier]: https://www.doi.org
+[fgc]: https://www.php.net/manual/function.file-get-contents.php
 [Git]: https://git-scm.com
 [Github releases page]: https://github.com/bovender/PubmedParser/releases
 [MediaWiki]: https://www.mediawiki.org

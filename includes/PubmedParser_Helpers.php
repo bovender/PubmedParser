@@ -31,28 +31,25 @@ class Helpers
 {
 	public static function FetchRemote($uri, &$result) {
 		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'PubmedParser' );
-		$useFGC = $config->get( 'PubmedParserUseFileGetContents' ) ?? true;
+		$method = $config->get( 'PubmedParserRemoteFetchMethod' );
 
 		try {
-			if ( $useFGC === false ) {
-				// A bit hacky, but moves on to cURL
-				throw new \Exception('');
+			switch ( $method ) {
+				case 'curl':
+					$curl = curl_init( $uri );
+					curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
+					$result = curl_exec( $curl );
+					curl_close( $curl );
+					break;
+				default:
+					$result = file_get_contents( $uri );
+					break;
 			}
-			
-			$result = file_get_contents( $uri );
+			return true;
+		} catch ( \Throwable $th ) {
+			$result = $th;
+			return false;
 		}
-		catch (\Exception $e) {
-			try {
-				$curl = curl_init( $uri );
-				curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
-				$result = curl_exec( $curl );
-				curl_close( $curl );
-			}
-			catch (\Exception $e) {
-				return false;
-			}
-		}
-		return true;
 	}
 
 	/** Converts a PMC id to a PMID by invoking the Pubmed ID
