@@ -1,14 +1,14 @@
 # This Dockerfile can be used to create a Docker image/container
 # that runs the unit tests on the PubmedParser extension.
-FROM mediawiki:1.34
+FROM mediawiki:1.37
 LABEL maintainer Daniel Kraus (https://www.bovender.de)
-RUN apt update -yqq && \
-    apt install -yqq \
-	php7.0-sqlite \
+RUN apt-get update -yqq && \
+	apt-get install -yqq \
+	php7.4-sqlite \
 	sqlite3 \
 	unzip \
 	zip
-RUN curl https://raw.githubusercontent.com/composer/getcomposer.org/cb19f2aa3aeaa2006c0cd69a7ef011eb31463067/web/installer -s | php -- --quiet
+RUN curl https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer -s | php -- --quiet
 RUN php composer.phar install
 
 COPY . /var/www/html/extensions/PubmedParser/
