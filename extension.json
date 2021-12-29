@@ -35,7 +35,7 @@
   "config": {
     "PubmedParserApiKey": {
       "value": "",
-      "description": "Site-wide NCBI API key to lift the rate limit."
+      "description": "Optional site-wide NCBI API key to lift the rate limit."
     },
     "PubmedParserRemoteFetchMethod": {
       "value": "file_get_contents",
