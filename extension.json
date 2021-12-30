@@ -1,7 +1,8 @@
 {
   "author": [
-    "[https://www.mediawiki.org/wiki/User:Bovender Daniel Kraus (bovender)]",
-    "[https://professional.wiki Karsten Hoffmeyer (kghbln)]"
+    "[https://github.com/bovender Daniel Kraus (bovender)]",
+    "[https://github.com/kghbln Karsten Hoffmeyer (kghbln)]",
+    "[https://github.com/jeffw16 Jeffrey Wang (jeffw16)]"
   ],
   "name": "PubmedParser",
   "type": "parserhook",

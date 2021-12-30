@@ -327,7 +327,8 @@ manually rename all your database tables!
 
 ## License
 
-Copyright (c) 2011-2021 Daniel Kraus ([bovender](https://www.bovender.de))
+Copyright (c) 2011-2022 Daniel Kraus ([bovender](https://www.bovender.de))
+and co-authors
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
