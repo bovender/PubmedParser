@@ -119,9 +119,7 @@ class Article
 						if ( $label ) {
 							$label .= ': ';
 						}
-						if ( !$this->abstract ) {
-							$this->abstract .= $label . $reader->readInnerXML() . ' ';
-						}
+						$this->abstract .= "\n\n" . $label . $reader->readInnerXML() . ' ';
 						break;
 				}
 			}
