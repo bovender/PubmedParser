@@ -115,11 +115,11 @@ class Article
 						}
 						break;
 					case 'AbstractText':
-						$label = $reader->getAttribute( 'Label' );
+						$label = strip_tags( $reader->getAttribute( 'Label' ) );
 						if ( $label ) {
 							$label .= ': ';
 						}
-						$this->abstract .= "\n\n" . $label . $reader->readInnerXML() . ' ';
+						$this->abstract .= $label . strip_tags( $reader->readInnerXML() ) . ' ';
 						break;
 				}
 			}
