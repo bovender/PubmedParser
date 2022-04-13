@@ -27,5 +27,6 @@
 	"pubmedparser-etal": "Symbol or words to use in PubMed citation templates as 'et al.'.",
 	"pubmedparser-initialseparator": "Symbol to use in PubMed citations to separate authors' initials.",
 	"pubmedparser-initialperiod": "Symbol to place after authors' initials in PubMed citations.",
-	"pubmedparser-reload": "Parameter to use in PubmedParser parser function calls to force reloading the PubMed citation."
+	"pubmedparser-reload": "Parameter to use in PubmedParser parser function calls to force reloading the PubMed citation.",
+	"pubmedparser-keywords": "Name of the PubMed template variable to show keywords"
 }

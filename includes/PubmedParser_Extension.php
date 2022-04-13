@@ -103,6 +103,7 @@ class Extension {
 		self::$initialSeparator = wfMessage( 'pubmedparser-initialseparator' )->text();
 		self::$templateName     = wfMessage( 'pubmedparser-templatename' )->text();
 		self::$reload           = wfMessage( 'pubmedparser-reload' )->text();
+		self::$keywords         = wfMessage( 'pubmedparser-keywords' )->text();
 	}
 
 
@@ -128,6 +129,7 @@ class Extension {
 	public static $initialSeparator;
 	public static $templateName;
 	public static $reload;
+	public static $keywords;
 }
 
 // vim: ts=2:sw=2:noet:comments^=\:///

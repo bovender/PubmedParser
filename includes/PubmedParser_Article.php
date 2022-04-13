@@ -39,6 +39,7 @@ class Article
 	public $pmc;
 	public $xml;
 	public $message; ///< May hold an exception message.
+	public $keywords = [];
 
 	/** Constructs a new article object from a given Pubmed XML string.
 	 */
@@ -120,6 +121,9 @@ class Article
 							$label .= ': ';
 						}
 						$this->abstract .= $label . strip_tags( $reader->readInnerXML() ) . ' ';
+						break;
+					case 'Keyword':
+						$this->keywords[] = $reader->readInnerXML();
 						break;
 				}
 			}
@@ -231,6 +235,10 @@ class Article
 		}
 		$j = implode( ' ', $jwords );
 		return $j;
+	}
+
+	function allKeywords() {
+		return implode( ',', $this->keywords );
 	}
 
 	/** A private function that returns either the author's last name or

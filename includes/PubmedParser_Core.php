@@ -132,6 +132,7 @@ class Core
 			. '|' . Extension::$pmc         . '=' . $article->pmc
 			. '|' . Extension::$abstract    . '=' . $article->abstract
 			. '|' . Extension::$title       . '=' . $article->title
+			. '|' . Extension::$keywords    . '=' . $article->allKeywords()
 			. '}}';
 	}
 

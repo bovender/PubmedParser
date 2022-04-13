@@ -27,5 +27,6 @@
 	"pubmedparser-etal": "''et al.''",
 	"pubmedparser-initialseparator": "",
 	"pubmedparser-initialperiod": "",
-	"pubmedparser-reload": "reload"
+	"pubmedparser-reload": "reload",
+	"pubmedparser-keywords": "keywords"
 }
