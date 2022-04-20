@@ -117,10 +117,13 @@ class Article
 						break;
 					case 'AbstractText':
 						$label = strip_tags( $reader->getAttribute( 'Label' ) );
+						$label = trim( preg_replace( '/\s\s+/', ' ', $label ) );
+						$content = strip_tags( $reader->readInnerXML() );
+						$content = trim( preg_replace( '/\s\s+/', ' ', $content ) );
 						if ( $label ) {
 							$label .= ': ';
 						}
-						$this->abstract .= $label . strip_tags( $reader->readInnerXML() ) . ' ';
+						$this->abstract .= $label . $content . ' ';
 						break;
 					case 'Keyword':
 						$this->keywords[] = $reader->readInnerXML();
