@@ -35,7 +35,7 @@ class CoreTest extends \MediaWikiTestCase {
 		'firstPage',
 	);
 
-	protected function setUp() {
+	protected function setUp(): void {
 		parent::setUp();
 		// Since wfMessage returns empty strings, prepare the messages.
 		foreach ( $this->templateFields as $key => $value ) {
