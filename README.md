@@ -1,12 +1,14 @@
-> **HEADS UP!**  
-> **THE MAIN BRANCH HAS BEEN RENAMED FROM "MASTER" TO "MAIN".**  
-> **TO UPDATE AN EXISTING LOCAL COPY OF THIS REPOSITORY:**  
-> **`git fetch`**  
+> **HEADS UP!**
+> **THE MAIN BRANCH HAS BEEN RENAMED FROM "MASTER" TO "MAIN".**
+> **TO UPDATE AN EXISTING LOCAL COPY OF THIS REPOSITORY:**
+> **`git fetch`**
 > **`git checkout -t origin/main`**
 
 ---
 
 # Extension PubmedParser
+
+[![CI](https://github.com/WikiTeq/PubmedParser/actions/workflows/mediawiki.yml/badge.svg)](https://github.com/WikiTeq/PubmedParser/actions/workflows/mediawiki.yml)
 
 <https://www.mediawiki.org/wiki/Extension:PubmedParser>
 
