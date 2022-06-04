@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ "*" ]
+
+jobs:
+  test:
+    name: "PHPUnit: MW ${{ matrix.mw }}, PHP ${{ matrix.php }}"
+    strategy:
+      matrix:
+        include:
+          - mw: 'REL1_35'
+            php: 7.4
+          - mw: 'REL1_36'
+            php: 7.4
+          - mw: 'REL1_37'
+            php: 7.4
+          - mw: 'master'
+            php: 7.4
+    runs-on: ubuntu-latest
+    steps:
+      # check out the repository
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Test extension
+        uses: wikiteq/mediawiki-phpunit-action@v2
+        with:
+          php: ${{ matrix.php }}
+          mwbranch: ${{ matrix.mw }}
+          extension: PubmedParser
+          testgroup: extension-PubmedParser

@@ -7,19 +7,22 @@
  */
 namespace PubmedParser;
 
+/**
+ * @group extension-PubmedParser
+ */
 class ArticleTest extends \MediaWikiTestCase {
 
 	protected function setUp() {
-		parent:setUp();
+		parent::setUp();
 	}
 
 	/**
 	 * Main unit test for PubmedArticle properties.
-	 * This test contains lots of assertions which is not considered good 
-	 * style; however, placing the assertions in individual tests would have 
-	 * involved creating PubmedArticle objects with the same sample data over 
-	 * and over again. (I tried to use the '(at) depends' keyword of PHPUnit, 
-	 * but when an object was returned from the producer, NULL would be 
+	 * This test contains lots of assertions which is not considered good
+	 * style; however, placing the assertions in individual tests would have
+	 * involved creating PubmedArticle objects with the same sample data over
+	 * and over again. (I tried to use the '(at) depends' keyword of PHPUnit,
+	 * but when an object was returned from the producer, NULL would be
 	 * delivered to the consumer. Maybe there is a better way to do this.)
 	 * @dataProvider xmlProvider
 	 */
@@ -34,7 +37,7 @@ class ArticleTest extends \MediaWikiTestCase {
 	 		'Title incorrect' );
 		$this->assertEquals( $simpleArticle->Journal->Title, $article->journal,
 	 		'Journal name incorrect' );
-		$this->assertEquals( $simpleArticle->Journal->ISOAbbreviation, 
+		$this->assertEquals( $simpleArticle->Journal->ISOAbbreviation,
 			$article->journalAbbrev, 'Abbreviated journal name incorrect' );
 		$this->assertEquals( $simpleArticle->Pagination->MedlinePgn, $article->pages,
 	 		'Page numbers incorrect' );

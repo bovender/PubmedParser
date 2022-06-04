@@ -5,12 +5,13 @@ namespace PubmedParser;
  * Unit tests for the PubmedParserFetcher class.
  * @group Database
  * @group bovender
+ * @group extension-PubmedParser
  */
 class CoreTest extends \MediaWikiTestCase {
 	private $testPmid = 454545;
 
-	/** An array of template fields that are used to build the reference. The 
-		* keys of this associative array map to the public static properties of 
+	/** An array of template fields that are used to build the reference. The
+		* keys of this associative array map to the public static properties of
 		* the PubmedParserFetcher class.
 	 */
 	private $templateFields = array(
@@ -46,9 +47,9 @@ class CoreTest extends \MediaWikiTestCase {
 			Extension::$$key = strtolower( $key );
 		};
 
-		// Manually set the template name; this cannot be done with the 
-		// $templateFields array since there is no corresponding value, and we 
-		// loop over the entire array further below to assert correctness of the 
+		// Manually set the template name; this cannot be done with the
+		// $templateFields array since there is no corresponding value, and we
+		// loop over the entire array further below to assert correctness of the
 		// template transclusion that was built.
 		Extension::$templateName = "pubmed";
 	}
