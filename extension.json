@@ -43,5 +43,5 @@
       "description": "Use either 'file_get_contents' (default) or 'curl' to fetch article data."
     }
   },
-  "manifest_version": 1
+  "manifest_version": 2
 }
