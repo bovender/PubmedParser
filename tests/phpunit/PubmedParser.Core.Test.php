@@ -52,6 +52,11 @@ class CoreTest extends \MediaWikiTestCase {
 		// loop over the entire array further below to assert correctness of the
 		// template transclusion that was built.
 		Extension::$templateName = "pubmed";
+		
+		$this->tablesUsed = array_merge(
+			$this->tablesUsed,
+			[ 'pubmed' ]
+		);
 	}
 
 	/**
