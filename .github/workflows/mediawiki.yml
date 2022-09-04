@@ -29,6 +29,7 @@ jobs:
       - name: Test extension
         uses: wikiteq/mediawiki-phpunit-action@v2
         with:
+          type: extension
           php: ${{ matrix.php }}
           mwbranch: ${{ matrix.mw }}
           extension: PubmedParser
