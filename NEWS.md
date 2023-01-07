@@ -5,12 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## unreleased
+## [5.1.0][] - 2023-01-07
 
 ### New feature
 
 - It is now possible to configure a Pubmed `API` key when setting up the
   extension.
+- Keywords parameter is now available for the Pubmed template (values are sources
+  from `Keyword` elements), separated by comma.
+
+## Changed
+
+- Use only first occurrence of specific tag to prevent values like journal from
+  being overwritten by multiple occurrences of Title tag like for this article
+  https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=32681566&retmode=xml
+  where Title also present in References section.
+- Strip tags and newlines/whitespaces from Abstract field (`AbstractText`).
+- Updated extension.json manifest version to 2.
 
 ## [5.0.2][] - 2021-05-04
 

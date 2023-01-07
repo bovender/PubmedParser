@@ -1,6 +1,6 @@
 <?php
 /*
- *      Copyright 2011-2022 Daniel Kraus <bovender@bovender.de> and co-authors
+ *      Copyright 2011-2023 Daniel Kraus <bovender@bovender.de> and co-authors
  *
  *      This program is free software; you can redistribute it and/or modify
  *      it under the terms of the GNU General Public License as published by

@@ -1,14 +1,4 @@
-> **HEADS UP!**
-> **THE MAIN BRANCH HAS BEEN RENAMED FROM "MASTER" TO "MAIN".**
-> **TO UPDATE AN EXISTING LOCAL COPY OF THIS REPOSITORY:**
-> **`git fetch`**
-> **`git checkout -t origin/main`**
-
----
-
 # Extension PubmedParser
-
-[![CI](https://github.com/WikiTeq/PubmedParser/actions/workflows/mediawiki.yml/badge.svg)](https://github.com/WikiTeq/PubmedParser/actions/workflows/mediawiki.yml)
 
 <https://www.mediawiki.org/wiki/Extension:PubmedParser>
 
@@ -36,18 +26,7 @@ reusably references into your Wiki page.
 
 <!-- TOC -->
 
-- [Installation](#installation)
-- [Configuration](#configuration)
-  - [NCBI API key](#ncbi-api-key)
-  - [Remote fetch method](#remote-fetch-method)
-- [Usage](#usage)
-  - [Template variables](#template-variables)
-  - [Example template pubmed](#example-template-pubmed)
-  - [Adding <ref></ref> tags automatically](#adding-refref-tags-automatically)
-  - [Forcing reload from Pubmed](#forcing-reload-from-pubmed)
-- [Customization](#customization)
-- [Upgrading from previous versions of this extension](#upgrading-from-previous-versions-of-this-extension)
-- [License](#license)
+
 
 <!-- /TOC -->
 
@@ -329,7 +308,7 @@ manually rename all your database tables!
 
 ## License
 
-Copyright (c) 2011-2022 Daniel Kraus ([bovender](https://www.bovender.de))
+Copyright (c) 2011-2023 Daniel Kraus ([bovender](https://www.bovender.de))
 and co-authors
 
 This program is free software; you can redistribute it and/or
