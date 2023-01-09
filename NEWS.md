@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Keywords parameter is now available for the Pubmed template (values are sources
   from `Keyword` elements), separated by comma.
 
-## Changed
+### Changed
 
 - Use only first occurrence of specific tag to prevent values like journal from
   being overwritten by multiple occurrences of Title tag like for this article
