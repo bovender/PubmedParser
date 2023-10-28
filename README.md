@@ -259,6 +259,23 @@ without causing superfluous download requests from Pubmed. The next time you
 edit a page, you can remove the 'reload' option, and the article information
 will be retrieved from cache again.
 
+Certainly! Here's an explanation that you can add to the documentation to describe this feature:
+
+---
+
+### Specifying a Custom Template Name
+
+In addition to using the default template specified in the extension's configuration, the PubmedParser extension allows users to specify a different template name directly within the `#pmid` parser function call. This can be particularly useful if you have multiple templates for different types of articles or display formats and want to choose among them on a case-by-case basis.
+
+To specify a custom template name, simply add a parameter prefixed by `#`. For example:
+
+```mediawiki
+{{#pmid:19782018|#anothertemplate}}
+{{#pmid:19782018|Alon2009|#anothertemplate}}
+```
+
+In the example above, instead of using the default template (e.g., `pubmed`), the extension will use the `anothertemplate` template to format and display the fetched Pubmed article information. Ensure that the custom template you specify exists in your wiki. If it doesn't, a red link to the non-existent template will be displayed on the page.
+
 ## Customization
 
 You can customize the name of the template as well as the names of the
