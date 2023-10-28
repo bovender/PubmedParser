@@ -51,13 +51,13 @@ class Core
 	 * name MUST be prefixed with '#' (configurable in MediaWiki system
 	 * messages).
 	 */
-	function __construct( $pmid = 0, $param1 = '', $param2 = '' ) {
+	function __construct( $pmid = 0, $param ) {
 		$this->status = PUBMEDPARSER_INVALIDPMID;
 		$this->template = Extension::$templateName;
 		$this->pmid = $pmid;
 		$this->apiKey = $this->getApiKey();
-		$this->parseParam( $param1 );
-		$this->parseParam( $param2 );
+		foreach ($param AS $p)
+			$this->parseParam( $p );
 		$this->lookUp();
 	}
 
@@ -68,6 +68,9 @@ class Core
 		// Is the parameter meant to indicate the template name?
 		if ( substr( $param, 0, 1 ) === PUBMEDPARSER_TEMPLATECHAR ) {
 			$this->template = substr( $param, 1 );
+		}
+		elseif ( strpos( $param, '=' ) !== false ) {
+			$this->addargs .= '|' . $param;
 		}
 		elseif ( $param === Extension::$reload ) {
 			$this->reload = true;
@@ -133,6 +136,7 @@ class Core
 			. '|' . Extension::$abstract    . '=' . $article->abstract
 			. '|' . Extension::$title       . '=' . $article->title
 			. '|' . Extension::$keywords    . '=' . $article->allKeywords()
+			. $this->addargs
 			. '}}';
 	}
 
@@ -309,6 +313,7 @@ class Core
 	private $reference; ///< Optional name of a footnote reference.
 	private $status;  ///< holds status information (0 if everything is ok)
 	private $template; ///< Name of the template to use.
+	private $addargs; ///< Additional template arguments
 	private static $_readDb = null;
 	private static $_writeDb = null;
 }

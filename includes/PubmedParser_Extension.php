@@ -70,9 +70,9 @@ class Extension {
 	/**
 	 * Static function that is hooked to the 'pmid' magic hook.
 	 */
-	public static function render( &$parser, $param1 = '', $param2 = '', $param3 = '' ) {
+	public static function render( &$parser, $pmid, ...$param ) {
 		if ( ! is_string( self::$authors ) ) self::loadMessages();
-		$core = new Core( $param1, $param2, $param3 );
+		$core = new Core( $pmid, $param );
 		return $core->execute();
 	}
 
