@@ -259,6 +259,33 @@ without causing superfluous download requests from Pubmed. The next time you
 edit a page, you can remove the 'reload' option, and the article information
 will be retrieved from cache again.
 
+### Specifying a Custom Template Name
+
+In addition to using the default template specified in the extension's configuration, the PubmedParser extension allows users to specify a different template name directly within the `#pmid` parser function call. This can be particularly useful if you have multiple templates for different types of articles or display formats and want to choose among them on a case-by-case basis.
+
+To specify a custom template name, simply add a parameter prefixed by `#`. For example:
+
+```mediawiki
+{{#pmid:19782018|#anothertemplate}}
+{{#pmid:19782018|Alon2009|#anothertemplate}}
+```
+
+In the example above, instead of using the default template (e.g., `pubmed`), the extension will use the `anothertemplate` template to format and display the fetched Pubmed article information. Ensure that the custom template you specify exists in your wiki. If it doesn't, a red link to the non-existent template will be displayed on the page.
+
+Of course! Here's a suitable explanation that you can incorporate into the documentation:
+
+### Passing Additional Parameters to the Template
+
+The PubmedParser extension supports direct parameter passing in the form of `key=value` within the `#pmid` parser function. This feature is especially valuable when you want to provide supplementary information or customize the display of the fetched article data in the template.
+
+For example, if you wish to provide an additional full-text URL for the article:
+
+```mediawiki
+{{#pmid:19782018|Alon2009|fulltexturl=https://example.com/fulltext.pdf}}
+```
+
+In the above syntax, the `fulltexturl` parameter with the value `https://example.com/fulltext.pdf` will be passed directly to the template. Within the template, you can then use the `{{{fulltexturl}}}` placeholder to display or link to the provided full-text URL.
+
 ## Customization
 
 You can customize the name of the template as well as the names of the
