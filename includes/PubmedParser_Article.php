@@ -116,7 +116,7 @@ class Article
 						}
 						break;
 					case 'AbstractText':
-						$label = strip_tags( $reader->getAttribute( 'Label' ) );
+						$label = strip_tags( $reader->getAttribute( 'Label' ?? '' ) );
 						$label = trim( preg_replace( '/\s\s+/', ' ', $label ) );
 						$content = strip_tags( $reader->readInnerXML() );
 						$content = trim( preg_replace( '/\s\s+/', ' ', $content ) );
@@ -226,8 +226,10 @@ class Article
 
 	/// Returns the first page of the article.
 	function firstPage() {
-		$fp = explode('-', $this->pages);
-		return $fp[0];
+		if ( $this->pages ) {
+			$fp = explode('-', $this->pages);
+			return $fp[0];
+		}
 	}
 
 	function journalAbbrevNoPeriods() {
