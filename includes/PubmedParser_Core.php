@@ -51,7 +51,7 @@ class Core
 	 * name MUST be prefixed with '#' (configurable in MediaWiki system
 	 * messages).
 	 */
-	function __construct( $pmid = 0, $param ) {
+	function __construct( $pmid = 0, $param = NULL ) {
 		$this->status = PUBMEDPARSER_INVALIDPMID;
 		$this->template = Extension::$templateName;
 		$this->pmid = $pmid;
