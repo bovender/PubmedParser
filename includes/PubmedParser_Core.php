@@ -314,6 +314,7 @@ class Core
 	private $status;  ///< holds status information (0 if everything is ok)
 	private $template; ///< Name of the template to use.
 	private $addargs; ///< Additional template arguments
+	private $apiKey; ///< Pubmed API key
 	private static $_readDb = null;
 	private static $_writeDb = null;
 }
