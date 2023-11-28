@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.2.0][] - 2023-11-28
+
+### New feature
+
+- It is now possible to send optional additional parameters to the citation
+  template, e.g. `{{#pmid:12345|my_optional_argument=my_argument_value}}`. This
+  can be useful for additional information such as an article URL.
+
+### Fixed
+
+- Address deprecation warnings with PHP 8.x.
+
 ## [5.1.0][] - 2023-01-07
 
 ### New feature
@@ -123,6 +135,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.0.0][] - 2014-09-10
 
+[5.2.0]: https://github.com/bovender/PubmedParser/releases/tag/v5.2.0
+[5.1.0]: https://github.com/bovender/PubmedParser/releases/tag/v5.1.0
 [5.0.2]: https://github.com/bovender/PubmedParser/releases/tag/v5.0.2
 [5.0.1]: https://github.com/bovender/PubmedParser/releases/tag/v5.0.1
 [5.0.0]: https://github.com/bovender/PubmedParser/releases/tag/v5.0.0

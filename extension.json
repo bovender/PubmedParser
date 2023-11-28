@@ -2,13 +2,14 @@
   "author": [
     "[https://github.com/bovender Daniel Kraus (bovender)]",
     "[https://github.com/kghbln Karsten Hoffmeyer (kghbln)]",
+    "[https://github.com/strimo378 Timo Stripf (strimo378)]",
     "[https://github.com/jeffw16 Jeffrey Wang (jeffw16)]",
     "[https://github.com/vedmaka Vedmaka"
   ],
   "name": "PubmedParser",
   "type": "parserhook",
   "url": "https://www.mediawiki.org/wiki/Extension:PubmedParser",
-  "version": "5.1.0",
+  "version": "5.2.0",
   "license-name": "GPL-2.0-or-later",
   "descriptionmsg": "pubmedparser-desc",
   "requires": {
