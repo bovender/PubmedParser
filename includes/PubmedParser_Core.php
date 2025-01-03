@@ -272,7 +272,7 @@ class Core
 	 */
 	protected function getWriteDb() {
 		if ( !self::$_writeDb ) {
-			self::$_writeDb = wfGetDB( DB_MASTER );
+			self::$_writeDb = wfGetDB( DB_PRIMARY );
 		};
 		return self::$_writeDb;
 	}
