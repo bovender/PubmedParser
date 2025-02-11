@@ -17,7 +17,7 @@
  *      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  *      MA 02110-1301, USA.
  */
-namespace PubmedParser;
+namespace MediaWiki\Extension\PubmedParser;
 
 use MediaWiki\MediaWikiServices;
 
@@ -51,9 +51,9 @@ class Core
 	 * name MUST be prefixed with '#' (configurable in MediaWiki system
 	 * messages).
 	 */
-	function __construct( $pmid = 0, $param = NULL ) {
-		$this->status = PUBMEDPARSER_INVALIDPMID;
-		$this->template = Extension::$templateName;
+	function __construct( $pmid = 0, $param = [] ) {
+		$this->status = 'INVALIDPMID';
+		$this->template = PubmedParserExtension::$templateName;
 		$this->pmid = $pmid;
 		$this->apiKey = $this->getApiKey();
 		foreach ($param AS $p)
@@ -66,7 +66,7 @@ class Core
 	 */
 	private function parseParam( $param ) {
 		// Is the parameter meant to indicate the template name?
-		if ( substr( $param, 0, 1 ) === PUBMEDPARSER_TEMPLATECHAR ) {
+		if ( substr( $param, 0, 1 ) === '#' ) {
 			$this->template = substr( $param, 1 );
 		}
 		elseif ( strpos( $param, '=' ) !== false ) {
@@ -92,7 +92,7 @@ class Core
 	 * @return Array with parametrized PubMed article template.
 	 */
 	function execute() {
-		if ( $this->statusCode() == PUBMEDPARSER_OK ) {
+		if ( $this->statusCode() == 'OK' ) {
 			$output = $this->buildTemplate( $this->article );
 			if ( $this->reference ) {
 				$output = "<ref name=\"{$this->reference}\">$output</ref>";
@@ -157,15 +157,15 @@ class Core
 		// First, let's check if the PMID consists of digits only
 		// This check is also important to prevent SQL injections!
 		if ( !ctype_digit2( $this->pmid ) ) {
-			$this->status = PUBMEDPARSER_INVALIDPMID;
+			$this->status = 'INVALIDPMID';
 			return;
 		}
 
-		$this->status = PUBMEDPARSER_OK;
+		$this->status = 'OK';
 		$xml = null;
 		if ( ! $this->reload ) {
 			$xml = $this->fetchFromDb( $this->pmid );
-			if ( $this->status != PUBMEDPARSER_OK ) {
+			if ( $this->status != 'OK' ) {
 				return;
 			}
 		};
@@ -188,7 +188,7 @@ class Core
 			}
 
 			if ( !Helpers::FetchRemote( $url, $xml ) ) {
-				$this->status = PUBMEDPARSER_CANNOTDOWNLOAD;
+				$this->status = 'CANNOTDOWNLOAD';
 				return;
 			}
 		} // if no xml in database
@@ -201,11 +201,11 @@ class Core
 				}
 			}
 			else {
-				$this->status = PUBMEDPARSER_INVALIDXML;
+				$this->status = 'INVALIDXML';
 			}
 		}
 		else {
-			$this->status = PUBMEDPARSER_NODATA;
+			$this->status = 'NODATA';
 		}
 	}
 
@@ -236,7 +236,7 @@ class Core
 				return $xml;
 			}
 		} else {
-			$this->status = PUBMEDPARSER_DBERROR;
+			$this->status = 'DBERROR';
 			return null;
 		}
 	}
@@ -295,20 +295,20 @@ class Core
 	function statusMsg() {
 		$s = wfMessage( 'pubmedparser-error' )->text() . ': ';
 		switch ( $this->status ) {
-			case PUBMEDPARSER_INVALIDPMID:
+			case 'INVALIDPMID':
 				return $s . wfMessage( 'pubmedparser-error-invalidpmid' )->text()
 					. ' (PMID: [https://pubmed.gov/' . $this->pmid . ' '
 					. $this->pmid . '])';
-			case PUBMEDPARSER_NODATA:
+			case 'NODATA':
 				return $s . wfMessage( 'pubmedparser-error-nodata' )->text()
 					. ' (PMID: [https://pubmed.gov/' . $this->pmid . ' '
 					. $this->pmid . '])';
-			case PUBMEDPARSER_DBERROR:
+			case 'DBERROR':
 				return $s . wfMessage( 'pubmedparser-error-dberror' )->text();
-			case PUBMEDPARSER_INVALIDXML:
+			case 'INVALIDXML':
 				return $s . wfMessage( 'pubmedparser-error-invalidxml' )->text() .
 					" ({$this->article->message})";
-			case PUBMEDPARSER_OK:
+			case 'OK':
 				return $s . 'ok'; // no i18n since this message will never be shown to the user
 			default:
 				return 'Status code: #' . $this->status;
@@ -326,4 +326,3 @@ class Core
 	private static $_readDb = null;
 	private static $_writeDb = null;
 }
-// vim: tw=78:ts=2:sw=2:noet:comments^=\:///

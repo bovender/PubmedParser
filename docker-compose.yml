@@ -1,0 +1,24 @@
+services:
+  mediawiki:
+    image: docker-registry.wikimedia.org/dev/bookworm-php83-fpm:1.0.0
+    volumes:
+      - ./mediawiki/:/var/www/html/w:cache
+      - ./:/var/www/html/w/extensions/PubmedParser
+      - cache:/var/www/html/w/cache:rw
+    environment:
+      COMPOSER_CACHE_DIR: '/var/www/html/w/cache/composer'
+      MW_SERVER: 'http://localhost:${MW_DOCKER_PORT:-8080}'
+      MW_DOCKER_PORT: "${MW_DOCKER_PORT:-8080}"
+      MW_SCRIPT_PATH: '/w'
+      MW_DBPATH: '/var/www/html/w/cache/sqlite'
+      MW_DBTYPE: 'sqlite'
+      MW_LANG: 'en'
+      MW_USER: '${MEDIAWIKI_USER:-Admin}'
+      MW_PASS: '${MEDIAWIKI_PASSWORD:-dockerpass}'
+      MW_SITENAME: 'MediaWiki'
+      MW_LOG_DIR: /var/www/html/w/cache
+      XDEBUG_CONFIG: '${XDEBUG_CONFIG}'
+      XDEBUG_ENABLE: '${XDEBUG_ENABLE:-true}'
+      XHPROF_ENABLE: '${XHPROF_ENABLE:-true}'  
+volumes:
+  cache:

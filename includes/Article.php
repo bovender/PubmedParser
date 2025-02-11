@@ -17,7 +17,7 @@
  *      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  *      MA 02110-1301, USA.
  */
-namespace PubmedParser;
+namespace MediaWiki\Extension\PubmedParser;
 
 if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'This is an extension to MediaWiki and cannot be run standalone.' );
@@ -187,9 +187,9 @@ class Article
 		if ( $numAuthors > 0 ) {
 			$a = $this->authorName( 0, $useInitials );
 			if ( $numAuthors > 2 ) {
-				$a .= " " . Extension::$etAl;
+				$a .= " " . PubmedParser::$etAl;
 			} elseif ( $numAuthors == 2 ) {
-				$a .= ' ' . Extension::$and .  ' '	. $this->authorName( 1, $useInitials );
+				$a .= ' ' . PubmedParser::$and .  ' '	. $this->authorName( 1, $useInitials );
 			}
 			return $a;
 		} else {
@@ -209,7 +209,7 @@ class Article
 			}
 			// Cut off the last ", ", add the "and" character or word, and append
 			// the last author's name.
-			$a = substr( $a, 0, strlen( $a )-2 ) . ' ' . Extension::$and
+			$a = substr( $a, 0, strlen( $a )-2 ) . ' ' . PubmedParser::$and
 				. ' ' . $this->authorName( $i, $useInitials );
 		} elseif ( $numAuthors == 1 ) {
 			$a = $this->authorName( 0, $useInitials );
@@ -257,14 +257,14 @@ class Article
 			if ( $useInitial ) {
 				$i = $this->initials[$index];
 				$iarray = str_split($i, 1);
-				$i = implode( Extension::$initialPeriod, $iarray)
-					. Extension::$initialPeriod;
+				$i = implode( PubmedParser::$initialPeriod, $iarray)
+					. PubmedParser::$initialPeriod;
 				// Spaces in the "Pubmedparser-initialperiod" system message must be
 				// encoded as "&nbsp;", lest they be removed by MediaWiki's text
 				// processing. In order to remove the trailing "&nbsp;" after
 				// concatenating all authors and initials, we use the trim function
 				// with " \xc2\xa0".
-				$author = trim( $author . Extension::$initialSeparator
+				$author = trim( $author . PubmedParser::$initialSeparator
 					. ' ' . $i, " \xc2\xa0");
 			}
 			return $author;
@@ -273,5 +273,3 @@ class Article
 		}
 	}
 }
-
-// vim: ts=2:sw=2:noet:comments^=\:///

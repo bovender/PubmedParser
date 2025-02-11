@@ -11,5 +11,5 @@ if ( function_exists( 'wfLoadExtension' ) ) {
 	);
 	return;
 } else {
-	die( 'This version of the PubmedParser extension requires MediaWiki 1.25+' );
+	die( 'This version of the PubmedParser extension requires MediaWiki 1.42+' );
 }

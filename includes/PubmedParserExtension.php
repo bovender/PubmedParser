@@ -17,7 +17,7 @@
  *      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  *      MA 02110-1301, USA.
  */
-namespace PubmedParser;
+namespace MediaWiki\Extension\PubmedParser;
 
 if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'This is an extension to MediaWiki and cannot be run standalone.' );
@@ -30,21 +30,12 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  * execution code was encapsulated in instance methods. The static methods
  * create an instance of this class and call upon the instance methods.
  */
-class Extension {
+class PubmedParserExtension {
 	/** Default setup function.
 	 * Associates the "pmid" magic word with the efPubmedParser_Render function.
 	 */
 	public static function setup( &$parser ) {
-		$parser->setFunctionHook( 'pmid', 'PubmedParser\Extension::render' );
-		if ( !defined( 'PUBMEDPARSER_OK' ) ) {
-			define( 'PUBMEDPARSER_OK',             0); ///< Status code: okay
-			define( 'PUBMEDPARSER_INVALIDPMID',    2); ///< Status code: PMID is invalid
-			define( 'PUBMEDPARSER_NODATA',         3); ///< Status code: Pubmed returned no data
-			define( 'PUBMEDPARSER_CANNOTDOWNLOAD', 4); ///< Status code: cannot download XML data
-			define( 'PUBMEDPARSER_DBERROR',        5);
-			define( 'PUBMEDPARSER_INVALIDXML',     6); ///< Status code: Invalid XML data received
-			define( 'PUBMEDPARSER_TEMPLATECHAR',   '#'); ///< Indicates template name parameter
-		}
+		$parser->setFunctionHook( 'pmid', '\MediaWiki\Extension\PubmedParser\PubmedParserExtension::render' );
 		return true;
 	}
 
@@ -59,7 +50,7 @@ class Extension {
 	/** Creates a Pubmed table in the Wiki database. This will hold XML
 	 * strings downloaded from pubmed.gov.
 	 */
-	public static function createTable( \DatabaseUpdater $updater ) {
+	public static function onLoadExtensionSchemaUpdates( \DatabaseUpdater $updater ) {
 		global $wgDBtype;
 		$dbTag = $wgDBtype == 'postgres' ? '_Postgres' : '';
 		$updater->addExtensionTable( 'Pubmed',
@@ -131,5 +122,3 @@ class Extension {
 	public static $reload;
 	public static $keywords;
 }
-
-// vim: ts=2:sw=2:noet:comments^=\:///

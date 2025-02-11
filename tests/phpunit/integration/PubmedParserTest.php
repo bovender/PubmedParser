@@ -1,13 +1,15 @@
 <?php
-namespace PubmedParser;
+use MediaWiki\Extension\PubmedParser\PubmedParserExtension;
+use MediaWiki\Extension\PubmedParser\Article;
+use MediaWiki\Extension\PubmedParser\Core;
 
 /**
- * Unit tests for the PubmedParserFetcher class.
+ * Integration test for PubmedParser.
  * @group Database
  * @group bovender
  * @group extension-PubmedParser
  */
-class CoreTest extends \MediaWikiTestCase {
+class PubmedParserTest extends MediaWikiIntegrationTestCase {
 	private $testPmid = 454545;
 
 	/** An array of template fields that are used to build the reference. The
@@ -40,18 +42,18 @@ class CoreTest extends \MediaWikiTestCase {
 		// Since wfMessage returns empty strings, prepare the messages.
 		foreach ( $this->templateFields as $key => $value ) {
 			// Two $$ to use the content of $key as variable name.
-			Extension::$$key = strtolower( $key );
+			PubmedParserExtension::$$key = strtolower( $key );
 		};
 		foreach ( $this->untestedFields as $key ) {
 			// Two $$ to use the content of $key as variable name.
-			Extension::$$key = strtolower( $key );
+			PubmedParserExtension::$$key = strtolower( $key );
 		};
 
 		// Manually set the template name; this cannot be done with the
 		// $templateFields array since there is no corresponding value, and we
 		// loop over the entire array further below to assert correctness of the
 		// template transclusion that was built.
-		Extension::$templateName = "pubmed";
+		PubmedParserExtension::$templateName = "pubmed";
 		
 		$this->tablesUsed = array_merge(
 			$this->tablesUsed,
@@ -61,12 +63,13 @@ class CoreTest extends \MediaWikiTestCase {
 
 	/**
 	 * Tests that invalid PMIDs produce errors.
+	 * @covers MediaWiki\Extension\PubmedParser\PubmedParserExtension
 	 * @dataProvider invalidPmidProvider
 	 */
 	public function testRenderWithInvalidPmidOutputsError( $pmid ) {
 		$null = null;
-		$result = Extension::render( $null, $pmid );
-		$this->assertRegExp('/span class="pubmedparser-error/',
+		$result = PubmedParserExtension::render( $null, $pmid );
+		$this->assertMatchesRegularExpression('/span class="pubmedparser-error/',
 		 	$result[0], 'No error was reported despite invalid PMID');
 	}
 
@@ -79,7 +82,7 @@ class CoreTest extends \MediaWikiTestCase {
 		$template = $core->buildTemplate( $article );
 		foreach ( $this->templateFields as $field => $value ) {
 			$s = strtolower( $field );
-			$this->assertRegExp( "/$s=$value/", $template,
+			$this->assertMatchesRegularExpression( "/$s=$value/", $template,
 			 	"Template has incorrect $field parameter" );
 		}
 	}
@@ -140,4 +143,3 @@ EOF
 		));
 	}
 }
-// vim: ts=2:sw=2:noet:comments^=\:///

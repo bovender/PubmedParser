@@ -168,7 +168,7 @@ according to your needs (see [Customization](#Ccstomization) below).
 | `{{{volume}}}` | The volume of the journal.
 | `{{{pages}}}` | The pagination as stored in Pubmed. Leading digits may be omitted in the last page number; for example, "1324 through 1336" is given as "1324-36".
 | `{{{pmid}}}` | The PMID number (i.e., the same ID that was used to call #pmid).
-| `{{{doi}}}` | The DOI ([Digital Object Identifer][]) of the article that points to the full text. Not all Pubmed entries provide this information.
+| `{{{doi}}}` | The DOI ([Digital Object Identifier][]) of the article that points to the full text. Not all Pubmed entries provide this information.
 | `{{{abstract}}}` | The article's abstract. If you want to have a ''collapsible'' abstract in your template, consider the [example below](#collapse).
 
 ### Example template `pubmed`
@@ -333,6 +333,44 @@ line `$wgDBPrefix = '<YourPrefix>';` in your `LocalSettings.php`. Caveat: Don't
 change this MediaWiki setting after installation; otherwise, you'll need to
 manually rename all your database tables!
 
+## Development and testing
+
+This extension provides a `docker-compose.yml` file to facilitate development
+and testing. Please read refer to [`DEVELOPERS.md`][developers] and read this
+document carefully.
+
+The `docker-compose.yml` in this extension's repository has been tweaked to link
+the `mediawiki` subdirectory as a volume into the mediawiki container. You must
+create this directory first! On my Linux machine, I have cloned the entire
+MediaWiki repository to an entirely different location (because I use it for
+several projects) and symlink it into my project directory, where `docker compose`
+can pick it up and link it into the container. The `mediawiki/` subdirectory
+is git-ignored by `.gitignore`.
+
+The following commands download MediaWiki, enable the extension, and install
+MediaWiki in a docker-compose container:
+
+```bash
+pushd /where/i/keep/mediawiki
+git clone --depth 1 https://gerrit.mediawiki.org/r/mediawiki/core.git mediawiki
+popd
+ln -s /where/i/keep/mediawiki/mediawiki mediawiki
+docker compose up -d
+docker compose exec mediawiki echo "wfLoadExtension( 'PubmedParser' );" >> LocalSettings.php
+docker compose exec mediawiki composer update
+docker compose exec mediawiki /bin/bash /docker/install.sh
+
+```
+
+Please note that cloning the MediaWiki core repository will download about
+**1 GB** (at the time of writing). You may want to perform a shallow clone
+as shown above, this will reduce the download size to under 50 MB.
+
+Also note that contrary to what is described in `DEVELOPERS.md`, we do not
+set the user and group ID in our docker-compose file -- it turned out that
+this caused all sorts of permission problems when setting up the database
+and updating composer. Maybe I'll find a solution for this in the future.
+
 ## License
 
 Copyright (c) 2011-2023 Daniel Kraus ([bovender](https://www.bovender.de))
@@ -356,6 +394,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 [A General Introduction to the E-utilities]: https://www.ncbi.nlm.nih.gov/books/NBK25497
 [Cite]: https://mediawiki.org/wiki/Extension:Cite
 [curl]: https://www.php.net/manual/book.curl.php
+[developers]: https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/core/+/HEAD/DEVELOPERS.md
 [Digital Object Identifier]: https://www.doi.org
 [fgc]: https://www.php.net/manual/function.file-get-contents.php
 [Git]: https://git-scm.com

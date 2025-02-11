@@ -1,3 +1,7 @@
 *~
 *.swp
 tags
+mediawiki/
+mediawiki
+.env
+
