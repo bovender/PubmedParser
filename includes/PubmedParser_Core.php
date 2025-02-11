@@ -224,12 +224,12 @@ class Core
 	 */
 	private function fetchFromDb( $pmid ) {
 		$dbr = $this->getReadDb();
-		$res = $dbr->select(
-			'pubmed',
-			'xml',
-			'pmid = ' . $pmid,
-			__METHOD__
-		);
+		$res = $dbr->newSelectQueryBuilder()
+			->select( 'xml' )
+			->from( 'pubmed' )
+			->where( 'pmid = ' . $pmid )
+			->caller( __METHOD__ )
+			->fetchResultSet();
 		if ( $dbr->lastErrno() == 0 ) {
 			if ( $res->numRows() == 1 ) {
 				$xml = $res->fetchObject()->xml;
@@ -247,7 +247,8 @@ class Core
 	 */
 	protected function getReadDb() {
 		if ( !self::$_readDb ) {
-			self::$_readDb = wfGetDB( DB_REPLICA );
+			$dbProvider = MediaWikiServices::getInstance()->getConnectionProvider();
+			self::$_readDb = $dbProvider->getReplicaDatabase();
 		};
 		return self::$_readDb;
 	}
@@ -263,7 +264,13 @@ class Core
 			'pmid' => $pmid,
 			'xml' => $xml
 		);
-		return $dbw->upsert( 'pubmed', $row, array( 'pmid' ), $row );
+		$upsertQuery = $dbw->newInsertQueryBuilder()
+			->insertInto( 'pubmed' )
+			->rows( $row )
+			->onDuplicateKeyUpdate()
+			->caller( __METHOD__ );
+
+		return $upsertQuery->execute();
 	}
 
 	/** Accessor for the current database write connection.
@@ -272,7 +279,8 @@ class Core
 	 */
 	protected function getWriteDb() {
 		if ( !self::$_writeDb ) {
-			self::$_writeDb = wfGetDB( DB_MASTER );
+			$dbProvider = MediaWikiServices::getInstance()->getConnectionProvider();
+			self::$_writeDb = $dbProvider->getPrimaryDatabase();
 		};
 		return self::$_writeDb;
 	}
