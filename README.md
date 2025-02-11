@@ -373,7 +373,7 @@ and updating composer. Maybe I'll find a solution for this in the future.
 
 ## License
 
-Copyright (c) 2011-2023 Daniel Kraus ([bovender](https://www.bovender.de))
+Copyright (c) 2011-2025 Daniel Kraus ([bovender](https://www.bovender.de))
 and co-authors
 
 This program is free software; you can redistribute it and/or
