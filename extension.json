@@ -9,7 +9,7 @@
     "[https://github.com/vedmaka Vedmaka]"
   ],
   "url": "https://www.mediawiki.org/wiki/Extension:PubmedParser",
-  "version": "5.3.0",
+  "version": "6.0.0",
   "license-name": "GPL-2.0-or-later",
   "descriptionmsg": "pubmedparser-desc",
   "requires": {
