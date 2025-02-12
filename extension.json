@@ -25,7 +25,7 @@
     "MediaWiki\\Extension\\PubmedParser\\": "includes/"
   },
   "Hooks": {
-    "ParserFirstCallInit": ["MediaWiki\\Extension\\PubmedParser\\PubmedParserExtension::setup"],
+    "ParserFirstCallInit": ["MediaWiki\\Extension\\PubmedParser\\Extension::setup"],
     "LoadExtensionSchemaUpdates": ["MediaWiki\\Extension\\PubmedParser\\Hooks::onLoadExtensionSchemaUpdates"],
     "UnitTestsList": ["MediaWiki\\Extension\\PubmedParser\\Hooks::onUnitTestsList"]
   },

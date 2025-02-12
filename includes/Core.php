@@ -53,7 +53,7 @@ class Core
 	 */
 	function __construct( $pmid = 0, $param = [] ) {
 		$this->status = 'INVALIDPMID';
-		$this->template = PubmedParserExtension::$templateName;
+		$this->template = Extension::$templateName;
 		$this->pmid = $pmid;
 		$this->apiKey = $this->getApiKey();
 		foreach ($param AS $p)
@@ -268,6 +268,8 @@ class Core
 			->insertInto( 'pubmed' )
 			->rows( $row )
 			->onDuplicateKeyUpdate()
+			->uniqueIndexFields( 'pmid' )
+			->set( $row )
 			->caller( __METHOD__ );
 
 		return $upsertQuery->execute();

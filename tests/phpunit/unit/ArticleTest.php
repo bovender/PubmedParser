@@ -1,14 +1,12 @@
 <?php
 /**
  * Unit tests for the PubmedParser extension.
- * @group Database
- * @group bovender
- * @covers PubmedParser\Article
  */
 namespace MediaWiki\Extension\PubmedParser;
 
 /**
  * @group extension-PubmedParser
+ * @covers MediaWiki\Extension\PubmedParser\Article
  */
 class ArticleTest extends \MediaWikiUnitTestCase {
 

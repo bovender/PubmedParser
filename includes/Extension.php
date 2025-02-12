@@ -26,12 +26,12 @@ namespace MediaWiki\Extension\PubmedParser;
  * execution code was encapsulated in instance methods. The static methods
  * create an instance of this class and call upon the instance methods.
  */
-class PubmedParserExtension {
+class Extension {
 	/** Default setup function.
 	 * Associates the "pmid" magic word with the efPubmedParser_Render function.
 	 */
 	public static function setup( &$parser ) {
-		$parser->setFunctionHook( 'pmid', '\MediaWiki\Extension\PubmedParser\PubmedParserExtension::render' );
+		$parser->setFunctionHook( 'pmid', '\MediaWiki\Extension\PubmedParser\Extension::render' );
 		return true;
 	}
 

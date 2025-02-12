@@ -1,5 +1,5 @@
 <?php
-use MediaWiki\Extension\PubmedParser\PubmedParserExtension;
+use MediaWiki\Extension\PubmedParser\Extension;
 use MediaWiki\Extension\PubmedParser\Article;
 use MediaWiki\Extension\PubmedParser\Core;
 
@@ -42,18 +42,18 @@ class PubmedParserTest extends MediaWikiIntegrationTestCase {
 		// Since wfMessage returns empty strings, prepare the messages.
 		foreach ( $this->templateFields as $key => $value ) {
 			// Two $$ to use the content of $key as variable name.
-			PubmedParserExtension::$$key = strtolower( $key );
+			Extension::$$key = strtolower( $key );
 		};
 		foreach ( $this->untestedFields as $key ) {
 			// Two $$ to use the content of $key as variable name.
-			PubmedParserExtension::$$key = strtolower( $key );
+			Extension::$$key = strtolower( $key );
 		};
 
 		// Manually set the template name; this cannot be done with the
 		// $templateFields array since there is no corresponding value, and we
 		// loop over the entire array further below to assert correctness of the
 		// template transclusion that was built.
-		PubmedParserExtension::$templateName = "pubmed";
+		Extension::$templateName = "pubmed";
 		
 		$this->tablesUsed = array_merge(
 			$this->tablesUsed,
@@ -63,17 +63,18 @@ class PubmedParserTest extends MediaWikiIntegrationTestCase {
 
 	/**
 	 * Tests that invalid PMIDs produce errors.
-	 * @covers MediaWiki\Extension\PubmedParser\PubmedParserExtension
+	 * @covers MediaWiki\Extension\PubmedParser\Extension
 	 * @dataProvider invalidPmidProvider
 	 */
 	public function testRenderWithInvalidPmidOutputsError( $pmid ) {
 		$null = null;
-		$result = PubmedParserExtension::render( $null, $pmid );
+		$result = Extension::render( $null, $pmid );
 		$this->assertMatchesRegularExpression('/span class="pubmedparser-error/',
 		 	$result[0], 'No error was reported despite invalid PMID');
 	}
 
 	/**
+	 * @covers MediaWiki\Extension\PubmedParser\Extension
 	 * @dataProvider pubmedXmlProvider
 	 */
 	public function testBuildTemplate( $pmid, $xml ) {
