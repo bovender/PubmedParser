@@ -19,10 +19,6 @@
  */
 namespace MediaWiki\Extension\PubmedParser;
 
-if ( !defined( 'MEDIAWIKI' ) ) {
-	die( 'This is an extension to MediaWiki and cannot be run standalone.' );
-}
-
 /**
  * Core class of the extension.
  * This class consists of several public, static functions that will be
@@ -36,25 +32,6 @@ class PubmedParserExtension {
 	 */
 	public static function setup( &$parser ) {
 		$parser->setFunctionHook( 'pmid', '\MediaWiki\Extension\PubmedParser\PubmedParserExtension::render' );
-		return true;
-	}
-
-	/**
-	 * Helper function to enable MediaWiki to discover our unit tests.
-	 */
-	public static function onUnitTestsList( &$files ) {
-		$files = array_merge( $files, glob( __DIR__ . '/tests/*Test.php' ) );
-		return true;
-	}
-
-	/** Creates a Pubmed table in the Wiki database. This will hold XML
-	 * strings downloaded from pubmed.gov.
-	 */
-	public static function onLoadExtensionSchemaUpdates( \DatabaseUpdater $updater ) {
-		global $wgDBtype;
-		$dbTag = $wgDBtype == 'postgres' ? '_Postgres' : '';
-		$updater->addExtensionTable( 'Pubmed',
-			__DIR__ . '/../db/PubmedParser' . $dbTag . '_Migration.sql', true );
 		return true;
 	}
 

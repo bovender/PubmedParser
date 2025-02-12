@@ -27,7 +27,7 @@
   "Hooks": {
     "ParserFirstCallInit": ["MediaWiki\\Extension\\PubmedParser\\PubmedParserExtension::setup"],
     "LoadExtensionSchemaUpdates": ["MediaWiki\\Extension\\PubmedParser\\Hooks::onLoadExtensionSchemaUpdates"],
-    "UnitTestsList": ["MediaWiki\\Extension\\PubmedParser\\PubmedParserExtension::onUnitTestsList"]
+    "UnitTestsList": ["MediaWiki\\Extension\\PubmedParser\\Hooks::onUnitTestsList"]
   },
   "ExtensionMessagesFiles": {
     "PubmedParserMagic": "includes/Magic.php"
