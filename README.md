@@ -21,14 +21,25 @@ the #pmid keyword, and PubmedParser will generate a `<ref name="additional
 parameter">...</ref>` structure for you. This makes it extremely easy to insert
 reusably references into your Wiki page.
 
-<!-- TOC ignore:true -->
+<!-- omit in toc -->
 ## Contents
 
-<!-- TOC -->
-
-
-
-<!-- /TOC -->
+- [Extension PubmedParser](#extension-pubmedparser)
+  - [Installation](#installation)
+  - [Configuration](#configuration)
+    - [NCBI API key](#ncbi-api-key)
+    - [Remote fetch method](#remote-fetch-method)
+  - [Usage](#usage)
+    - [Template variables](#template-variables)
+    - [Example template `pubmed`](#example-template-pubmed)
+    - [Adding `<ref></ref>` tags automatically](#adding-refref-tags-automatically)
+    - [Forcing reload from Pubmed](#forcing-reload-from-pubmed)
+    - [Specifying a Custom Template Name](#specifying-a-custom-template-name)
+    - [Passing Additional Parameters to the Template](#passing-additional-parameters-to-the-template)
+  - [Customization](#customization)
+  - [Upgrading from previous versions of this extension](#upgrading-from-previous-versions-of-this-extension)
+  - [Development and testing](#development-and-testing)
+  - [License](#license)
 
 ## Installation
 
