@@ -371,6 +371,12 @@ set the user and group ID in our docker-compose file -- it turned out that
 this caused all sorts of permission problems when setting up the database
 and updating composer. Maybe I'll find a solution for this in the future.
 
+To actually run the tests, make sure the container is up and running, the issue:
+
+```bash
+docker compose exec mediawiki composer phpunit:entrypoint -- extensions/PubmedParser/tests/phpunit -v
+```
+
 ## License
 
 Copyright (c) 2011-2025 Daniel Kraus ([bovender](https://www.bovender.de))
