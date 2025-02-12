@@ -1,13 +1,15 @@
 <?php
-namespace PubmedParser;
+use MediaWiki\Extension\PubmedParser\Extension;
+use MediaWiki\Extension\PubmedParser\Article;
+use MediaWiki\Extension\PubmedParser\Core;
 
 /**
- * Unit tests for the PubmedParserFetcher class.
+ * Integration test for PubmedParser.
  * @group Database
  * @group bovender
  * @group extension-PubmedParser
  */
-class CoreTest extends \MediaWikiTestCase {
+class PubmedParserTest extends MediaWikiIntegrationTestCase {
 	private $testPmid = 454545;
 
 	/** An array of template fields that are used to build the reference. The
@@ -61,16 +63,18 @@ class CoreTest extends \MediaWikiTestCase {
 
 	/**
 	 * Tests that invalid PMIDs produce errors.
+	 * @covers MediaWiki\Extension\PubmedParser\Extension
 	 * @dataProvider invalidPmidProvider
 	 */
 	public function testRenderWithInvalidPmidOutputsError( $pmid ) {
 		$null = null;
 		$result = Extension::render( $null, $pmid );
-		$this->assertRegExp('/span class="pubmedparser-error/',
+		$this->assertMatchesRegularExpression('/span class="pubmedparser-error/',
 		 	$result[0], 'No error was reported despite invalid PMID');
 	}
 
 	/**
+	 * @covers MediaWiki\Extension\PubmedParser\Extension
 	 * @dataProvider pubmedXmlProvider
 	 */
 	public function testBuildTemplate( $pmid, $xml ) {
@@ -79,7 +83,7 @@ class CoreTest extends \MediaWikiTestCase {
 		$template = $core->buildTemplate( $article );
 		foreach ( $this->templateFields as $field => $value ) {
 			$s = strtolower( $field );
-			$this->assertRegExp( "/$s=$value/", $template,
+			$this->assertMatchesRegularExpression( "/$s=$value/", $template,
 			 	"Template has incorrect $field parameter" );
 		}
 	}
@@ -140,4 +144,3 @@ EOF
 		));
 	}
 }
-// vim: ts=2:sw=2:noet:comments^=\:///

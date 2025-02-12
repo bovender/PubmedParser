@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.0.0][] - 2025-02-12
+
+### New feature
+
+- Support SQLite databases.
+
+### Breaking
+
+- Address more deprecation warnings, modernize code base; the **minimum
+  required MediaWiki version is now 1.42!**
+
 ## [5.2.0][] - 2023-11-28
 
 ### New feature
@@ -30,7 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Use only first occurrence of specific tag to prevent values like journal from
   being overwritten by multiple occurrences of Title tag like for this article
-  https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=32681566&retmode=xml
+  <https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=32681566&retmode=xml>
   where Title also present in References section.
 - Strip tags and newlines/whitespaces from Abstract field (`AbstractText`).
 - Updated extension.json manifest version to 2.
@@ -135,6 +146,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.0.0][] - 2014-09-10
 
+[6.0.0]: https://github.com/bovender/PubmedParser/releases/tag/v6.0.0
 [5.2.0]: https://github.com/bovender/PubmedParser/releases/tag/v5.2.0
 [5.1.0]: https://github.com/bovender/PubmedParser/releases/tag/v5.1.0
 [5.0.2]: https://github.com/bovender/PubmedParser/releases/tag/v5.0.2

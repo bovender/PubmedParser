@@ -1,33 +1,36 @@
 {
+  "name": "PubmedParser",
+  "type": "parserhook",
   "author": [
     "[https://github.com/bovender Daniel Kraus (bovender)]",
     "[https://github.com/kghbln Karsten Hoffmeyer (kghbln)]",
     "[https://github.com/strimo378 Timo Stripf (strimo378)]",
     "[https://github.com/jeffw16 Jeffrey Wang (jeffw16)]",
-    "[https://github.com/vedmaka Vedmaka"
+    "[https://github.com/vedmaka Vedmaka]"
   ],
-  "name": "PubmedParser",
-  "type": "parserhook",
   "url": "https://www.mediawiki.org/wiki/Extension:PubmedParser",
-  "version": "5.2.0",
+  "version": "6.0.0",
   "license-name": "GPL-2.0-or-later",
   "descriptionmsg": "pubmedparser-desc",
   "requires": {
-    "MediaWiki": ">= 1.28.0"
+    "MediaWiki": ">= 1.42.0"
   },
   "AutoloadClasses": {
-    "PubmedParser\\Extension": "includes/PubmedParser_Extension.php",
-    "PubmedParser\\Core": "includes/PubmedParser_Core.php",
-    "PubmedParser\\Article": "includes/PubmedParser_Article.php",
-    "PubmedParser\\Helpers": "includes/PubmedParser_Helpers.php"
+    "blabla": "blabla.php"
+  },
+  "TestAutoloadClasses": {
+    "blablasss": "blabla.php"
+  },
+  "AutoloadNamespaces": {
+    "MediaWiki\\Extension\\PubmedParser\\": "includes/"
   },
   "Hooks": {
-    "ParserFirstCallInit": ["PubmedParser\\Extension::setup"],
-    "LoadExtensionSchemaUpdates": ["PubmedParser\\Extension::createTable"],
-    "UnitTestsList": ["PubmedParser\\Extension::onUnitTestsList"]
+    "ParserFirstCallInit": ["MediaWiki\\Extension\\PubmedParser\\Extension::setup"],
+    "LoadExtensionSchemaUpdates": ["MediaWiki\\Extension\\PubmedParser\\Hooks::onLoadExtensionSchemaUpdates"],
+    "UnitTestsList": ["MediaWiki\\Extension\\PubmedParser\\Hooks::onUnitTestsList"]
   },
   "ExtensionMessagesFiles": {
-    "PubmedParserMagic": "includes/PubmedParser_Magic.php"
+    "PubmedParserMagic": "includes/Magic.php"
   },
   "MessagesDirs": {
     "PubmedParser": ["i18n"]

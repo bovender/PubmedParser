@@ -1,6 +1,6 @@
 <?php
 /*
- *      Copyright 2011-2023 Daniel Kraus <bovender@bovender.de> and co-authors
+ *      Copyright 2011-2025 Daniel Kraus <bovender@bovender.de> and co-authors
  *
  *      This program is free software; you can redistribute it and/or modify
  *      it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
  *      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  *      MA 02110-1301, USA.
  */
-namespace PubmedParser;
+namespace MediaWiki\Extension\PubmedParser;
 
 use MediaWiki\MediaWikiServices;
 

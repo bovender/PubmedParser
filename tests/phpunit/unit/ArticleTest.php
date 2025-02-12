@@ -1,16 +1,14 @@
 <?php
 /**
  * Unit tests for the PubmedParser extension.
- * @group Database
- * @group bovender
- * @covers PubmedParser\Article
  */
-namespace PubmedParser;
+namespace MediaWiki\Extension\PubmedParser;
 
 /**
  * @group extension-PubmedParser
+ * @covers MediaWiki\Extension\PubmedParser\Article
  */
-class ArticleTest extends \MediaWikiTestCase {
+class ArticleTest extends \MediaWikiUnitTestCase {
 
 	/**
 	 * Main unit test for PubmedArticle properties.
@@ -73,4 +71,3 @@ class ArticleTest extends \MediaWikiTestCase {
 		return $a;
 	}
 }
-// vim: ts=2:sw=2:noet:comments^=\:///

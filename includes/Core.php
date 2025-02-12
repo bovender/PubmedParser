@@ -1,6 +1,6 @@
 <?php
 /*
- *      Copyright 2011-2023 Daniel Kraus <bovender@bovender.de> and co-authors
+ *      Copyright 2011-2025 Daniel Kraus <bovender@bovender.de> and co-authors
  *
  *      This program is free software; you can redistribute it and/or modify
  *      it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
  *      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  *      MA 02110-1301, USA.
  */
-namespace PubmedParser;
+namespace MediaWiki\Extension\PubmedParser;
 
 use MediaWiki\MediaWikiServices;
 
@@ -51,8 +51,8 @@ class Core
 	 * name MUST be prefixed with '#' (configurable in MediaWiki system
 	 * messages).
 	 */
-	function __construct( $pmid = 0, $param = NULL ) {
-		$this->status = PUBMEDPARSER_INVALIDPMID;
+	function __construct( $pmid = 0, $param = [] ) {
+		$this->status = 'INVALIDPMID';
 		$this->template = Extension::$templateName;
 		$this->pmid = $pmid;
 		$this->apiKey = $this->getApiKey();
@@ -66,7 +66,7 @@ class Core
 	 */
 	private function parseParam( $param ) {
 		// Is the parameter meant to indicate the template name?
-		if ( substr( $param, 0, 1 ) === PUBMEDPARSER_TEMPLATECHAR ) {
+		if ( substr( $param, 0, 1 ) === '#' ) {
 			$this->template = substr( $param, 1 );
 		}
 		elseif ( strpos( $param, '=' ) !== false ) {
@@ -92,7 +92,7 @@ class Core
 	 * @return Array with parametrized PubMed article template.
 	 */
 	function execute() {
-		if ( $this->statusCode() == PUBMEDPARSER_OK ) {
+		if ( $this->statusCode() == 'OK' ) {
 			$output = $this->buildTemplate( $this->article );
 			if ( $this->reference ) {
 				$output = "<ref name=\"{$this->reference}\">$output</ref>";
@@ -157,15 +157,15 @@ class Core
 		// First, let's check if the PMID consists of digits only
 		// This check is also important to prevent SQL injections!
 		if ( !ctype_digit2( $this->pmid ) ) {
-			$this->status = PUBMEDPARSER_INVALIDPMID;
+			$this->status = 'INVALIDPMID';
 			return;
 		}
 
-		$this->status = PUBMEDPARSER_OK;
+		$this->status = 'OK';
 		$xml = null;
 		if ( ! $this->reload ) {
 			$xml = $this->fetchFromDb( $this->pmid );
-			if ( $this->status != PUBMEDPARSER_OK ) {
+			if ( $this->status != 'OK' ) {
 				return;
 			}
 		};
@@ -188,7 +188,7 @@ class Core
 			}
 
 			if ( !Helpers::FetchRemote( $url, $xml ) ) {
-				$this->status = PUBMEDPARSER_CANNOTDOWNLOAD;
+				$this->status = 'CANNOTDOWNLOAD';
 				return;
 			}
 		} // if no xml in database
@@ -201,11 +201,11 @@ class Core
 				}
 			}
 			else {
-				$this->status = PUBMEDPARSER_INVALIDXML;
+				$this->status = 'INVALIDXML';
 			}
 		}
 		else {
-			$this->status = PUBMEDPARSER_NODATA;
+			$this->status = 'NODATA';
 		}
 	}
 
@@ -224,19 +224,19 @@ class Core
 	 */
 	private function fetchFromDb( $pmid ) {
 		$dbr = $this->getReadDb();
-		$res = $dbr->select(
-			'pubmed',
-			'xml',
-			'pmid = ' . $pmid,
-			__METHOD__
-		);
+		$res = $dbr->newSelectQueryBuilder()
+			->select( 'xml' )
+			->from( 'pubmed' )
+			->where( 'pmid = ' . $pmid )
+			->caller( __METHOD__ )
+			->fetchResultSet();
 		if ( $dbr->lastErrno() == 0 ) {
 			if ( $res->numRows() == 1 ) {
 				$xml = $res->fetchObject()->xml;
 				return $xml;
 			}
 		} else {
-			$this->status = PUBMEDPARSER_DBERROR;
+			$this->status = 'DBERROR';
 			return null;
 		}
 	}
@@ -247,7 +247,8 @@ class Core
 	 */
 	protected function getReadDb() {
 		if ( !self::$_readDb ) {
-			self::$_readDb = wfGetDB( DB_REPLICA );
+			$dbProvider = MediaWikiServices::getInstance()->getConnectionProvider();
+			self::$_readDb = $dbProvider->getReplicaDatabase();
 		};
 		return self::$_readDb;
 	}
@@ -263,7 +264,15 @@ class Core
 			'pmid' => $pmid,
 			'xml' => $xml
 		);
-		return $dbw->upsert( 'pubmed', $row, array( 'pmid' ), $row );
+		$upsertQuery = $dbw->newInsertQueryBuilder()
+			->insertInto( 'pubmed' )
+			->rows( $row )
+			->onDuplicateKeyUpdate()
+			->uniqueIndexFields( 'pmid' )
+			->set( $row )
+			->caller( __METHOD__ );
+
+		return $upsertQuery->execute();
 	}
 
 	/** Accessor for the current database write connection.
@@ -272,7 +281,8 @@ class Core
 	 */
 	protected function getWriteDb() {
 		if ( !self::$_writeDb ) {
-			self::$_writeDb = wfGetDB( DB_PRIMARY );
+			$dbProvider = MediaWikiServices::getInstance()->getConnectionProvider();
+			self::$_writeDb = $dbProvider->getPrimaryDatabase();
 		};
 		return self::$_writeDb;
 	}
@@ -287,20 +297,20 @@ class Core
 	function statusMsg() {
 		$s = wfMessage( 'pubmedparser-error' )->text() . ': ';
 		switch ( $this->status ) {
-			case PUBMEDPARSER_INVALIDPMID:
+			case 'INVALIDPMID':
 				return $s . wfMessage( 'pubmedparser-error-invalidpmid' )->text()
 					. ' (PMID: [https://pubmed.gov/' . $this->pmid . ' '
 					. $this->pmid . '])';
-			case PUBMEDPARSER_NODATA:
+			case 'NODATA':
 				return $s . wfMessage( 'pubmedparser-error-nodata' )->text()
 					. ' (PMID: [https://pubmed.gov/' . $this->pmid . ' '
 					. $this->pmid . '])';
-			case PUBMEDPARSER_DBERROR:
+			case 'DBERROR':
 				return $s . wfMessage( 'pubmedparser-error-dberror' )->text();
-			case PUBMEDPARSER_INVALIDXML:
+			case 'INVALIDXML':
 				return $s . wfMessage( 'pubmedparser-error-invalidxml' )->text() .
 					" ({$this->article->message})";
-			case PUBMEDPARSER_OK:
+			case 'OK':
 				return $s . 'ok'; // no i18n since this message will never be shown to the user
 			default:
 				return 'Status code: #' . $this->status;
@@ -318,4 +328,3 @@ class Core
 	private static $_readDb = null;
 	private static $_writeDb = null;
 }
-// vim: tw=78:ts=2:sw=2:noet:comments^=\:///

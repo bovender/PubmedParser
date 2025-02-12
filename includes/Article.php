@@ -1,6 +1,6 @@
 <?php
 /*
- *      Copyright 2011-2023 Daniel Kraus <bovender@bovender.de> and co-authors
+ *      Copyright 2011-2025 Daniel Kraus <bovender@bovender.de> and co-authors
  *
  *      This program is free software; you can redistribute it and/or modify
  *      it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
  *      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  *      MA 02110-1301, USA.
  */
-namespace PubmedParser;
+namespace MediaWiki\Extension\PubmedParser;
 
 if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'This is an extension to MediaWiki and cannot be run standalone.' );
@@ -26,6 +26,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 class Article
 {
 	public $authors = array();
+	public $initials;
 	public $collectiveName;
 	public $title;
 	public $abstract;
@@ -51,7 +52,7 @@ class Article
 			$this->pmid = $pmid;
 			$this->xml = $xml;
 			$this->parse( $reader );
-		} catch (\Exception $e) {
+		} catch ( Exception $e ) {
 			$this->xml = false;
 			$this->message = $e->getMessage();
 		}
@@ -227,7 +228,7 @@ class Article
 	/// Returns the first page of the article.
 	function firstPage() {
 		if ( $this->pages ) {
-			$fp = explode('-', $this->pages);
+			$fp = explode( '-', $this->pages );
 			return $fp[0];
 		}
 	}
@@ -253,19 +254,17 @@ class Article
 	 */
 	private function authorName( $index, $useInitial = false ) {
 		if ( $index < count( $this->authors ) ) {
-			$author = $this->authors[$index];
-			if ( $useInitial ) {
-				$i = $this->initials[$index];
-				$iarray = str_split($i, 1);
-				$i = implode( Extension::$initialPeriod, $iarray)
-					. Extension::$initialPeriod;
+			$author = $this->authors[ $index ];
+			if ( $useInitial && is_array( $this->initials ) && sizeof( $this->initials ) >= $index ) {
+				$i = $this->initials[ $index ];
+				$iarray = str_split( $i, 1 );
+				$i = implode( Extension::$initialPeriod || '', $iarray ) . Extension::$initialPeriod;
 				// Spaces in the "Pubmedparser-initialperiod" system message must be
 				// encoded as "&nbsp;", lest they be removed by MediaWiki's text
 				// processing. In order to remove the trailing "&nbsp;" after
 				// concatenating all authors and initials, we use the trim function
 				// with " \xc2\xa0".
-				$author = trim( $author . Extension::$initialSeparator
-					. ' ' . $i, " \xc2\xa0");
+				$author = trim( $author . Extension::$initialSeparator . ' ' . $i, " \xc2\xa0" );
 			}
 			return $author;
 		} else {
@@ -273,5 +272,3 @@ class Article
 		}
 	}
 }
-
-// vim: ts=2:sw=2:noet:comments^=\:///

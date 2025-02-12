@@ -1,6 +1,6 @@
 <?php
 /*
- *      Copyright 2011-2023 Daniel Kraus <bovender@bovender.de> and co-authors
+ *      Copyright 2011-2025 Daniel Kraus <bovender@bovender.de> and co-authors
  *
  *      This program is free software; you can redistribute it and/or modify
  *      it under the terms of the GNU General Public License as published by
@@ -17,11 +17,7 @@
  *      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  *      MA 02110-1301, USA.
  */
-namespace PubmedParser;
-
-if ( !defined( 'MEDIAWIKI' ) ) {
-	die( 'This is an extension to MediaWiki and cannot be run standalone.' );
-}
+namespace MediaWiki\Extension\PubmedParser;
 
 /**
  * Core class of the extension.
@@ -35,35 +31,7 @@ class Extension {
 	 * Associates the "pmid" magic word with the efPubmedParser_Render function.
 	 */
 	public static function setup( &$parser ) {
-		$parser->setFunctionHook( 'pmid', 'PubmedParser\Extension::render' );
-		if ( !defined( 'PUBMEDPARSER_OK' ) ) {
-			define( 'PUBMEDPARSER_OK',             0); ///< Status code: okay
-			define( 'PUBMEDPARSER_INVALIDPMID',    2); ///< Status code: PMID is invalid
-			define( 'PUBMEDPARSER_NODATA',         3); ///< Status code: Pubmed returned no data
-			define( 'PUBMEDPARSER_CANNOTDOWNLOAD', 4); ///< Status code: cannot download XML data
-			define( 'PUBMEDPARSER_DBERROR',        5);
-			define( 'PUBMEDPARSER_INVALIDXML',     6); ///< Status code: Invalid XML data received
-			define( 'PUBMEDPARSER_TEMPLATECHAR',   '#'); ///< Indicates template name parameter
-		}
-		return true;
-	}
-
-	/**
-	 * Helper function to enable MediaWiki to discover our unit tests.
-	 */
-	public static function onUnitTestsList( &$files ) {
-		$files = array_merge( $files, glob( __DIR__ . '/tests/*Test.php' ) );
-		return true;
-	}
-
-	/** Creates a Pubmed table in the Wiki database. This will hold XML
-	 * strings downloaded from pubmed.gov.
-	 */
-	public static function createTable( \DatabaseUpdater $updater ) {
-		global $wgDBtype;
-		$dbTag = $wgDBtype == 'postgres' ? '_Postgres' : '';
-		$updater->addExtensionTable( 'Pubmed',
-			__DIR__ . '/../db/PubmedParser' . $dbTag . '_Migration.sql', true );
+		$parser->setFunctionHook( 'pmid', '\MediaWiki\Extension\PubmedParser\Extension::render' );
 		return true;
 	}
 
@@ -131,5 +99,3 @@ class Extension {
 	public static $reload;
 	public static $keywords;
 }
-
-// vim: ts=2:sw=2:noet:comments^=\:///
