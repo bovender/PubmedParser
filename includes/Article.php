@@ -188,9 +188,9 @@ class Article
 		if ( $numAuthors > 0 ) {
 			$a = $this->authorName( 0, $useInitials );
 			if ( $numAuthors > 2 ) {
-				$a .= " " . PubmedParser::$etAl;
+				$a .= " " . Extension::$etAl;
 			} elseif ( $numAuthors == 2 ) {
-				$a .= ' ' . PubmedParser::$and .  ' '	. $this->authorName( 1, $useInitials );
+				$a .= ' ' . Extension::$and .  ' '	. $this->authorName( 1, $useInitials );
 			}
 			return $a;
 		} else {
@@ -210,7 +210,7 @@ class Article
 			}
 			// Cut off the last ", ", add the "and" character or word, and append
 			// the last author's name.
-			$a = substr( $a, 0, strlen( $a )-2 ) . ' ' . PubmedParser::$and
+			$a = substr( $a, 0, strlen( $a )-2 ) . ' ' . Extension::$and
 				. ' ' . $this->authorName( $i, $useInitials );
 		} elseif ( $numAuthors == 1 ) {
 			$a = $this->authorName( 0, $useInitials );
