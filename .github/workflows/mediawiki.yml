@@ -21,22 +21,45 @@ jobs:
             php: '8.2'
           # Current stable release
           - mw: 'REL1_46'
-            php: '8.2'
+            php: '8.3'
           # Development branch, to catch breakage early
           - mw: 'master'
             php: '8.3'
     runs-on: ubuntu-latest
     continue-on-error: ${{ matrix.mw == 'master' }}
     steps:
-      # check out the repository
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Test extension
-        # Pinned to a commit rather than the v2 tag: v2 uses actions/cache@v2,
-        # which GitHub has disabled; this commit (post-v2, pre-v3) fixes that.
-        uses: wikiteq/mediawiki-phpunit-action@149d6c3cbd8c80b2685100f2aaa26f8878a4f0fc
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
         with:
-          type: extension
-          php: ${{ matrix.php }}
-          mwbranch: ${{ matrix.mw }}
-          extension: PubmedParser
+          php-version: ${{ matrix.php }}
+          extensions: mbstring, intl, sqlite3
+          tools: composer
+
+      - name: Checkout MediaWiki
+        uses: actions/checkout@v4
+        with:
+          repository: wikimedia/mediawiki
+          ref: ${{ matrix.mw }}
+          path: mediawiki
+
+      - name: Checkout PubmedParser
+        uses: actions/checkout@v4
+        with:
+          path: mediawiki/extensions/PubmedParser
+
+      - name: Install MediaWiki dependencies
+        working-directory: mediawiki
+        run: composer install --no-progress --prefer-dist
+
+      - name: Install MediaWiki
+        working-directory: mediawiki
+        run: >
+          php maintenance/install.php --pass pubmedparsertest --dbtype sqlite
+          --extensions PubmedParser Tests admin
+
+      # composer's "phpunit" script generates phpunit.xml before delegating to
+      # PHPUnit, so it stays correct even if MediaWiki moves its entrypoint
+      # (as happened between 1.46 and master).
+      - name: Run PubmedParser's PHPUnit suite
+        working-directory: mediawiki
+        run: composer phpunit -- extensions/PubmedParser/tests/phpunit
