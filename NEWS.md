@@ -5,6 +5,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.1.0][] - 2026-08-01
+
+### Fixed
+
+- `journalcaps` template parameter now correctly capitalizes the journal
+  name; it had been capitalizing the article title instead since a 2013
+  refactoring.
+- Author initials (`authorsi`/`allauthorsi`) are now joined with the
+  configured `pubmedparser-initialperiod` message instead of a stray literal
+  "1", and no longer risk an out-of-bounds array access for authors that
+  lack an `Initials` node.
+- Malformed PubMed XML no longer risks an uncaught error; the `Article`
+  constructor now catches `Throwable` instead of an `Exception` class that
+  did not exist in this extension's namespace.
+- Removed leftover invalid entries in `extension.json` (`AutoloadClasses`/
+  `TestAutoloadClasses` pointing at a non-existent `blabla.php`).
+- Removed the obsolete `UnitTestsList` hook registration; MediaWiki
+  auto-discovers `tests/phpunit` for registered extensions.
+
+### Changed
+
+- Updated the CI workflow and Docker development environment to test
+  against current MediaWiki releases (1.43 LTS, 1.45, 1.46 stable).
+- Significantly expanded unit and integration test coverage.
+- Audited every MediaWiki API used by this extension; the minimum required
+  MediaWiki version is still 1.42.0 (set by
+  `MediaWikiServices::getConnectionProvider()`, `@since 1.42`), so this
+  remains a minor release rather than a major one. Explicitly declared the
+  resulting minimum PHP version (8.1, MediaWiki 1.42's own floor) via
+  `requires.platform.php` in `extension.json`.
+
 ## [6.0.0][] - 2025-02-12
 
 ### New feature
@@ -146,6 +177,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.0.0][] - 2014-09-10
 
+[6.1.0]: https://github.com/bovender/PubmedParser/releases/tag/v6.1.0
 [6.0.0]: https://github.com/bovender/PubmedParser/releases/tag/v6.0.0
 [5.2.0]: https://github.com/bovender/PubmedParser/releases/tag/v5.2.0
 [5.1.0]: https://github.com/bovender/PubmedParser/releases/tag/v5.1.0

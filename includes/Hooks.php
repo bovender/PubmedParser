@@ -19,17 +19,9 @@
  */
 namespace MediaWiki\Extension\PubmedParser;
 
-use DatabaseUpdater;
+use MediaWiki\Installer\DatabaseUpdater;
 
 class Hooks {
-	/**
-	 * Helper function to enable MediaWiki to discover our unit tests.
-	 */
-	public static function onUnitTestsList( &$files ) {
-		$files = array_merge( $files, glob( __DIR__ . '/tests/*Test.php' ) );
-		return true;
-	}
-
 	/** Creates a Pubmed table in the Wiki database. This will hold XML
 	 * strings downloaded from pubmed.gov.
 	 */

@@ -9,25 +9,21 @@
     "[https://github.com/vedmaka Vedmaka]"
   ],
   "url": "https://www.mediawiki.org/wiki/Extension:PubmedParser",
-  "version": "6.0.0",
+  "version": "6.1.0",
   "license-name": "GPL-2.0-or-later",
   "descriptionmsg": "pubmedparser-desc",
   "requires": {
-    "MediaWiki": ">= 1.42.0"
-  },
-  "AutoloadClasses": {
-    "blabla": "blabla.php"
-  },
-  "TestAutoloadClasses": {
-    "blablasss": "blabla.php"
+    "MediaWiki": ">= 1.42.0",
+    "platform": {
+      "php": ">= 8.1"
+    }
   },
   "AutoloadNamespaces": {
     "MediaWiki\\Extension\\PubmedParser\\": "includes/"
   },
   "Hooks": {
     "ParserFirstCallInit": ["MediaWiki\\Extension\\PubmedParser\\Extension::setup"],
-    "LoadExtensionSchemaUpdates": ["MediaWiki\\Extension\\PubmedParser\\Hooks::onLoadExtensionSchemaUpdates"],
-    "UnitTestsList": ["MediaWiki\\Extension\\PubmedParser\\Hooks::onUnitTestsList"]
+    "LoadExtensionSchemaUpdates": ["MediaWiki\\Extension\\PubmedParser\\Hooks::onLoadExtensionSchemaUpdates"]
   },
   "ExtensionMessagesFiles": {
     "PubmedParserMagic": "includes/Magic.php"
@@ -36,7 +32,7 @@
     "PubmedParser": ["i18n"]
   },
   "ConfigRegistry": {
-    "PubmedParser": "GlobalVarConfig::newInstance"
+    "PubmedParser": "MediaWiki\\Config\\GlobalVarConfig::newInstance"
   },
   "config": {
     "PubmedParserApiKey": {

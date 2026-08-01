@@ -227,7 +227,7 @@ class Core
 		$res = $dbr->newSelectQueryBuilder()
 			->select( 'xml' )
 			->from( 'pubmed' )
-			->where( 'pmid = ' . $pmid )
+			->where( [ 'pmid' => $pmid ] )
 			->caller( __METHOD__ )
 			->fetchResultSet();
 		if ( $dbr->lastErrno() == 0 ) {

@@ -54,11 +54,6 @@ class PubmedParserTest extends MediaWikiIntegrationTestCase {
 		// loop over the entire array further below to assert correctness of the
 		// template transclusion that was built.
 		Extension::$templateName = "pubmed";
-		
-		$this->tablesUsed = array_merge(
-			$this->tablesUsed,
-			[ 'pubmed' ]
-		);
 	}
 
 	/**
@@ -79,13 +74,47 @@ class PubmedParserTest extends MediaWikiIntegrationTestCase {
 	 */
 	public function testBuildTemplate( $pmid, $xml ) {
 		$article = new Article( $pmid, $xml );
+
+		// Pre-populate the cache table so that constructing Core() below
+		// retrieves the article from the database instead of making a real
+		// network request to the live PubMed API.
+		$this->getDb()->newInsertQueryBuilder()
+			->insertInto( 'pubmed' )
+			->row( [ 'pmid' => $pmid, 'xml' => $xml ] )
+			->caller( __METHOD__ )
+			->execute();
+
 		$core = new Core( $pmid );
+		$this->assertSame( 'OK', $core->statusCode(),
+			'Core did not retrieve the cached article from the database' );
+
 		$template = $core->buildTemplate( $article );
 		foreach ( $this->templateFields as $field => $value ) {
 			$s = strtolower( $field );
 			$this->assertMatchesRegularExpression( "/$s=$value/", $template,
 			 	"Template has incorrect $field parameter" );
 		}
+	}
+
+	/**
+	 * Tests that Extension::render() wraps its output in a <ref> tag when a
+	 * reference name is passed, and that the cached database record is used
+	 * instead of a live network request.
+	 * @covers MediaWiki\Extension\PubmedParser\Extension
+	 * @covers MediaWiki\Extension\PubmedParser\Core
+	 * @dataProvider pubmedXmlProvider
+	 */
+	public function testRenderWithReferenceNameWrapsOutputInRefTag( $pmid, $xml ) {
+		$this->getDb()->newInsertQueryBuilder()
+			->insertInto( 'pubmed' )
+			->row( [ 'pmid' => $pmid, 'xml' => $xml ] )
+			->caller( __METHOD__ )
+			->execute();
+
+		$null = null;
+		$result = Extension::render( $null, $pmid, 'MyRef' );
+		$this->assertMatchesRegularExpression( '/^<ref name="MyRef">.*<\/ref>$/s', $result[0],
+			'Output was not wrapped in the expected <ref> tag' );
 	}
 
 	public function invalidPmidProvider() {
