@@ -119,6 +119,17 @@ class ArticleTest extends \MediaWikiUnitTestCase {
 	}
 
 	/**
+	 * Regression test: str_split() cuts a UTF-8 initial into bytes.
+	 * Ž then becomes invalid UTF-8 and the parser drops the page.
+	 */
+	public function testMultibyteInitialsAreNotSplitIntoBytes() {
+		$article = new Article( 1, $this->xmlWithAuthors( [
+			[ 'last' => 'Bolanča', 'initials' => 'Ž' ],
+		] ) );
+		$this->assertSame( 'Bolanča, Ž.', $article->authors( true ) );
+	}
+
+	/**
 	 * Regression test: authorName() used to test
 	 * `sizeof( $this->initials ) >= $index` (off-by-one), which allowed an
 	 * out-of-bounds array access whenever an author had no <Initials> node
